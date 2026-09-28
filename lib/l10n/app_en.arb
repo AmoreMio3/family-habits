@@ -1,0 +1,76 @@
+{
+  "@@locale": "en",
+  "appTitle": "Family Habits",
+  "@appTitle": {
+    "description": "App name shown in the app bar and launcher."
+  },
+  "today": "Today",
+  "familyWeek": "Family week",
+  "checkInsProgress": "{done} of {total} check-ins",
+  "@checkInsProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "myHabits": "My habits",
+  "familyHabits": "Family habits",
+  "familyHabitTag": "Family habit",
+  "checkInForFamily": "Check in for the family",
+  "familyCheckedIn": "{name} checked in “{habit}” for the whole family",
+  "@familyCheckedIn": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "habit": {
+        "type": "String"
+      }
+    }
+  },
+  "streakDays": "{count, plural, =0{No streak yet} =1{1 day} other{{count} days}}",
+  "@streakDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "weekTarget": "{done}/{target} this week",
+  "@weekTarget": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "categories": "Categories",
+  "language": "Language",
+  "phoneLanguage": "Phone language",
+  "parent": "Parent",
+  "child": "Child",
+  "switchProfile": "Switch profile",
+  "catQuitBadHabit": "Quit a bad habit",
+  "catArt": "Art",
+  "catMeditate": "Meditate",
+  "catStudy": "Study",
+  "catSport": "Sport",
+  "catEntertainment": "Entertainment",
+  "catFinance": "Finance",
+  "catHealth": "Health",
+  "catWork": "Work",
+  "catNutrition": "Nutrition",
+  "catHomeTasks": "Home tasks",
+  "catOutdoor": "Outdoor activities",
+  "catFamilyTime": "Family quality time",
+  "catFamilyTable": "Family dinner & gatherings",
+  "catSleep": "Sleep",
+  "catSelfCare": "Self-care & hygiene"
+}
