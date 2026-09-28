@@ -314,6 +314,480 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Self-care & hygiene'**
   String get catSelfCare;
+
+  /// No description provided for @welcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Build good habits together'**
+  String get welcomeTitle;
+
+  /// No description provided for @welcomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Track your own habits, help your kids with theirs, and watch the family bar fill up.'**
+  String get welcomeBody;
+
+  /// No description provided for @imParent.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m a parent'**
+  String get imParent;
+
+  /// No description provided for @joinWithCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Join with a code'**
+  String get joinWithCode;
+
+  /// No description provided for @tryDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Try the demo family'**
+  String get tryDemo;
+
+  /// No description provided for @signIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signIn;
+
+  /// No description provided for @createAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get createAccount;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get forgotPassword;
+
+  /// No description provided for @passwordResetSent.
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a password reset link to {email}.'**
+  String passwordResetSent(String email);
+
+  /// No description provided for @haveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'I already have an account'**
+  String get haveAccount;
+
+  /// No description provided for @newHere.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m new here'**
+  String get newHere;
+
+  /// No description provided for @errWrongPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'The email or password is wrong.'**
+  String get errWrongPassword;
+
+  /// No description provided for @errEmailInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'An account with this email already exists. Sign in instead.'**
+  String get errEmailInUse;
+
+  /// No description provided for @errWeakPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Use at least 6 characters for the password.'**
+  String get errWeakPassword;
+
+  /// No description provided for @errInvalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the email address.'**
+  String get errInvalidEmail;
+
+  /// No description provided for @errCodeNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This code doesn\'t exist. Check it with the parent who made it.'**
+  String get errCodeNotFound;
+
+  /// No description provided for @errCodeExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'This code has expired. Ask a parent for a new one.'**
+  String get errCodeExpired;
+
+  /// No description provided for @errCodeWrongKind.
+  ///
+  /// In en, this message translates to:
+  /// **'This code is for a different kind of join. Ask a parent for the right one.'**
+  String get errCodeWrongKind;
+
+  /// No description provided for @errNeedsRecentLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'For your safety, sign out, sign in again, then try again.'**
+  String get errNeedsRecentLogin;
+
+  /// No description provided for @errNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection. Try again when you\'re online.'**
+  String get errNetwork;
+
+  /// No description provided for @errUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Try again.'**
+  String get errUnknown;
+
+  /// No description provided for @setUpFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up your family'**
+  String get setUpFamily;
+
+  /// No description provided for @createFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a family'**
+  String get createFamily;
+
+  /// No description provided for @familyName.
+  ///
+  /// In en, this message translates to:
+  /// **'Family name'**
+  String get familyName;
+
+  /// No description provided for @yourName.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name in the family'**
+  String get yourName;
+
+  /// No description provided for @joinFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Join my partner\'s family'**
+  String get joinFamily;
+
+  /// No description provided for @inviteCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite code'**
+  String get inviteCode;
+
+  /// No description provided for @continueAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueAction;
+
+  /// No description provided for @enterCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code shown on a parent\'s phone.'**
+  String get enterCode;
+
+  /// No description provided for @pairCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get pairCode;
+
+  /// No description provided for @join.
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get join;
+
+  /// No description provided for @family.
+  ///
+  /// In en, this message translates to:
+  /// **'Family'**
+  String get family;
+
+  /// No description provided for @addChild.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a child'**
+  String get addChild;
+
+  /// No description provided for @inviteParent.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite a parent'**
+  String get inviteParent;
+
+  /// No description provided for @nickname.
+  ///
+  /// In en, this message translates to:
+  /// **'Name or nickname'**
+  String get nickname;
+
+  /// No description provided for @ageBand.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get ageBand;
+
+  /// No description provided for @ageUnder6.
+  ///
+  /// In en, this message translates to:
+  /// **'Under 6'**
+  String get ageUnder6;
+
+  /// No description provided for @age6to9.
+  ///
+  /// In en, this message translates to:
+  /// **'6 to 9'**
+  String get age6to9;
+
+  /// No description provided for @age10to12.
+  ///
+  /// In en, this message translates to:
+  /// **'10 to 12'**
+  String get age10to12;
+
+  /// No description provided for @ageTeen.
+  ///
+  /// In en, this message translates to:
+  /// **'13 to 17'**
+  String get ageTeen;
+
+  /// No description provided for @ownDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Has their own phone or tablet'**
+  String get ownDevice;
+
+  /// No description provided for @consentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Parent consent'**
+  String get consentTitle;
+
+  /// No description provided for @consentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m this child\'s parent or guardian. I agree to Family Habits storing this child\'s nickname, age range and habit check-ins so our family can track habits together. I can delete this data at any time.'**
+  String get consentBody;
+
+  /// No description provided for @consentCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'I agree'**
+  String get consentCheck;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @pairDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a device'**
+  String get pairDevice;
+
+  /// No description provided for @sharedDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect a shared family device'**
+  String get sharedDevice;
+
+  /// No description provided for @codeInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'On the other device, open Family Habits, tap “Join with a code” and enter this code. It works for 24 hours, once.'**
+  String get codeInstructions;
+
+  /// No description provided for @setPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a PIN'**
+  String get setPin;
+
+  /// No description provided for @removePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove PIN'**
+  String get removePin;
+
+  /// No description provided for @pinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter PIN'**
+  String get pinTitle;
+
+  /// No description provided for @pinWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong PIN'**
+  String get pinWrong;
+
+  /// No description provided for @removeMemberConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name} and all of their habits?'**
+  String removeMemberConfirm(String name);
+
+  /// No description provided for @weekStartsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Week starts on'**
+  String get weekStartsOn;
+
+  /// No description provided for @weekStartAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Language default'**
+  String get weekStartAuto;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteAccount;
+
+  /// No description provided for @deleteOwnerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This deletes your account and the whole family: every profile, habit and check-in. It can\'t be undone.'**
+  String get deleteOwnerBody;
+
+  /// No description provided for @deleteParentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This deletes your account and your profile in this family. It can\'t be undone.'**
+  String get deleteParentBody;
+
+  /// No description provided for @unpairDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect this device'**
+  String get unpairDevice;
+
+  /// No description provided for @unpairBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This device leaves the family. A parent can connect it again with a new code.'**
+  String get unpairBody;
+
+  /// No description provided for @demoBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo family. Changes aren\'t saved.'**
+  String get demoBanner;
+
+  /// No description provided for @addHabit.
+  ///
+  /// In en, this message translates to:
+  /// **'Add habit'**
+  String get addHabit;
+
+  /// No description provided for @editHabit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit habit'**
+  String get editHabit;
+
+  /// No description provided for @habitName.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit name'**
+  String get habitName;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @subcategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Subcategory'**
+  String get subcategory;
+
+  /// No description provided for @habitFor.
+  ///
+  /// In en, this message translates to:
+  /// **'For'**
+  String get habitFor;
+
+  /// No description provided for @wholeFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Whole family'**
+  String get wholeFamily;
+
+  /// No description provided for @timesPerWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Once a week} other{{count} times a week}}'**
+  String timesPerWeek(int count);
+
+  /// No description provided for @deleteHabitConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete “{habit}” and its history?'**
+  String deleteHabitConfirm(String habit);
+
+  /// No description provided for @noHabitsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No habits yet.'**
+  String get noHabitsYet;
+
+  /// No description provided for @members.
+  ///
+  /// In en, this message translates to:
+  /// **'Members'**
+  String get members;
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @everyDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day'**
+  String get everyDay;
 }
 
 class _AppLocalizationsDelegate

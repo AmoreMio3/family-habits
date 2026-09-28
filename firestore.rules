@@ -1,0 +1,202 @@
+rules_version = '2';
+
+// Who may read and write what. Tests: firebase/rules.test.js.
+//
+// users/{uid}      links a sign-in to one family: a parent (full access) or
+//                  a paired device (only the child profiles in memberIds).
+// families/{fid}   the family and its members, habits and check-ins.
+// pairingCodes/{c} short-lived codes to join a family.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function userPath(uid) {
+      return /databases/$(database)/documents/users/$(uid);
+    }
+
+    function familyPath(fid) {
+      return /databases/$(database)/documents/families/$(fid);
+    }
+
+    function codePath(code) {
+      return /databases/$(database)/documents/pairingCodes/$(code);
+    }
+
+    function me() {
+      return get(userPath(request.auth.uid)).data;
+    }
+
+    function hasRecord() {
+      return signedIn() && exists(userPath(request.auth.uid));
+    }
+
+    function inFamily(fid) {
+      return hasRecord() && me().familyId == fid;
+    }
+
+    function isParent(fid) {
+      return inFamily(fid) && me().role == 'parent';
+    }
+
+    function isOwner(fid) {
+      return isParent(fid) && get(familyPath(fid)).data.ownerUid == request.auth.uid;
+    }
+
+    // Parents act for everyone; a paired device only for its own profiles.
+    function canActAs(fid, memberId) {
+      return isParent(fid)
+        || (inFamily(fid) && me().role == 'device' && memberId in me().memberIds);
+    }
+
+    function isShortText(value, max) {
+      return value is string && value.size() > 0 && value.size() <= max;
+    }
+
+    match /users/{uid} {
+      allow get: if signedIn() && request.auth.uid == uid;
+      // Lets the owner find and remove every account when deleting the family.
+      allow get, list: if isParent(resource.data.familyId);
+      allow create: if signedIn() && request.auth.uid == uid
+        && (newOwner() || newCoParent() || newDevice());
+      allow delete: if signedIn()
+        && (request.auth.uid == uid || isOwner(resource.data.familyId));
+
+      function incoming() {
+        return request.resource.data;
+      }
+
+      // The family was just created by this user.
+      function newOwner() {
+        return incoming().keys().hasOnly(['familyId', 'role', 'memberId'])
+          && incoming().role == 'parent'
+          && get(familyPath(incoming().familyId)).data.ownerUid == request.auth.uid;
+      }
+
+      function code() {
+        return get(codePath(incoming().inviteCode)).data;
+      }
+
+      function validCode(kind) {
+        return incoming().inviteCode is string
+          && exists(codePath(incoming().inviteCode))
+          && code().kind == kind
+          && code().familyId == incoming().familyId
+          && request.time < code().expiresAt;
+      }
+
+      function newCoParent() {
+        return incoming().keys().hasOnly(['familyId', 'role', 'memberId', 'inviteCode'])
+          && incoming().role == 'parent'
+          && validCode('coParent');
+      }
+
+      function newDevice() {
+        return incoming().keys().hasOnly(['familyId', 'role', 'memberIds', 'inviteCode'])
+          && incoming().role == 'device'
+          && validCode('device')
+          && incoming().memberIds == code().memberIds;
+      }
+    }
+
+    match /pairingCodes/{code} {
+      // Anyone holding the code may read it. Codes can't be listed.
+      allow get: if signedIn();
+      allow list: if isParent(resource.data.familyId);
+      allow create: if isParent(request.resource.data.familyId)
+        && code.size() == 8
+        && request.resource.data.keys().hasOnly(['familyId', 'kind', 'memberIds', 'createdBy', 'expiresAt'])
+        && request.resource.data.kind in ['device', 'coParent']
+        && request.resource.data.memberIds is list
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.expiresAt <= request.time + duration.value(25, 'h');
+      // A code works once: whoever used it deletes it.
+      allow delete: if isParent(resource.data.familyId)
+        || (hasRecord() && me().get('inviteCode', '') == code);
+    }
+
+    match /families/{fid} {
+      allow get: if inFamily(fid);
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['name', 'ownerUid', 'weekStart'])
+        && request.resource.data.ownerUid == request.auth.uid
+        && isShortText(request.resource.data.name, 60);
+      allow update: if isParent(fid)
+        && request.resource.data.keys().hasOnly(['name', 'ownerUid', 'weekStart'])
+        && request.resource.data.ownerUid == resource.data.ownerUid
+        && isShortText(request.resource.data.name, 60)
+        && (request.resource.data.weekStart == null || request.resource.data.weekStart in [1, 2, 3, 4, 5, 6, 7]);
+      allow delete: if isOwner(fid);
+
+      match /members/{mid} {
+        allow read: if inFamily(fid);
+        allow create: if isParent(fid) && validMember() && (
+          // Parents add only their own profile...
+          (request.resource.data.role == 'parent' && request.resource.data.uid == request.auth.uid)
+          // ...and children only with consent recorded.
+          || (request.resource.data.role == 'child'
+              && request.resource.data.uid == null
+              && request.resource.data.consentAt is timestamp
+              && request.resource.data.consentByUid == request.auth.uid));
+        allow update: if isParent(fid) && validMember()
+          && request.resource.data.role == resource.data.role
+          && request.resource.data.uid == resource.data.uid
+          && request.resource.data.consentAt == resource.data.consentAt
+          && request.resource.data.consentByUid == resource.data.consentByUid;
+        allow delete: if isParent(fid)
+          && (resource.data.role == 'child' || resource.data.uid == request.auth.uid || isOwner(fid));
+
+        function validMember() {
+          let d = request.resource.data;
+          return d.keys().hasOnly(['nickname', 'role', 'ageBand', 'hasOwnDevice', 'uid', 'pinHash', 'consentAt', 'consentByUid'])
+            && isShortText(d.nickname, 40)
+            && d.role in ['parent', 'child']
+            && d.ageBand in ['under6', 'age6to9', 'age10to12', 'teen', 'adult']
+            && d.hasOwnDevice is bool
+            && (d.pinHash == null || d.pinHash is string);
+        }
+      }
+
+      match /habits/{hid} {
+        allow read: if inFamily(fid);
+        allow create, update: if isParent(fid) && validHabit();
+        allow delete: if isParent(fid);
+
+        function validHabit() {
+          let d = request.resource.data;
+          return d.keys().hasOnly(['name', 'ownerMemberId', 'category', 'subcategory', 'timesPerWeek'])
+            && isShortText(d.name, 80)
+            && isShortText(d.category, 40)
+            && (d.subcategory == null || isShortText(d.subcategory, 60))
+            && d.timesPerWeek is int && d.timesPerWeek >= 1 && d.timesPerWeek <= 7
+            && (d.ownerMemberId == null
+                || exists(/databases/$(database)/documents/families/$(fid)/members/$(d.ownerMemberId)));
+        }
+      }
+
+      match /checkIns/{cid} {
+        allow read: if inFamily(fid);
+        allow create, update: if validCheckIn(request.resource.data)
+          && cid == request.resource.data.habitId + '_' + request.resource.data.day;
+        allow delete: if canCheck(resource.data.habitId);
+
+        // Family habits: parents only. Personal habits: the owner or a parent.
+        function canCheck(hid) {
+          let path = /databases/$(database)/documents/families/$(fid)/habits/$(hid);
+          let owner = get(path).data.get('ownerMemberId', null);
+          return exists(path) && (owner == null ? isParent(fid) : canActAs(fid, owner));
+        }
+
+        function validCheckIn(d) {
+          return d.keys().hasOnly(['habitId', 'day', 'checkedInBy'])
+            && d.habitId is string
+            && d.day is string && d.day.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+            && canCheck(d.habitId)
+            && canActAs(fid, d.checkedInBy);
+        }
+      }
+    }
+  }
+}

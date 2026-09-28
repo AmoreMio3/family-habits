@@ -72,5 +72,112 @@
   "catFamilyTime": "Family quality time",
   "catFamilyTable": "Family dinner & gatherings",
   "catSleep": "Sleep",
-  "catSelfCare": "Self-care & hygiene"
+  "catSelfCare": "Self-care & hygiene",
+  "welcomeTitle": "Build good habits together",
+  "welcomeBody": "Track your own habits, help your kids with theirs, and watch the family bar fill up.",
+  "imParent": "I'm a parent",
+  "joinWithCode": "Join with a code",
+  "tryDemo": "Try the demo family",
+  "signIn": "Sign in",
+  "createAccount": "Create account",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot password?",
+  "passwordResetSent": "We sent a password reset link to {email}.",
+  "@passwordResetSent": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "haveAccount": "I already have an account",
+  "newHere": "I'm new here",
+  "errWrongPassword": "The email or password is wrong.",
+  "errEmailInUse": "An account with this email already exists. Sign in instead.",
+  "errWeakPassword": "Use at least 6 characters for the password.",
+  "errInvalidEmail": "Check the email address.",
+  "errCodeNotFound": "This code doesn't exist. Check it with the parent who made it.",
+  "errCodeExpired": "This code has expired. Ask a parent for a new one.",
+  "errCodeWrongKind": "This code is for a different kind of join. Ask a parent for the right one.",
+  "errNeedsRecentLogin": "For your safety, sign out, sign in again, then try again.",
+  "errNetwork": "No internet connection. Try again when you're online.",
+  "errUnknown": "Something went wrong. Try again.",
+  "setUpFamily": "Set up your family",
+  "createFamily": "Create a family",
+  "familyName": "Family name",
+  "yourName": "Your name in the family",
+  "joinFamily": "Join my partner's family",
+  "inviteCode": "Invite code",
+  "continueAction": "Continue",
+  "enterCode": "Enter the code shown on a parent's phone.",
+  "pairCode": "Code",
+  "join": "Join",
+  "family": "Family",
+  "addChild": "Add a child",
+  "inviteParent": "Invite a parent",
+  "nickname": "Name or nickname",
+  "ageBand": "Age",
+  "ageUnder6": "Under 6",
+  "age6to9": "6 to 9",
+  "age10to12": "10 to 12",
+  "ageTeen": "13 to 17",
+  "ownDevice": "Has their own phone or tablet",
+  "consentTitle": "Parent consent",
+  "consentBody": "I'm this child's parent or guardian. I agree to Family Habits storing this child's nickname, age range and habit check-ins so our family can track habits together. I can delete this data at any time.",
+  "consentCheck": "I agree",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "pairDevice": "Connect a device",
+  "sharedDevice": "Connect a shared family device",
+  "codeInstructions": "On the other device, open Family Habits, tap “Join with a code” and enter this code. It works for 24 hours, once.",
+  "setPin": "Set a PIN",
+  "removePin": "Remove PIN",
+  "pinTitle": "Enter PIN",
+  "pinWrong": "Wrong PIN",
+  "removeMemberConfirm": "Delete {name} and all of their habits?",
+  "@removeMemberConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "weekStartsOn": "Week starts on",
+  "weekStartAuto": "Language default",
+  "signOut": "Sign out",
+  "deleteAccount": "Delete account",
+  "deleteOwnerBody": "This deletes your account and the whole family: every profile, habit and check-in. It can't be undone.",
+  "deleteParentBody": "This deletes your account and your profile in this family. It can't be undone.",
+  "unpairDevice": "Disconnect this device",
+  "unpairBody": "This device leaves the family. A parent can connect it again with a new code.",
+  "demoBanner": "Demo family. Changes aren't saved.",
+  "addHabit": "Add habit",
+  "editHabit": "Edit habit",
+  "habitName": "Habit name",
+  "category": "Category",
+  "subcategory": "Subcategory",
+  "habitFor": "For",
+  "wholeFamily": "Whole family",
+  "timesPerWeek": "{count, plural, =1{Once a week} other{{count} times a week}}",
+  "@timesPerWeek": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteHabitConfirm": "Delete “{habit}” and its history?",
+  "@deleteHabitConfirm": {
+    "placeholders": {
+      "habit": {
+        "type": "String"
+      }
+    }
+  },
+  "noHabitsYet": "No habits yet.",
+  "members": "Members",
+  "settings": "Settings",
+  "everyDay": "Every day"
 }

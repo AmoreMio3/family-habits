@@ -1,9 +1,10 @@
 import '../models/category.dart';
 import '../models/family.dart';
+import 'family_repository.dart';
 import 'family_store.dart';
 
-/// Example family used until accounts and sync exist.
-FamilyStore sampleFamily({DateTime Function()? clock}) {
+/// Example family shown until the app is connected to Firebase.
+InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
   final now = (clock ?? DateTime.now)();
   DateTime daysAgo(int n) => DateTime(now.year, now.month, now.day - n);
 
@@ -24,9 +25,15 @@ FamilyStore sampleFamily({DateTime Function()? clock}) {
       id: 'noa',
       nickname: 'Noa',
       role: MemberRole.child,
+      ageBand: AgeBand.age6to9,
       hasOwnDevice: true,
     ),
-    Member(id: 'itai', nickname: 'Itai', role: MemberRole.child),
+    Member(
+      id: 'itai',
+      nickname: 'Itai',
+      role: MemberRole.child,
+      ageBand: AgeBand.under6,
+    ),
   ];
 
   const habits = [
@@ -125,11 +132,18 @@ FamilyStore sampleFamily({DateTime Function()? clock}) {
       CheckIn(habitId: 'itai-bed', day: daysAgo(n), checkedInBy: 'dad'),
   ];
 
-  return FamilyStore(
+  return InMemoryFamilyRepository(
+    info: const FamilyInfo(id: 'demo', name: 'Demo family'),
     members: members,
     habits: habits,
     checkIns: checkIns,
-    activeMemberId: 'noa',
-    clock: clock,
   );
 }
+
+/// The demo family, opened as Dad's parent account.
+FamilyStore sampleFamily({DateTime Function()? clock}) => FamilyStore(
+  repository: sampleRepository(clock: clock),
+  access: const DeviceAccess.parent(myMemberId: 'dad'),
+  clock: clock,
+  isDemo: true,
+);
