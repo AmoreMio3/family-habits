@@ -1,0 +1,16 @@
+{
+  "name": "firebase",
+  "version": "1.0.0",
+  "description": "Security rules tests for Family Habits",
+  "scripts": {
+    "test": "firebase emulators:exec --only firestore --project demo-family-habits \"vitest run\""
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "^5.0.2",
+    "firebase": "^12.19.0",
+    "firebase-tools": "^15.31.0",
+    "vitest": "^5.0.2"
+  },
+  "type": "module",
+  "private": true
+}

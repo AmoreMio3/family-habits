@@ -122,4 +122,267 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get catSelfCare => 'Autocuidado e higiene';
+
+  @override
+  String get welcomeTitle => 'Criem bons hábitos juntos';
+
+  @override
+  String get welcomeBody =>
+      'Acompanhe seus hábitos, ajude seus filhos com os deles e veja a barra da família encher.';
+
+  @override
+  String get imParent => 'Sou pai ou mãe';
+
+  @override
+  String get joinWithCode => 'Entrar com um código';
+
+  @override
+  String get tryDemo => 'Experimentar a família de exemplo';
+
+  @override
+  String get signIn => 'Entrar';
+
+  @override
+  String get createAccount => 'Criar conta';
+
+  @override
+  String get email => 'E-mail';
+
+  @override
+  String get password => 'Senha';
+
+  @override
+  String get forgotPassword => 'Esqueceu a senha?';
+
+  @override
+  String passwordResetSent(String email) {
+    return 'Enviamos um link para redefinir a senha para $email.';
+  }
+
+  @override
+  String get haveAccount => 'Já tenho uma conta';
+
+  @override
+  String get newHere => 'Sou novo aqui';
+
+  @override
+  String get errWrongPassword => 'O e-mail ou a senha estão errados.';
+
+  @override
+  String get errEmailInUse =>
+      'Já existe uma conta com este e-mail. Entre nela.';
+
+  @override
+  String get errWeakPassword => 'Use pelo menos 6 caracteres na senha.';
+
+  @override
+  String get errInvalidEmail => 'Confira o endereço de e-mail.';
+
+  @override
+  String get errCodeNotFound =>
+      'Este código não existe. Confira com quem o criou.';
+
+  @override
+  String get errCodeExpired =>
+      'Este código expirou. Peça um novo a um dos pais.';
+
+  @override
+  String get errCodeWrongKind =>
+      'Este código é para outro tipo de acesso. Peça o código certo.';
+
+  @override
+  String get errNeedsRecentLogin =>
+      'Por segurança, saia, entre de novo e tente outra vez.';
+
+  @override
+  String get errNetwork =>
+      'Sem conexão com a internet. Tente de novo quando estiver on-line.';
+
+  @override
+  String get errUnknown => 'Algo deu errado. Tente de novo.';
+
+  @override
+  String get setUpFamily => 'Configure sua família';
+
+  @override
+  String get createFamily => 'Criar uma família';
+
+  @override
+  String get familyName => 'Nome da família';
+
+  @override
+  String get yourName => 'Seu nome na família';
+
+  @override
+  String get joinFamily => 'Entrar na família do meu parceiro';
+
+  @override
+  String get inviteCode => 'Código de convite';
+
+  @override
+  String get continueAction => 'Continuar';
+
+  @override
+  String get enterCode => 'Digite o código mostrado no celular de um dos pais.';
+
+  @override
+  String get pairCode => 'Código';
+
+  @override
+  String get join => 'Entrar';
+
+  @override
+  String get family => 'Família';
+
+  @override
+  String get addChild => 'Adicionar um filho ou filha';
+
+  @override
+  String get inviteParent => 'Convidar outro pai ou mãe';
+
+  @override
+  String get nickname => 'Nome ou apelido';
+
+  @override
+  String get ageBand => 'Idade';
+
+  @override
+  String get ageUnder6 => 'Menos de 6';
+
+  @override
+  String get age6to9 => '6 a 9';
+
+  @override
+  String get age10to12 => '10 a 12';
+
+  @override
+  String get ageTeen => '13 a 17';
+
+  @override
+  String get ownDevice => 'Tem o próprio celular ou tablet';
+
+  @override
+  String get consentTitle => 'Consentimento dos pais';
+
+  @override
+  String get consentBody =>
+      'Sou pai, mãe ou responsável por esta criança. Concordo que o Family Habits guarde o apelido, a faixa de idade e os registros de hábitos dela para que nossa família acompanhe os hábitos juntos. Posso apagar esses dados a qualquer momento.';
+
+  @override
+  String get consentCheck => 'Concordo';
+
+  @override
+  String get save => 'Salvar';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get delete => 'Excluir';
+
+  @override
+  String get pairDevice => 'Conectar um aparelho';
+
+  @override
+  String get sharedDevice => 'Conectar um aparelho compartilhado da família';
+
+  @override
+  String get codeInstructions =>
+      'No outro aparelho, abra o Family Habits, toque em “Entrar com um código” e digite este código. Ele vale uma vez, por 24 horas.';
+
+  @override
+  String get setPin => 'Definir um PIN';
+
+  @override
+  String get removePin => 'Remover o PIN';
+
+  @override
+  String get pinTitle => 'Digite o PIN';
+
+  @override
+  String get pinWrong => 'PIN errado';
+
+  @override
+  String removeMemberConfirm(String name) {
+    return 'Excluir $name e todos os hábitos?';
+  }
+
+  @override
+  String get weekStartsOn => 'A semana começa em';
+
+  @override
+  String get weekStartAuto => 'Padrão do idioma';
+
+  @override
+  String get signOut => 'Sair';
+
+  @override
+  String get deleteAccount => 'Excluir conta';
+
+  @override
+  String get deleteOwnerBody =>
+      'Isso exclui sua conta e a família inteira: cada perfil, hábito e registro. Não dá para desfazer.';
+
+  @override
+  String get deleteParentBody =>
+      'Isso exclui sua conta e seu perfil nesta família. Não dá para desfazer.';
+
+  @override
+  String get unpairDevice => 'Desconectar este aparelho';
+
+  @override
+  String get unpairBody =>
+      'Este aparelho sai da família. Um dos pais pode conectá-lo de novo com um código novo.';
+
+  @override
+  String get demoBanner => 'Família de exemplo. As mudanças não são salvas.';
+
+  @override
+  String get addHabit => 'Adicionar hábito';
+
+  @override
+  String get editHabit => 'Editar hábito';
+
+  @override
+  String get habitName => 'Nome do hábito';
+
+  @override
+  String get category => 'Categoria';
+
+  @override
+  String get subcategory => 'Subcategoria';
+
+  @override
+  String get habitFor => 'Para';
+
+  @override
+  String get wholeFamily => 'Família toda';
+
+  @override
+  String timesPerWeek(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count vezes por semana',
+      one: 'Uma vez por semana',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String deleteHabitConfirm(String habit) {
+    return 'Excluir “$habit” e o histórico?';
+  }
+
+  @override
+  String get noHabitsYet => 'Nenhum hábito ainda.';
+
+  @override
+  String get members => 'Membros';
+
+  @override
+  String get settings => 'Configurações';
+
+  @override
+  String get everyDay => 'Todo dia';
 }

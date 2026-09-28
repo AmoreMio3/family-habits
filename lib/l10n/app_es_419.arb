@@ -2,5 +2,21 @@
   "@@locale": "es_419",
   "familyCheckedIn": "{name} registró «{habit}» para toda la familia",
   "phoneLanguage": "Idioma del celular",
-  "catHomeTasks": "Tareas de la casa"
+  "catHomeTasks": "Tareas de la casa",
+  "forgotPassword": "¿Olvidaste la contraseña?",
+  "passwordResetSent": "Enviamos un enlace para restablecer la contraseña a {email}.",
+  "errEmailInUse": "Ya existe una cuenta con este correo. Inicia sesión.",
+  "errCodeExpired": "Este código venció. Pide uno nuevo a un papá o mamá.",
+  "errUnknown": "Algo salió mal. Inténtalo de nuevo.",
+  "enterCode": "Escribe el código que aparece en el celular de un papá o mamá.",
+  "imParent": "Soy papá o mamá",
+  "addChild": "Agregar un hijo o hija",
+  "inviteParent": "Invitar a otro papá o mamá",
+  "ownDevice": "Tiene su propio celular o tableta",
+  "codeInstructions": "En el otro dispositivo, abre Family Habits, toca «Unirme con un código» e ingresa este código. Sirve una sola vez durante 24 horas.",
+  "pinTitle": "Ingresa el PIN",
+  "addHabit": "Agregar hábito",
+  "settings": "Configuración",
+  "unpairBody": "Este dispositivo saldrá de la familia. Un papá o mamá puede volver a conectarlo con un código nuevo.",
+  "errCodeWrongKind": "Este código es para otro tipo de acceso. Pide el correcto."
 }
