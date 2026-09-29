@@ -179,5 +179,13 @@
   "noHabitsYet": "No habits yet.",
   "members": "Members",
   "settings": "Settings",
-  "everyDay": "Every day"
+  "everyDay": "Every day",
+  "loadFailed": "Couldn't load your family. Check your internet connection and try again.",
+  "tryAgain": "Try again",
+  "@loadFailed": {
+    "description": "Shown when the family's data can't be loaded."
+  },
+  "@tryAgain": {
+    "description": "Button that retries loading."
+  }
 }

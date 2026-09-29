@@ -36,9 +36,14 @@ class FamilyStore extends ChangeNotifier {
     DateTime Function()? clock,
     this.isDemo = false,
   }) : _clock = clock ?? DateTime.now {
+    _listen();
+  }
+
+  void _listen() {
     _sub = repository.watch().listen(
       (snapshot) {
         _snapshot = snapshot;
+        _error = null;
         notifyListeners();
       },
       onError: (Object e) {
@@ -48,17 +53,28 @@ class FamilyStore extends ChangeNotifier {
     );
   }
 
+  /// Listens again after [error], for example once the connection is back.
+  void retry() {
+    _sub.cancel();
+    _error = null;
+    notifyListeners();
+    _listen();
+  }
+
   final FamilyRepository repository;
   final DeviceAccess access;
   final bool isDemo;
   final DateTime Function() _clock;
-  late final StreamSubscription<FamilySnapshot> _sub;
+  late StreamSubscription<FamilySnapshot> _sub;
   FamilySnapshot? _snapshot;
   Object? _error;
   String? _activeMemberId;
 
   bool get isLoading => _snapshot == null && _error == null;
   Object? get error => _error;
+
+  /// Whether the family has loaded at least once, so [info] is available.
+  bool get hasData => _snapshot != null;
 
   FamilyInfo get info => _snapshot!.info;
   List<Member> get members => _snapshot?.members ?? const [];

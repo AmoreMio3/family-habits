@@ -386,6 +386,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get everyDay => 'Todos los días';
+
+  @override
+  String get loadFailed =>
+      'No se ha podido cargar tu familia. Comprueba tu conexión a internet e inténtalo de nuevo.';
+
+  @override
+  String get tryAgain => 'Reintentar';
 }
 
 /// The translations for Spanish Castilian, as used in Latin America and the Caribbean (`es_419`).

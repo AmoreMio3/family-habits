@@ -385,4 +385,11 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get everyDay => 'כל יום';
+
+  @override
+  String get loadFailed =>
+      'לא הצלחנו לטעון את המשפחה. כדאי לבדוק את החיבור לאינטרנט ולנסות שוב.';
+
+  @override
+  String get tryAgain => 'לנסות שוב';
 }
