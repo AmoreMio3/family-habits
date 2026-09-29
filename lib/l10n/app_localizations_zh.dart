@@ -75,22 +75,13 @@ class AppLocalizationsZh extends AppLocalizations {
   String get switchProfile => '切换成员';
 
   @override
-  String get catQuitBadHabit => '戒除坏习惯';
-
-  @override
-  String get catArt => '艺术';
-
-  @override
-  String get catMeditate => '冥想';
+  String get catArt => '艺术与创意';
 
   @override
   String get catStudy => '学习';
 
   @override
   String get catSport => '运动';
-
-  @override
-  String get catEntertainment => '娱乐';
 
   @override
   String get catFinance => '理财';
@@ -112,9 +103,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get catFamilyTime => '家庭时光';
-
-  @override
-  String get catFamilyTable => '家庭聚餐';
 
   @override
   String get catSleep => '睡眠';
@@ -339,9 +327,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get category => '分类';
 
   @override
-  String get subcategory => '子分类';
-
-  @override
   String get habitFor => '给谁';
 
   @override
@@ -373,6 +358,82 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get everyDay => '每天';
+
+  @override
+  String get catBreakHabit => '戒除习惯';
+
+  @override
+  String get catMindfulness => '正念';
+
+  @override
+  String get catFamilyCare => '家庭照顾与育儿';
+
+  @override
+  String get catFamilyMeals => '家庭聚餐与聚会';
+
+  @override
+  String get catHobbies => '爱好与娱乐';
+
+  @override
+  String get groupSelf => '照顾好自己';
+
+  @override
+  String get groupFamily => '照顾好家人';
+
+  @override
+  String get groupDaily => '我的责任';
+
+  @override
+  String get groupLeisure => '享受生活';
+
+  @override
+  String get createMyOwnHabit => '创建我自己的习惯';
+
+  @override
+  String get createMyOwnCategory => '创建我自己的分类';
+
+  @override
+  String createNamedHabit(String name) {
+    return '将“$name”创建为我的习惯';
+  }
+
+  @override
+  String get searchHabitsHint => '搜索，例如“公园”或“书”';
+
+  @override
+  String get noMatchingHabits => '没有匹配的现成习惯。你可以自己创建。';
+
+  @override
+  String get ourCategories => '我们家的分类';
+
+  @override
+  String get personalDefinition => '怎样算完成？（可选）';
+
+  @override
+  String get personalDefinitionHint => '例如：我今天喝了足够的水';
+
+  @override
+  String get categoryName => '分类名称';
+
+  @override
+  String get categoryHabits => '此分类中的习惯';
+
+  @override
+  String get addHabitToCategory => '添加习惯';
+
+  @override
+  String get editCategory => '编辑分类';
+
+  @override
+  String get deleteCategory => '删除分类';
+
+  @override
+  String deleteCategoryConfirm(String name) {
+    return '删除“$name”？其中已有的习惯会保留。';
+  }
+
+  @override
+  String get otherCategory => '其他';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -445,22 +506,13 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get switchProfile => '切換成員';
 
   @override
-  String get catQuitBadHabit => '戒除壞習慣';
-
-  @override
-  String get catArt => '藝術';
-
-  @override
-  String get catMeditate => '冥想';
+  String get catArt => '藝術與創意';
 
   @override
   String get catStudy => '學習';
 
   @override
   String get catSport => '運動';
-
-  @override
-  String get catEntertainment => '娛樂';
 
   @override
   String get catFinance => '理財';
@@ -484,13 +536,10 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get catFamilyTime => '家庭時光';
 
   @override
-  String get catFamilyTable => '家庭聚餐';
-
-  @override
   String get catSleep => '睡眠';
 
   @override
-  String get catSelfCare => '個人護理與衛生';
+  String get catSelfCare => '個人保養與衛生';
 
   @override
   String get welcomeTitle => '一起養成好習慣';
@@ -709,9 +758,6 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get category => '分類';
 
   @override
-  String get subcategory => '子分類';
-
-  @override
   String get habitFor => '給誰';
 
   @override
@@ -743,4 +789,80 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get everyDay => '每天';
+
+  @override
+  String get catBreakHabit => '戒除習慣';
+
+  @override
+  String get catMindfulness => '正念';
+
+  @override
+  String get catFamilyCare => '家庭照顧與育兒';
+
+  @override
+  String get catFamilyMeals => '家庭用餐與聚會';
+
+  @override
+  String get catHobbies => '嗜好與娛樂';
+
+  @override
+  String get groupSelf => '照顧好自己';
+
+  @override
+  String get groupFamily => '照顧好家人';
+
+  @override
+  String get groupDaily => '我的責任';
+
+  @override
+  String get groupLeisure => '享受生活';
+
+  @override
+  String get createMyOwnHabit => '建立我自己的習慣';
+
+  @override
+  String get createMyOwnCategory => '建立我自己的分類';
+
+  @override
+  String createNamedHabit(String name) {
+    return '將「$name」建立為我的習慣';
+  }
+
+  @override
+  String get searchHabitsHint => '搜尋，例如「公園」或「書」';
+
+  @override
+  String get noMatchingHabits => '沒有符合的現成習慣。你可以自己建立。';
+
+  @override
+  String get ourCategories => '我們家的分類';
+
+  @override
+  String get personalDefinition => '怎樣算完成？（選填）';
+
+  @override
+  String get personalDefinitionHint => '例如：我今天喝了足夠的水';
+
+  @override
+  String get categoryName => '分類名稱';
+
+  @override
+  String get categoryHabits => '此分類中的習慣';
+
+  @override
+  String get addHabitToCategory => '新增習慣';
+
+  @override
+  String get editCategory => '編輯分類';
+
+  @override
+  String get deleteCategory => '刪除分類';
+
+  @override
+  String deleteCategoryConfirm(String name) {
+    return '刪除「$name」？其中已有的習慣會保留。';
+  }
+
+  @override
+  String get otherCategory => '其他';
 }

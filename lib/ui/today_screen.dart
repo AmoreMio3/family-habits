@@ -6,6 +6,7 @@ import '../logic/progress.dart';
 import '../logic/week.dart';
 import '../models/family.dart';
 import 'family_progress_card.dart';
+import 'common.dart';
 import 'habit_editor.dart';
 import 'pin_dialog.dart';
 
@@ -113,13 +114,14 @@ class _HabitTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final done = store.isDoneToday(habit);
+    final look = categoryLook(l10n, store, habit.category);
     final enabled = store.canCheckIn(habit);
     final subtitle = habit.isFamily
         ? l10n.weekTarget(
             doneThisWeek(habit, store.checkIns, weekStart),
             habit.timesPerWeek,
           )
-        : '${habit.category.label(l10n)} · ${l10n.streakDays(streak(habit, store.checkIns, store.today))}';
+        : '${habit.definition ?? look.label} · ${l10n.streakDays(streak(habit, store.checkIns, store.today))}';
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -129,11 +131,11 @@ class _HabitTile extends StatelessWidget {
         controlAffinity: ListTileControlAffinity.leading,
         secondary: store.canManage
             ? IconButton(
-                icon: Icon(habit.category.icon, color: habit.category.color),
+                icon: Icon(look.icon, color: look.color),
                 tooltip: l10n.editHabit,
                 onPressed: () => showHabitEditor(context, store, habit: habit),
               )
-            : Icon(habit.category.icon, color: habit.category.color),
+            : Icon(look.icon, color: look.color),
         title: Text(habit.name),
         subtitle: Text(subtitle),
       ),

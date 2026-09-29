@@ -4,24 +4,47 @@ import '../data/family_store.dart';
 import '../l10n/app_localizations.dart';
 import '../models/category.dart';
 import '../models/family.dart';
+import 'common.dart';
 
-/// Adds a habit, or edits [habit].
-Future<void> showHabitEditor(
+/// Edits [habit], or adds a new habit starting from [name] and [category]
+/// (for example a library habit, with its [templateId]). Returns whether it
+/// was saved.
+Future<bool> showHabitEditor(
   BuildContext context,
   FamilyStore store, {
   Habit? habit,
-}) => Navigator.of(context).push(
-  MaterialPageRoute<void>(
-    fullscreenDialog: true,
-    builder: (_) => _HabitEditor(store: store, habit: habit),
-  ),
-);
+  String? name,
+  CategoryRef? category,
+  String? templateId,
+}) async =>
+    await Navigator.of(context).push(
+      MaterialPageRoute<bool>(
+        fullscreenDialog: true,
+        builder: (_) => _HabitEditor(
+          store: store,
+          habit: habit,
+          name: name,
+          category: category,
+          templateId: templateId,
+        ),
+      ),
+    ) ??
+    false;
 
 class _HabitEditor extends StatefulWidget {
-  const _HabitEditor({required this.store, this.habit});
+  const _HabitEditor({
+    required this.store,
+    this.habit,
+    this.name,
+    this.category,
+    this.templateId,
+  });
 
   final FamilyStore store;
   final Habit? habit;
+  final String? name;
+  final CategoryRef? category;
+  final String? templateId;
 
   @override
   State<_HabitEditor> createState() => _HabitEditorState();
@@ -31,10 +54,16 @@ class _HabitEditor extends StatefulWidget {
 const _familyOwner = '';
 
 class _HabitEditorState extends State<_HabitEditor> {
-  late final _name = TextEditingController(text: widget.habit?.name);
-  late BuiltInCategory _category =
-      widget.habit?.category ?? BuiltInCategory.health;
-  late String? _subcategory = widget.habit?.subcategory;
+  late final _name = TextEditingController(
+    text: widget.habit?.name ?? widget.name,
+  );
+  late final _definition = TextEditingController(
+    text: widget.habit?.definition,
+  );
+  late CategoryRef _category =
+      widget.habit?.category ??
+      widget.category ??
+      const BuiltInRef(BuiltInCategory.health);
   late String _owner =
       widget.habit?.ownerMemberId ??
       widget.store.activeMember?.id ??
@@ -44,6 +73,7 @@ class _HabitEditorState extends State<_HabitEditor> {
   @override
   void dispose() {
     _name.dispose();
+    _definition.dispose();
     super.dispose();
   }
 
@@ -57,11 +87,16 @@ class _HabitEditorState extends State<_HabitEditor> {
             ? const FamilyOwner()
             : PersonalOwner(_owner),
         category: _category,
-        subcategory: _subcategory,
+        templateId: _name.text.trim() == (widget.habit?.name ?? widget.name)
+            ? widget.habit?.templateId ?? widget.templateId
+            : null,
+        definition: _definition.text.trim().isEmpty
+            ? null
+            : _definition.text.trim(),
         timesPerWeek: _times,
       ),
     );
-    if (mounted) Navigator.pop(context);
+    if (mounted) Navigator.pop(context, true);
   }
 
   Future<void> _delete() async {
@@ -88,7 +123,7 @@ class _HabitEditorState extends State<_HabitEditor> {
     );
     if (ok != true) return;
     await widget.store.repository.deleteHabit(habit.id);
-    if (mounted) Navigator.pop(context);
+    if (mounted) Navigator.pop(context, true);
   }
 
   @override
@@ -115,6 +150,15 @@ class _HabitEditorState extends State<_HabitEditor> {
             onChanged: (_) => setState(() {}),
           ),
           const SizedBox(height: 16),
+          TextField(
+            key: const Key('habitDefinition'),
+            controller: _definition,
+            textCapitalization: TextCapitalization.sentences,
+            maxLength: 120,
+            decoration: field(l10n.personalDefinition)
+                .copyWith(hintText: l10n.personalDefinitionHint),
+          ),
+          const SizedBox(height: 16),
           DropdownButtonFormField<String>(
             key: const Key('habitOwner'),
             initialValue: _owner,
@@ -131,45 +175,44 @@ class _HabitEditorState extends State<_HabitEditor> {
             onChanged: (v) => setState(() => _owner = v ?? _familyOwner),
           ),
           const SizedBox(height: 16),
-          DropdownButtonFormField<BuiltInCategory>(
+          DropdownButtonFormField<CategoryRef>(
+            key: const Key('habitCategory'),
             initialValue: _category,
             isExpanded: true,
             decoration: field(l10n.category),
             items: [
-              for (final c in BuiltInCategory.values)
+              for (final ref in [
+                for (final c in BuiltInCategory.values) BuiltInRef(c),
+                for (final c in widget.store.categories) CustomRef(c.id),
+                if (_category is CustomRef &&
+                    widget.store.customCategory(
+                          (_category as CustomRef).customId,
+                        ) ==
+                        null)
+                  _category,
+              ])
                 DropdownMenuItem(
-                  value: c,
-                  child: Row(
-                    children: [
-                      Icon(c.icon, color: c.color, size: 20),
-                      const SizedBox(width: 12),
-                      Flexible(
-                        child: Text(
-                          c.label(l10n),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
+                  value: ref,
+                  child: Builder(
+                    builder: (context) {
+                      final look = categoryLook(l10n, widget.store, ref);
+                      return Row(
+                        children: [
+                          Icon(look.icon, color: look.color, size: 20),
+                          const SizedBox(width: 12),
+                          Flexible(
+                            child: Text(
+                              look.label,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
             ],
-            onChanged: (c) => setState(() {
-              _category = c ?? _category;
-              _subcategory = null;
-            }),
-          ),
-          const SizedBox(height: 16),
-          DropdownButtonFormField<String?>(
-            key: ValueKey(_category),
-            initialValue: _subcategory,
-            isExpanded: true,
-            decoration: field(l10n.subcategory),
-            items: [
-              const DropdownMenuItem(value: null, child: Text('—')),
-              for (final s in _category.defaultSubcategories)
-                DropdownMenuItem(value: s, child: Text(s)),
-            ],
-            onChanged: (s) => setState(() => _subcategory = s),
+            onChanged: (c) => setState(() => _category = c ?? _category),
           ),
           const SizedBox(height: 16),
           Text(_times == 7 ? l10n.everyDay : l10n.timesPerWeek(_times)),

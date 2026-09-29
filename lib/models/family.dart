@@ -116,15 +116,22 @@ class Habit {
     required this.name,
     required this.owner,
     required this.category,
-    this.subcategory,
+    this.templateId,
+    this.definition,
     this.timesPerWeek = 7,
   });
 
   final String id;
   final String name;
   final HabitOwner owner;
-  final BuiltInCategory category;
-  final String? subcategory;
+  final CategoryRef category;
+
+  /// The library habit this was made from, if any.
+  final String? templateId;
+
+  /// The owner's own meaning of done, such as "I drank enough water today".
+  /// The daily check-in is still just yes or no.
+  final String? definition;
 
   /// Weekly target, e.g. 7 for daily or 4 for "4 family dinners a week".
   final int timesPerWeek;
@@ -140,8 +147,9 @@ class Habit {
   Map<String, Object?> toMap() => {
     'name': name,
     'ownerMemberId': ownerMemberId,
-    'category': category.name,
-    'subcategory': subcategory,
+    'category': category.id,
+    'templateId': templateId,
+    'definition': definition,
     'timesPerWeek': timesPerWeek,
   };
 
@@ -151,10 +159,9 @@ class Habit {
       id: id,
       name: map['name'] as String? ?? '',
       owner: ownerId == null ? const FamilyOwner() : PersonalOwner(ownerId),
-      category:
-          BuiltInCategory.values.asNameMap()[map['category']] ??
-          BuiltInCategory.health,
-      subcategory: map['subcategory'] as String?,
+      category: CategoryRef.parse(map['category'] as String?),
+      templateId: map['templateId'] as String?,
+      definition: map['definition'] as String?,
       timesPerWeek: (map['timesPerWeek'] as num?)?.toInt() ?? 7,
     );
   }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../models/category.dart';
 import '../models/family.dart';
 import 'family_repository.dart';
 
@@ -37,6 +38,8 @@ class FirestoreFamilyRepository implements FamilyRepository {
       _family.collection('habits');
   CollectionReference<Map<String, dynamic>> get _checkIns =>
       _family.collection('checkIns');
+  CollectionReference<Map<String, dynamic>> get _categories =>
+      _family.collection('categories');
 
   @override
   Stream<FamilySnapshot> watch() {
@@ -46,12 +49,14 @@ class FirestoreFamilyRepository implements FamilyRepository {
     List<Member>? members;
     List<Habit>? habits;
     List<CheckIn>? checkIns;
+    List<CustomCategory>? categories;
 
     void emit() {
       if (info == null ||
           members == null ||
           habits == null ||
-          checkIns == null) {
+          checkIns == null ||
+          categories == null) {
         return;
       }
       controller.add(
@@ -60,6 +65,7 @@ class FirestoreFamilyRepository implements FamilyRepository {
           members: members!,
           habits: habits!,
           checkIns: checkIns!,
+          categories: categories!,
         ),
       );
     }
@@ -106,6 +112,15 @@ class FirestoreFamilyRepository implements FamilyRepository {
                   ];
                   emit();
                 }, onError: controller.addError),
+          )
+          ..add(
+            _categories.snapshots().listen((s) {
+              categories = [
+                for (final d in s.docs)
+                  CustomCategory.fromMap(d.id, fromFirestore(d.data())),
+              ];
+              emit();
+            }, onError: controller.addError),
           );
       },
       onCancel: () async {
@@ -159,6 +174,14 @@ class FirestoreFamilyRepository implements FamilyRepository {
     batch.delete(_habits.doc(habitId));
     await batch.commit();
   }
+
+  @override
+  Future<void> saveCategory(CustomCategory category) =>
+      _categories.doc(category.id).set(category.toMap());
+
+  @override
+  Future<void> deleteCategory(String categoryId) =>
+      _categories.doc(categoryId).delete();
 
   @override
   Future<void> setCheckIn(

@@ -77,22 +77,13 @@ class AppLocalizationsHe extends AppLocalizations {
   String get switchProfile => 'החלפת פרופיל';
 
   @override
-  String get catQuitBadHabit => 'גמילה מהרגל רע';
-
-  @override
-  String get catArt => 'אמנות';
-
-  @override
-  String get catMeditate => 'מדיטציה';
+  String get catArt => 'אמנות ויצירה';
 
   @override
   String get catStudy => 'לימודים';
 
   @override
   String get catSport => 'ספורט';
-
-  @override
-  String get catEntertainment => 'בידור';
 
   @override
   String get catFinance => 'כספים';
@@ -107,16 +98,13 @@ class AppLocalizationsHe extends AppLocalizations {
   String get catNutrition => 'תזונה';
 
   @override
-  String get catHomeTasks => 'מטלות בית';
+  String get catHomeTasks => 'משימות בית';
 
   @override
   String get catOutdoor => 'פעילות בחוץ';
 
   @override
-  String get catFamilyTime => 'זמן משפחתי איכותי';
-
-  @override
-  String get catFamilyTable => 'ארוחות ומפגשים משפחתיים';
+  String get catFamilyTime => 'זמן איכות משפחתי';
 
   @override
   String get catSleep => 'שינה';
@@ -349,9 +337,6 @@ class AppLocalizationsHe extends AppLocalizations {
   String get category => 'קטגוריה';
 
   @override
-  String get subcategory => 'תת-קטגוריה';
-
-  @override
   String get habitFor => 'בשביל';
 
   @override
@@ -385,4 +370,80 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get everyDay => 'כל יום';
+
+  @override
+  String get catBreakHabit => 'להיגמל מהרגל';
+
+  @override
+  String get catMindfulness => 'מיינדפולנס';
+
+  @override
+  String get catFamilyCare => 'דאגה למשפחה והורות';
+
+  @override
+  String get catFamilyMeals => 'ארוחות ומפגשים משפחתיים';
+
+  @override
+  String get catHobbies => 'תחביבים והנאה';
+
+  @override
+  String get groupSelf => 'לדאוג לעצמי';
+
+  @override
+  String get groupFamily => 'לדאוג למשפחה שלי';
+
+  @override
+  String get groupDaily => 'האחריות שלי';
+
+  @override
+  String get groupLeisure => 'ליהנות מהחיים';
+
+  @override
+  String get createMyOwnHabit => 'ליצור הרגל משלי';
+
+  @override
+  String get createMyOwnCategory => 'ליצור קטגוריה משלי';
+
+  @override
+  String createNamedHabit(String name) {
+    return 'ליצור את „$name” כהרגל משלי';
+  }
+
+  @override
+  String get searchHabitsHint => 'חיפוש, למשל „פארק” או „ספר”';
+
+  @override
+  String get noMatchingHabits => 'אין הרגל מוכן שמתאים. אפשר ליצור הרגל משלך.';
+
+  @override
+  String get ourCategories => 'הקטגוריות של המשפחה שלנו';
+
+  @override
+  String get personalDefinition => 'מה נחשב כבוצע? (לא חובה)';
+
+  @override
+  String get personalDefinitionHint => 'למשל: שתיתי מספיק מים היום';
+
+  @override
+  String get categoryName => 'שם הקטגוריה';
+
+  @override
+  String get categoryHabits => 'הרגלים בקטגוריה';
+
+  @override
+  String get addHabitToCategory => 'הוספת הרגל';
+
+  @override
+  String get editCategory => 'עריכת קטגוריה';
+
+  @override
+  String get deleteCategory => 'מחיקת קטגוריה';
+
+  @override
+  String deleteCategoryConfirm(String name) {
+    return 'למחוק את „$name”? הרגלים שכבר נמצאים בה יישמרו.';
+  }
+
+  @override
+  String get otherCategory => 'אחר';
 }

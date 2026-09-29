@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../app.dart';
 import '../data/account_service.dart';
 import '../l10n/app_localizations.dart';
+import '../data/family_store.dart';
+import '../models/category.dart';
 import '../models/family.dart';
 
 String accountErrorText(AppLocalizations l10n, Object error) {
@@ -155,3 +157,22 @@ class FormPage extends StatelessWidget {
     ),
   );
 }
+
+/// A habit category's name, icon and color, built-in or the family's own.
+/// A deleted family category shows as "Other".
+({String label, IconData icon, Color color}) categoryLook(
+  AppLocalizations l10n,
+  FamilyStore store,
+  CategoryRef ref,
+) => switch (ref) {
+  BuiltInRef(:final category) => (
+    label: category.label(l10n),
+    icon: category.icon,
+    color: category.color,
+  ),
+  CustomRef(:final customId) => (
+    label: store.customCategory(customId)?.name ?? l10n.otherCategory,
+    icon: CustomCategory.icon,
+    color: CustomCategory.color,
+  ),
+};

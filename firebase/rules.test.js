@@ -163,6 +163,28 @@ describe('habits and members', () => {
     await assertFails(deleteDoc(doc(as('tablet'), 'families/f1/habits/read')));
   });
 
+  test('a habit from the library can carry its template and a personal definition', async () => {
+    const db = as('owner');
+    await assertSucceeds(setDoc(doc(db, 'families/f1/habits/w'), {
+      ...habit('Drink enough water', 'maya'), templateId: 'HEALTH_001', definition: 'I drank enough water today',
+    }));
+    await assertFails(setDoc(doc(db, 'families/f1/habits/w'), {
+      ...habit('Drink enough water', 'maya'), definition: 'x'.repeat(121),
+    }));
+    await assertFails(setDoc(doc(db, 'families/f1/habits/w'), { ...habit('Water', 'maya'), score: 3 }));
+  });
+
+  test('parents manage the family categories; others can only read them', async () => {
+    const own = { name: 'Music school', habits: ['Practice violin', 'Theory homework'] };
+    await assertSucceeds(setDoc(doc(as('owner'), 'families/f1/categories/c1'), own));
+    await assertSucceeds(getDocs(collection(as('tablet'), 'families/f1/categories')));
+    await assertFails(getDocs(collection(as('stranger'), 'families/f1/categories')));
+    await assertFails(setDoc(doc(as('tablet'), 'families/f1/categories/c2'), own));
+    await assertFails(setDoc(doc(as('owner'), 'families/f1/categories/c3'), { ...own, color: 'red' }));
+    await assertFails(setDoc(doc(as('owner'), 'families/f1/categories/c4'), { ...own, name: '' }));
+    await assertSucceeds(deleteDoc(doc(as('coparent'), 'families/f1/categories/c1')));
+  });
+
   test('a habit must belong to a real member', async () => {
     await assertFails(setDoc(doc(as('owner'), 'families/f1/habits/h1'), habit('Swim', 'ghost')));
   });

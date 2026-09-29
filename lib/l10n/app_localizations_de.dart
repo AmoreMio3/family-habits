@@ -76,22 +76,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get switchProfile => 'Profil wechseln';
 
   @override
-  String get catQuitBadHabit => 'Schlechte Gewohnheit ablegen';
-
-  @override
-  String get catArt => 'Kunst';
-
-  @override
-  String get catMeditate => 'Meditation';
+  String get catArt => 'Kunst & Kreativität';
 
   @override
   String get catStudy => 'Lernen';
 
   @override
   String get catSport => 'Sport';
-
-  @override
-  String get catEntertainment => 'Unterhaltung';
 
   @override
   String get catFinance => 'Finanzen';
@@ -109,19 +100,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get catHomeTasks => 'Haushalt';
 
   @override
-  String get catOutdoor => 'Aktivitäten im Freien';
+  String get catOutdoor => 'Draußen aktiv';
 
   @override
   String get catFamilyTime => 'Familienzeit';
 
   @override
-  String get catFamilyTable => 'Familienessen und Treffen';
-
-  @override
   String get catSleep => 'Schlaf';
 
   @override
-  String get catSelfCare => 'Körperpflege und Hygiene';
+  String get catSelfCare => 'Körperpflege & Hygiene';
 
   @override
   String get welcomeTitle => 'Gemeinsam gute Gewohnheiten aufbauen';
@@ -352,9 +340,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get category => 'Kategorie';
 
   @override
-  String get subcategory => 'Unterkategorie';
-
-  @override
   String get habitFor => 'Für';
 
   @override
@@ -387,4 +372,82 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get everyDay => 'Jeden Tag';
+
+  @override
+  String get catBreakHabit => 'Gewohnheit ablegen';
+
+  @override
+  String get catMindfulness => 'Achtsamkeit';
+
+  @override
+  String get catFamilyCare => 'Familie & Erziehung';
+
+  @override
+  String get catFamilyMeals => 'Familienessen & Treffen';
+
+  @override
+  String get catHobbies => 'Hobbys & Spaß';
+
+  @override
+  String get groupSelf => 'Für mich sorgen';
+
+  @override
+  String get groupFamily => 'Für meine Familie sorgen';
+
+  @override
+  String get groupDaily => 'Meine Aufgaben';
+
+  @override
+  String get groupLeisure => 'Das Leben genießen';
+
+  @override
+  String get createMyOwnHabit => 'Eigene Gewohnheit erstellen';
+
+  @override
+  String get createMyOwnCategory => 'Eigene Kategorie erstellen';
+
+  @override
+  String createNamedHabit(String name) {
+    return '„$name“ als eigene Gewohnheit erstellen';
+  }
+
+  @override
+  String get searchHabitsHint => 'Suchen, zum Beispiel „Park“ oder „Buch“';
+
+  @override
+  String get noMatchingHabits =>
+      'Keine fertige Gewohnheit passt. Du kannst deine eigene erstellen.';
+
+  @override
+  String get ourCategories => 'Kategorien unserer Familie';
+
+  @override
+  String get personalDefinition => 'Was zählt als erledigt? (optional)';
+
+  @override
+  String get personalDefinitionHint =>
+      'Zum Beispiel: Ich habe heute genug Wasser getrunken';
+
+  @override
+  String get categoryName => 'Name der Kategorie';
+
+  @override
+  String get categoryHabits => 'Gewohnheiten in dieser Kategorie';
+
+  @override
+  String get addHabitToCategory => 'Gewohnheit hinzufügen';
+
+  @override
+  String get editCategory => 'Kategorie bearbeiten';
+
+  @override
+  String get deleteCategory => 'Kategorie löschen';
+
+  @override
+  String deleteCategoryConfirm(String name) {
+    return '„$name“ löschen? Gewohnheiten darin bleiben erhalten.';
+  }
+
+  @override
+  String get otherCategory => 'Sonstiges';
 }

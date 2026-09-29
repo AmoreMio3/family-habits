@@ -320,6 +320,7 @@ class FirebaseAccountService implements AccountService {
 
     await deleteAll(family.collection('checkIns'));
     await deleteAll(family.collection('habits'));
+    await deleteAll(family.collection('categories'));
     await deleteAll(family.collection('members'));
     await deleteAll(
       _db.collection('pairingCodes').where('familyId', isEqualTo: family.id),
