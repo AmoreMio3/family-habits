@@ -447,4 +447,11 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get otherCategory => 'Outros';
+
+  @override
+  String get loadFailed =>
+      'Não foi possível carregar sua família. Verifique sua conexão com a internet e tente de novo.';
+
+  @override
+  String get tryAgain => 'Tentar de novo';
 }

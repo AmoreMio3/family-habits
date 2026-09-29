@@ -130,5 +130,7 @@
   "groupSelf": "Cuidar de mí",
   "groupFamily": "Cuidar de mi familia",
   "groupDaily": "Mis responsabilidades",
-  "groupLeisure": "Disfrutar de la vida"
+  "groupLeisure": "Disfrutar de la vida",
+  "loadFailed": "No se ha podido cargar tu familia. Comprueba tu conexión a internet e inténtalo de nuevo.",
+  "tryAgain": "Reintentar"
 }

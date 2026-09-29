@@ -453,4 +453,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get otherCategory => 'Autre';
+
+  @override
+  String get loadFailed =>
+      'Impossible de charger votre famille. Vérifiez votre connexion internet et réessayez.';
+
+  @override
+  String get tryAgain => 'Réessayer';
 }

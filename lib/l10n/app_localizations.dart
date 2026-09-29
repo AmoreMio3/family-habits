@@ -902,6 +902,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get otherCategory;
+
+  /// Shown when the family's data can't be loaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your family. Check your internet connection and try again.'**
+  String get loadFailed;
+
+  /// Button that retries loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get tryAgain;
 }
 
 class _AppLocalizationsDelegate

@@ -117,21 +117,28 @@ class FirebaseAccountService implements AccountService {
   @override
   Stream<AccountState> watch() => _auth.authStateChanges().asyncExpand((user) {
     if (user == null) return Stream.value(const SignedOut());
-    return _userDoc(user.uid).snapshots().map((s) {
-      final data = s.data();
-      if (data == null) return NeedsFamily(user.uid, user.email);
-      final role =
-          AccountRole.values.asNameMap()[data['role']] ?? AccountRole.device;
-      return Ready(
-        Session(
-          uid: user.uid,
-          familyId: data['familyId'] as String,
-          role: role,
-          memberId: data['memberId'] as String?,
-          memberIds: [...?(data['memberIds'] as List?)?.cast<String>()],
-        ),
-      );
-    });
+    // Wait until the server has the user record. A record still being written
+    // shows up locally first, and reading the family then would be refused
+    // because the security rules check the server's copy.
+    return _userDoc(user.uid)
+        .snapshots(includeMetadataChanges: true)
+        .where((s) => !s.metadata.hasPendingWrites)
+        .map((s) {
+          final data = s.data();
+          if (data == null) return NeedsFamily(user.uid, user.email);
+          final role =
+              AccountRole.values.asNameMap()[data['role']] ??
+              AccountRole.device;
+          return Ready(
+            Session(
+              uid: user.uid,
+              familyId: data['familyId'] as String,
+              role: role,
+              memberId: data['memberId'] as String?,
+              memberIds: [...?(data['memberIds'] as List?)?.cast<String>()],
+            ),
+          );
+        });
   });
 
   Future<T> _guard<T>(Future<T> Function() action) async {

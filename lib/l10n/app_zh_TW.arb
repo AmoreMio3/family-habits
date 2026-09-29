@@ -130,5 +130,7 @@
   "groupSelf": "照顧好自己",
   "groupFamily": "照顧好家人",
   "groupDaily": "我的責任",
-  "groupLeisure": "享受生活"
+  "groupLeisure": "享受生活",
+  "loadFailed": "無法載入你的家庭。請檢查網路連線後再試一次。",
+  "tryAgain": "再試一次"
 }

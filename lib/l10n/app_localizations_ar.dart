@@ -453,4 +453,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get otherCategory => 'أخرى';
+
+  @override
+  String get loadFailed =>
+      'تعذّر تحميل عائلتك. تحقّق من اتصالك بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get tryAgain => 'إعادة المحاولة';
 }

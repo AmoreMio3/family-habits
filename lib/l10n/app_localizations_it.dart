@@ -449,4 +449,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get otherCategory => 'Altro';
+
+  @override
+  String get loadFailed =>
+      'Impossibile caricare la tua famiglia. Controlla la connessione a internet e riprova.';
+
+  @override
+  String get tryAgain => 'Riprova';
 }
