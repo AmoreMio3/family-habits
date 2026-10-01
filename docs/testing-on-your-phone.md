@@ -21,9 +21,10 @@ notification, tap it, and the new version installs over the old one.
    [Settings → Secrets and variables → Actions](https://github.com/AmoreMio3/family-habits/settings/secrets/actions),
    click **New repository secret**, name it `FIREBASE_SERVICE_ACCOUNT`, and paste
    the whole contents of the downloaded file. Then delete the file from your computer.
-5. **On your phone,** open the invitation email from Firebase and follow it. It
-   installs the Firebase App Tester app, which shows every build and notifies you
-   of new ones.
+5. **On your phone,** wait for the first build after the secret is added.
+   Firebase emails the invitation only when it has a build to send (check spam
+   too). Open it on the phone: it installs the Firebase App Tester app, which
+   shows every build and notifies you of new ones.
 
 ## Notes
 
