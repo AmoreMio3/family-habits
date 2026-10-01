@@ -53,7 +53,7 @@ jobs:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           FIREBASE_APP_ID: 1:988310827185:android:5cef4ea859f18b39fcb290
           TESTER_GROUP: ${{ vars.TESTER_GROUP || 'family' }}
-          NOTES: ${{ github.event_name == 'pull_request' && format('Pull request #{0}: {1}', github.event.pull_request.number, github.event.pull_request.title) || format('main: {0}', github.event.head_commit.message) }}
+          NOTES: "${{ github.event_name == 'pull_request' && format('Pull request {0}: {1}', github.event.pull_request.number, github.event.pull_request.title) || format('main: {0}', github.event.head_commit.message) }}"
         run: |
           echo "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/firebase-key.json"
           export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/firebase-key.json"
