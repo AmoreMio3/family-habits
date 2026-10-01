@@ -7,6 +7,7 @@ import '../models/category.dart';
 import '../models/habit_library.dart';
 import '../models/habit_library_l10n.dart';
 import 'category_editor.dart';
+import 'look.dart';
 import 'common.dart';
 import 'habit_editor.dart';
 
@@ -125,7 +126,7 @@ class _HabitPickerState extends State<_HabitPicker> {
           builder: (context) {
             final look = categoryLook(l10n, store, r.category);
             return ListTile(
-              leading: Icon(look.icon, color: look.color),
+              leading: IconBubble(icon: look.icon, color: look.color, size: 40),
               title: Text(r.name),
               subtitle: Text(look.label),
               onTap: () => _edit(
@@ -152,15 +153,9 @@ class _HabitPickerState extends State<_HabitPicker> {
 
   List<Widget> _browse(BuildContext context, AppLocalizations l10n) {
     final store = widget.store;
-    final theme = Theme.of(context);
     Widget header(String text) => Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 4),
-      child: Text(
-        text,
-        style: theme.textTheme.titleSmall?.copyWith(
-          color: theme.colorScheme.primary,
-        ),
-      ),
+      padding: const EdgeInsetsDirectional.fromSTEB(20, 22, 20, 6),
+      child: Text(text, style: Look.of(context).heading(19)),
     );
     return [
       CreateOwnTile(
@@ -183,9 +178,10 @@ class _HabitPickerState extends State<_HabitPicker> {
         header(l10n.ourCategories),
         for (final c in store.categories)
           ListTile(
-            leading: const Icon(
-              CustomCategory.icon,
+            leading: const IconBubble(
+              icon: CustomCategory.icon,
               color: CustomCategory.color,
+              size: 40,
             ),
             title: Text(c.name),
             trailing: const Icon(Icons.chevron_right),
@@ -197,7 +193,7 @@ class _HabitPickerState extends State<_HabitPicker> {
         for (final c in BuiltInCategory.values.where((c) => c.group == group))
           ListTile(
             key: Key('category-${c.name}'),
-            leading: Icon(c.icon, color: c.color),
+            leading: IconBubble(icon: c.icon, color: c.color, size: 40),
             title: Text(c.label(l10n)),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => _openCategory(BuiltInRef(c)),
@@ -268,7 +264,11 @@ class _CategoryHabits extends StatelessWidget {
                   if (!_forChild(store) || suitsChild(t))
                     ListTile(
                       key: Key('template-${t.id}'),
-                      leading: Icon(c.icon, color: c.color),
+                      leading: IconBubble(
+                        icon: c.icon,
+                        color: c.color,
+                        size: 40,
+                      ),
                       title: Text(habitTemplateName(t, locale)),
                       onTap: () => _edit(
                         context,
@@ -279,7 +279,11 @@ class _CategoryHabits extends StatelessWidget {
               if (custom != null)
                 for (final name in custom.habits)
                   ListTile(
-                    leading: Icon(look.icon, color: look.color),
+                    leading: IconBubble(
+                      icon: look.icon,
+                      color: look.color,
+                      size: 40,
+                    ),
                     title: Text(name),
                     onTap: () => _edit(context, name: name),
                   ),
@@ -313,23 +317,28 @@ class CreateOwnTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
-      child: Card(
-        margin: EdgeInsets.zero,
-        color: scheme.primaryContainer,
-        child: ListTile(
-          leading: Icon(icon, color: scheme.onPrimaryContainer),
-          title: Text(
-            label,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: scheme.onPrimaryContainer,
+    final look = Look.of(context);
+    return SoftCard(
+      margin: const EdgeInsets.fromLTRB(16, 6, 16, 6),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      color: Color.alphaBlend(look.tint(look.primary), look.card),
+      onTap: onTap,
+      child: Row(
+        children: [
+          IconBubble(icon: icon, color: look.primary, size: 40),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 16,
+                color: look.ink,
+              ),
             ),
           ),
-          onTap: onTap,
-        ),
+          Icon(Icons.add_circle_rounded, color: look.primary),
+        ],
       ),
     );
   }

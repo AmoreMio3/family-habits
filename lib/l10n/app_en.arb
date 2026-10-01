@@ -223,5 +223,12 @@
   },
   "@tryAgain": {
     "description": "Button that retries loading."
+  },
+  "hiName": "Hi, {name}!",
+  "@hiName": {
+    "description": "Greeting at the top of Today.",
+    "placeholders": {
+      "name": { "type": "String" }
+    }
   }
 }

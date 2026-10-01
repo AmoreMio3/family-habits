@@ -132,5 +132,6 @@
   "groupDaily": "Meine Aufgaben",
   "groupLeisure": "Das Leben genießen",
   "loadFailed": "Deine Familie konnte nicht geladen werden. Prüfe deine Internetverbindung und versuche es noch einmal.",
-  "tryAgain": "Erneut versuchen"
+  "tryAgain": "Erneut versuchen",
+  "hiName": "Hallo, {name}!"
 }

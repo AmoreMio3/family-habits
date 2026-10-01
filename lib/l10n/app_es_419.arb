@@ -41,5 +41,6 @@
   "groupSelf": "Cuidar de mí",
   "groupFamily": "Cuidar de mi familia",
   "groupDaily": "Mis responsabilidades",
-  "groupLeisure": "Disfrutar de la vida"
+  "groupLeisure": "Disfrutar de la vida",
+  "hiName": "¡Hola, {name}!"
 }

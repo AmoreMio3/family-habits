@@ -914,6 +914,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try again'**
   String get tryAgain;
+
+  /// Greeting at the top of Today.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi, {name}!'**
+  String hiName(String name);
 }
 
 class _AppLocalizationsDelegate

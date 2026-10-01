@@ -67,6 +67,29 @@ flutter:
   uses-material-design: true
   generate: true
 
+  fonts:
+    - family: Rubik
+      fonts:
+        - asset: assets/fonts/Rubik-400.ttf
+        - asset: assets/fonts/Rubik-500.ttf
+          weight: 500
+        - asset: assets/fonts/Rubik-600.ttf
+          weight: 600
+        - asset: assets/fonts/Rubik-700.ttf
+          weight: 700
+    - family: Fredoka
+      fonts:
+        - asset: assets/fonts/Fredoka-400.ttf
+        - asset: assets/fonts/Fredoka-500.ttf
+          weight: 500
+        - asset: assets/fonts/Fredoka-600.ttf
+          weight: 600
+        - asset: assets/fonts/Fredoka-700.ttf
+          weight: 700
+    - family: VarelaRound
+      fonts:
+        - asset: assets/fonts/VarelaRound-400.ttf
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

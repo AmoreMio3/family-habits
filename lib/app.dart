@@ -4,8 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'data/account_service.dart';
 import 'l10n/app_localizations.dart';
 import 'ui/auth/auth_gate.dart';
-
-const brandGreen = Color(0xFF1D6F55);
+import 'ui/look.dart';
 
 /// Locales offered in the language picker, with their names in that language.
 final languageNames = <Locale, String>{
@@ -64,12 +63,8 @@ class FamilyHabitsApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        theme: ThemeData(colorSchemeSeed: brandGreen, useMaterial3: true),
-        darkTheme: ThemeData(
-          colorSchemeSeed: brandGreen,
-          brightness: Brightness.dark,
-          useMaterial3: true,
-        ),
+        theme: buildTheme(Brightness.light),
+        darkTheme: buildTheme(Brightness.dark),
         home: AuthGate(accounts: accounts, settings: settings),
       ),
     );

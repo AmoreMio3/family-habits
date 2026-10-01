@@ -6,6 +6,7 @@ import '../l10n/app_localizations.dart';
 import '../data/family_store.dart';
 import '../models/category.dart';
 import '../models/family.dart';
+import 'look.dart';
 
 String accountErrorText(AppLocalizations l10n, Object error) {
   final code = error is AccountException ? error.error : AccountError.unknown;
@@ -176,3 +177,10 @@ class FormPage extends StatelessWidget {
     color: CustomCategory.color,
   ),
 };
+
+/// The member's color in the family bar, avatars and lists.
+Color memberColor(BuildContext context, FamilyStore store, String memberId) {
+  final colors = Look.of(context).memberColors;
+  final i = store.members.indexWhere((m) => m.id == memberId);
+  return colors[(i < 0 ? 0 : i) % colors.length];
+}

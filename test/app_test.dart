@@ -1,8 +1,19 @@
 import 'package:family_habits/app.dart';
 import 'package:family_habits/data/in_memory_accounts.dart';
 import 'package:family_habits/l10n/app_localizations.dart';
+import 'package:family_habits/ui/today_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+/// A profile button on Today, found by the member's name.
+Finder profileButton(String name) => find.ancestor(
+  of: find.text(name),
+  matching: find.byWidgetPredicate(
+    (w) =>
+        w.key is ValueKey<String> &&
+        (w.key! as ValueKey<String>).value.startsWith('profile-'),
+  ),
+);
 
 void main() {
   late InMemoryAccountService accounts;
@@ -88,13 +99,13 @@ void main() {
     'a parent checks in a family habit for everyone; a child cannot',
     (tester) async {
       await openDemo(tester);
-      final dinner = find.widgetWithText(
-        CheckboxListTile,
-        'Have a phone-free meal',
+      final dinner = find.descendant(
+        of: find.widgetWithText(HabitCard, 'Have a phone-free meal'),
+        matching: find.byType(CheckCircle),
       );
       await tester.tap(dinner);
       await tester.pumpAndSettle();
-      expect(tester.widget<CheckboxListTile>(dinner).value, isTrue);
+      expect(tester.widget<CheckCircle>(dinner).done, isTrue);
       expect(
         find.text(
           'Dad checked in “Have a phone-free meal” for the whole family',
@@ -102,9 +113,9 @@ void main() {
         findsOneWidget,
       );
 
-      await tester.tap(find.text('Noa · Child'));
+      await tester.tap(find.byKey(const Key('profile-noa')));
       await tester.pumpAndSettle();
-      expect(tester.widget<CheckboxListTile>(dinner).onChanged, isNull);
+      expect(tester.widget<CheckCircle>(dinner).enabled, isFalse);
       expect(find.text('Add habit'), findsNothing);
     },
   );
@@ -165,8 +176,8 @@ void main() {
     await tapText(tester, 'Join with a code');
     await enter(tester, 'code', code.toLowerCase());
     await tapText(tester, 'Join');
-    expect(find.text('Maya · Child'), findsOneWidget);
-    expect(find.text('Abba · Parent'), findsNothing);
+    expect(profileButton('Maya'), findsOneWidget);
+    expect(profileButton('Abba'), findsNothing);
     expect(find.text('Read 15 minutes'), findsOneWidget);
 
     // A code works once.
@@ -219,11 +230,11 @@ void main() {
     await enter(tester, 'code', code);
     await tapText(tester, 'Join');
 
-    expect(find.text('Itai · Child'), findsOneWidget);
-    expect(find.text('Dad · Parent'), findsNothing);
-    await tester.tap(find.text('Noa · Child'));
+    expect(find.byKey(const Key('profile-itai')), findsOneWidget);
+    expect(find.byKey(const Key('profile-dad')), findsNothing);
+    await tester.tap(find.byKey(const Key('profile-noa')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Itai · Child'));
+    await tester.tap(find.byKey(const Key('profile-itai')));
     await tester.pumpAndSettle();
     await enter(tester, 'pin', '1111');
     await tester.pumpAndSettle();

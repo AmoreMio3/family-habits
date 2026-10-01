@@ -8,6 +8,7 @@ import 'categories_screen.dart';
 import 'common.dart';
 import 'family_screen.dart';
 import 'habit_picker.dart';
+import 'look.dart';
 import 'today_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
           floatingActionButton: _tab == 0 && store.hasData && store.canManage
               ? FloatingActionButton.extended(
                   onPressed: () => showHabitPicker(context, store),
-                  icon: const Icon(Icons.add),
+                  icon: const Icon(Icons.add_rounded),
                   label: Text(l10n.addHabit),
                 )
               : null,
@@ -73,15 +74,18 @@ class _HomeScreenState extends State<HomeScreen> {
             onDestinationSelected: (i) => setState(() => _tab = i),
             destinations: [
               NavigationDestination(
-                icon: const Icon(Icons.today_outlined),
+                icon: const Icon(Icons.wb_sunny_outlined),
+                selectedIcon: const Icon(Icons.wb_sunny_rounded),
                 label: l10n.today,
               ),
               NavigationDestination(
                 icon: const Icon(Icons.diversity_3_outlined),
+                selectedIcon: const Icon(Icons.diversity_3_rounded),
                 label: l10n.family,
               ),
               NavigationDestination(
                 icon: const Icon(Icons.category_outlined),
+                selectedIcon: const Icon(Icons.category_rounded),
                 label: l10n.categories,
               ),
             ],
@@ -99,27 +103,22 @@ class _DemoBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Material(
-      color: scheme.tertiaryContainer,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Row(
-          children: [
-            Icon(
-              Icons.info_outline,
-              size: 18,
-              color: scheme.onTertiaryContainer,
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: Text(
-                text,
-                style: TextStyle(color: scheme.onTertiaryContainer),
-              ),
-            ),
-          ],
-        ),
+    final look = Look.of(context);
+    return Container(
+      margin: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: look.tint(look.streak),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.auto_awesome_rounded, size: 18, color: look.streak),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(text, style: TextStyle(color: look.ink, fontSize: 13)),
+          ),
+        ],
       ),
     );
   }

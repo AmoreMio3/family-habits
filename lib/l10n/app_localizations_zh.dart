@@ -440,6 +440,11 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get tryAgain => '重试';
+
+  @override
+  String hiName(String name) {
+    return '你好，$name！';
+  }
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -877,4 +882,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get tryAgain => '再試一次';
+
+  @override
+  String hiName(String name) {
+    return '你好，$name！';
+  }
 }
