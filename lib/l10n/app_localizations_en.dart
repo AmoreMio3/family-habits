@@ -385,6 +385,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get everyDay => 'Every day';
+
+  @override
+  String get loadFailed =>
+      'Couldn\'t load your family. Check your internet connection and try again.';
+
+  @override
+  String get tryAgain => 'Try again';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).

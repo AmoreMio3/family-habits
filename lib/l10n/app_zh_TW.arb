@@ -111,5 +111,7 @@
   "noHabitsYet": "還沒有習慣。",
   "members": "成員",
   "settings": "設定",
-  "everyDay": "每天"
+  "everyDay": "每天",
+  "loadFailed": "無法載入你的家庭。請檢查網路連線後再試一次。",
+  "tryAgain": "再試一次"
 }

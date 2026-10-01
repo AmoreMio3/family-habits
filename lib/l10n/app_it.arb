@@ -111,5 +111,7 @@
   "noHabitsYet": "Ancora nessuna abitudine.",
   "members": "Membri",
   "settings": "Impostazioni",
-  "everyDay": "Ogni giorno"
+  "everyDay": "Ogni giorno",
+  "loadFailed": "Impossibile caricare la tua famiglia. Controlla la connessione a internet e riprova.",
+  "tryAgain": "Riprova"
 }

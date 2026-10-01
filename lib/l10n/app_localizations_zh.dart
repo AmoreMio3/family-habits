@@ -373,6 +373,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get everyDay => '每天';
+
+  @override
+  String get loadFailed => '无法加载你的家庭。请检查网络连接后重试。';
+
+  @override
+  String get tryAgain => '重试';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -743,4 +749,10 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get everyDay => '每天';
+
+  @override
+  String get loadFailed => '無法載入你的家庭。請檢查網路連線後再試一次。';
+
+  @override
+  String get tryAgain => '再試一次';
 }

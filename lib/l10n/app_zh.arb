@@ -111,5 +111,7 @@
   "noHabitsYet": "还没有习惯。",
   "members": "成员",
   "settings": "设置",
-  "everyDay": "每天"
+  "everyDay": "每天",
+  "loadFailed": "无法加载你的家庭。请检查网络连接后重试。",
+  "tryAgain": "重试"
 }

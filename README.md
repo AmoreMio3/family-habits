@@ -28,14 +28,16 @@ Daily and weekly summary notifications come next.
 
 ## Two modes
 
-Until the app is connected to a Firebase project, it runs in demo mode: the
-welcome screen offers "Try the demo family", and sign-up works but is kept in
-memory only. Once `lib/firebase_options.dart` is generated (below), the app uses
-Firebase for sign-in and storage.
+The Android app is connected to the Firebase project `family-habits-77d62`
+(settings in `lib/firebase_options.dart`), so sign-up and family data are saved
+online. On platforms not yet added to that project (iPhone, web, desktop) the
+app runs in demo mode: sign-up is kept in memory only, and the welcome screen
+offers "Try the demo family".
 
 ## Connect Firebase
 
-One time, on the free Spark plan:
+Already done for Android. For a new Firebase project, or to add iPhone,
+one time on the free Spark plan:
 
 1. At https://console.firebase.google.com, create a project (Google Analytics can be off).
 2. Build > Authentication > Get started, then enable **Email/Password** and **Anonymous**.

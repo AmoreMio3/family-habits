@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ListenableBuilder(
       listenable: store,
       builder: (context, _) {
-        final title = store.isLoading ? l10n.appTitle : store.info.name;
+        final title = store.hasData ? store.info.name : l10n.appTitle;
         return Scaffold(
           appBar: AppBar(
             title: Text(title),
@@ -46,8 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               if (store.isDemo) _DemoBanner(text: l10n.demoBanner),
               Expanded(
-                child: store.isLoading
-                    ? const Center(child: CircularProgressIndicator())
+                child: !store.hasData
+                    ? store.error == null
+                          ? const Center(child: CircularProgressIndicator())
+                          : _LoadError(store: store, accounts: widget.accounts)
                     : switch (_tab) {
                         0 => TodayScreen(store: store),
                         1 => FamilyScreen(
@@ -59,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          floatingActionButton: _tab == 0 && !store.isLoading && store.canManage
+          floatingActionButton: _tab == 0 && store.hasData && store.canManage
               ? FloatingActionButton.extended(
                   onPressed: () => showHabitEditor(context, store),
                   icon: const Icon(Icons.add),
@@ -116,6 +118,37 @@ class _DemoBanner extends StatelessWidget {
                 style: TextStyle(color: scheme.onTertiaryContainer),
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Shown when the family can't be loaded, instead of an empty screen.
+class _LoadError extends StatelessWidget {
+  const _LoadError({required this.store, required this.accounts});
+
+  final FamilyStore store;
+  final AccountService accounts;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(l10n.loadFailed, textAlign: TextAlign.center),
+            const SizedBox(height: 16),
+            FilledButton(
+              key: const Key('retry'),
+              onPressed: store.retry,
+              child: Text(l10n.tryAgain),
+            ),
+            TextButton(onPressed: accounts.signOut, child: Text(l10n.signOut)),
           ],
         ),
       ),

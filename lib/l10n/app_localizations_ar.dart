@@ -391,4 +391,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get everyDay => 'كل يوم';
+
+  @override
+  String get loadFailed =>
+      'تعذّر تحميل عائلتك. تحقّق من اتصالك بالإنترنت وحاول مرة أخرى.';
+
+  @override
+  String get tryAgain => 'إعادة المحاولة';
 }

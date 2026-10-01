@@ -387,4 +387,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get everyDay => 'Jeden Tag';
+
+  @override
+  String get loadFailed =>
+      'Deine Familie konnte nicht geladen werden. Prüfe deine Internetverbindung und versuche es noch einmal.';
+
+  @override
+  String get tryAgain => 'Erneut versuchen';
 }
