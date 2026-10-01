@@ -29,6 +29,18 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        // A shared test key, committed on purpose so every CI build has the same
+        // signature and a new test version installs over the old one.
+        // It is for test builds only; Google Play releases need a private key.
+        getByName("debug") {
+            storeFile = file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
