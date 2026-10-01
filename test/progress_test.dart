@@ -11,14 +11,14 @@ void main() {
     id: 'dinner',
     name: 'Family dinner',
     owner: FamilyOwner(),
-    category: BuiltInCategory.familyTable,
+    category: BuiltInRef(BuiltInCategory.familyMeals),
     timesPerWeek: 4,
   );
   const read = Habit(
     id: 'read',
     name: 'Read',
     owner: PersonalOwner('noa'),
-    category: BuiltInCategory.study,
+    category: BuiltInRef(BuiltInCategory.study),
     timesPerWeek: 2,
   );
 

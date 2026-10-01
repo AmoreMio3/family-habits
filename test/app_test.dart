@@ -90,14 +90,14 @@ void main() {
       await openDemo(tester);
       final dinner = find.widgetWithText(
         CheckboxListTile,
-        'Family dinner, no phones',
+        'Have a phone-free meal',
       );
       await tester.tap(dinner);
       await tester.pumpAndSettle();
       expect(tester.widget<CheckboxListTile>(dinner).value, isTrue);
       expect(
         find.text(
-          'Dad checked in “Family dinner, no phones” for the whole family',
+          'Dad checked in “Have a phone-free meal” for the whole family',
         ),
         findsOneWidget,
       );
@@ -140,6 +140,8 @@ void main() {
     // Give Maya a habit.
     await tapText(tester, 'Today');
     await tapText(tester, 'Add habit');
+    await tester.tap(find.byKey(const Key('createOwnHabit')));
+    await tester.pumpAndSettle();
     await enter(tester, 'habitName', 'Read 15 minutes');
     await tester.tap(find.byKey(const Key('habitOwner')));
     await tester.pumpAndSettle();
@@ -228,6 +230,6 @@ void main() {
     expect(find.text('Wrong PIN'), findsOneWidget);
     await enter(tester, 'pin', '4321');
     await tester.pumpAndSettle();
-    expect(find.text('Make my bed'), findsOneWidget);
+    expect(find.text('Make the bed'), findsOneWidget);
   });
 }

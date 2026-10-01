@@ -76,28 +76,19 @@ class AppLocalizationsHi extends AppLocalizations {
   String get switchProfile => 'प्रोफ़ाइल बदलें';
 
   @override
-  String get catQuitBadHabit => 'बुरी आदत छोड़ें';
-
-  @override
-  String get catArt => 'कला';
-
-  @override
-  String get catMeditate => 'ध्यान';
+  String get catArt => 'कला और रचनात्मकता';
 
   @override
   String get catStudy => 'पढ़ाई';
 
   @override
-  String get catSport => 'खेल';
+  String get catSport => 'खेल-कूद';
 
   @override
-  String get catEntertainment => 'मनोरंजन';
+  String get catFinance => 'पैसा';
 
   @override
-  String get catFinance => 'वित्त';
-
-  @override
-  String get catHealth => 'स्वास्थ्य';
+  String get catHealth => 'सेहत';
 
   @override
   String get catWork => 'काम';
@@ -109,19 +100,16 @@ class AppLocalizationsHi extends AppLocalizations {
   String get catHomeTasks => 'घर के काम';
 
   @override
-  String get catOutdoor => 'बाहरी गतिविधियाँ';
+  String get catOutdoor => 'बाहर की गतिविधियाँ';
 
   @override
   String get catFamilyTime => 'परिवार के साथ समय';
 
   @override
-  String get catFamilyTable => 'पारिवारिक भोजन और मिलन';
-
-  @override
   String get catSleep => 'नींद';
 
   @override
-  String get catSelfCare => 'व्यक्तिगत देखभाल और स्वच्छता';
+  String get catSelfCare => 'सेल्फ-केयर और साफ़-सफ़ाई';
 
   @override
   String get welcomeTitle => 'मिलकर अच्छी आदतें बनाएँ';
@@ -350,9 +338,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get category => 'श्रेणी';
 
   @override
-  String get subcategory => 'उप-श्रेणी';
-
-  @override
   String get habitFor => 'किसके लिए';
 
   @override
@@ -385,6 +370,83 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get everyDay => 'हर दिन';
+
+  @override
+  String get catBreakHabit => 'आदत छोड़ें';
+
+  @override
+  String get catMindfulness => 'माइंडफ़ुलनेस';
+
+  @override
+  String get catFamilyCare => 'परिवार की देखभाल और पेरेंटिंग';
+
+  @override
+  String get catFamilyMeals => 'पारिवारिक भोजन और मिलन';
+
+  @override
+  String get catHobbies => 'शौक और मौज-मस्ती';
+
+  @override
+  String get groupSelf => 'अपना ख़याल रखना';
+
+  @override
+  String get groupFamily => 'अपने परिवार का ख़याल रखना';
+
+  @override
+  String get groupDaily => 'मेरी ज़िम्मेदारियाँ';
+
+  @override
+  String get groupLeisure => 'ज़िंदगी का आनंद लेना';
+
+  @override
+  String get createMyOwnHabit => 'अपनी आदत बनाएँ';
+
+  @override
+  String get createMyOwnCategory => 'अपनी श्रेणी बनाएँ';
+
+  @override
+  String createNamedHabit(String name) {
+    return '“$name” को अपनी आदत के रूप में बनाएँ';
+  }
+
+  @override
+  String get searchHabitsHint => 'खोजें, जैसे “पार्क” या “किताब”';
+
+  @override
+  String get noMatchingHabits =>
+      'कोई तैयार आदत मेल नहीं खाती। आप अपनी आदत बना सकते हैं।';
+
+  @override
+  String get ourCategories => 'हमारे परिवार की श्रेणियाँ';
+
+  @override
+  String get personalDefinition => 'क्या पूरा माना जाएगा? (वैकल्पिक)';
+
+  @override
+  String get personalDefinitionHint => 'जैसे: आज मैंने पर्याप्त पानी पिया';
+
+  @override
+  String get categoryName => 'श्रेणी का नाम';
+
+  @override
+  String get categoryHabits => 'इस श्रेणी की आदतें';
+
+  @override
+  String get addHabitToCategory => 'आदत जोड़ें';
+
+  @override
+  String get editCategory => 'श्रेणी बदलें';
+
+  @override
+  String get deleteCategory => 'श्रेणी हटाएँ';
+
+  @override
+  String deleteCategoryConfirm(String name) {
+    return '“$name” हटाएँ? इसमें पहले से मौजूद आदतें बनी रहेंगी।';
+  }
+
+  @override
+  String get otherCategory => 'अन्य';
 
   @override
   String get loadFailed =>

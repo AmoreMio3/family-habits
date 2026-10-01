@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:flutter/widgets.dart';
 
 import '../logic/week.dart';
+import '../models/category.dart';
 import '../models/family.dart';
 import 'family_repository.dart';
 
@@ -80,6 +81,10 @@ class FamilyStore extends ChangeNotifier {
   List<Member> get members => _snapshot?.members ?? const [];
   List<Habit> get habits => _snapshot?.habits ?? const [];
   List<CheckIn> get checkIns => _snapshot?.checkIns ?? const [];
+  List<CustomCategory> get categories => _snapshot?.categories ?? const [];
+
+  CustomCategory? customCategory(String id) =>
+      categories.where((c) => c.id == id).firstOrNull;
   DateTime get today => dateOnly(_clock());
 
   /// Parents first, then children, each in name order.

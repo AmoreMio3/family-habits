@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import '../models/category.dart';
 import '../models/family.dart';
 
 /// Everything a family screen shows, read in one piece.
@@ -10,12 +11,16 @@ class FamilySnapshot {
     required this.members,
     required this.habits,
     required this.checkIns,
+    this.categories = const [],
   });
 
   final FamilyInfo info;
   final List<Member> members;
   final List<Habit> habits;
   final List<CheckIn> checkIns;
+
+  /// Categories the family made itself.
+  final List<CustomCategory> categories;
 }
 
 /// What a pairing code lets its holder do.
@@ -38,6 +43,11 @@ abstract class FamilyRepository {
 
   Future<void> saveHabit(Habit habit);
   Future<void> deleteHabit(String habitId);
+
+  Future<void> saveCategory(CustomCategory category);
+
+  /// Deletes a family category. Habits in it keep working and show as "Other".
+  Future<void> deleteCategory(String categoryId);
 
   /// Marks [habit] done or not done on [day]. For a family habit one parent's
   /// check-in counts for everyone.
@@ -65,7 +75,9 @@ class InMemoryFamilyRepository implements FamilyRepository {
     List<Member> members = const [],
     List<Habit> habits = const [],
     List<CheckIn> checkIns = const [],
+    List<CustomCategory> categories = const [],
   }) : _members = {for (final m in members) m.id: m},
+       _categories = {for (final c in categories) c.id: c},
        _habits = {for (final h in habits) h.id: h},
        _checkIns = {for (final c in checkIns) c.id: c};
 
@@ -73,6 +85,7 @@ class InMemoryFamilyRepository implements FamilyRepository {
   final Map<String, Member> _members;
   final Map<String, Habit> _habits;
   final Map<String, CheckIn> _checkIns;
+  final Map<String, CustomCategory> _categories;
   final _controller = StreamController<FamilySnapshot>.broadcast();
   var _nextId = 0;
 
@@ -85,6 +98,7 @@ class InMemoryFamilyRepository implements FamilyRepository {
     members: _members.values.toList(),
     habits: _habits.values.toList(),
     checkIns: _checkIns.values.toList(),
+    categories: _categories.values.toList(),
   );
 
   void _emit() => _controller.add(current);
@@ -129,6 +143,18 @@ class InMemoryFamilyRepository implements FamilyRepository {
   Future<void> deleteHabit(String habitId) async {
     _habits.remove(habitId);
     _checkIns.removeWhere((_, c) => c.habitId == habitId);
+    _emit();
+  }
+
+  @override
+  Future<void> saveCategory(CustomCategory category) async {
+    _categories[category.id] = category;
+    _emit();
+  }
+
+  @override
+  Future<void> deleteCategory(String categoryId) async {
+    _categories.remove(categoryId);
     _emit();
   }
 

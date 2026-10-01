@@ -76,22 +76,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get switchProfile => 'Switch profile';
 
   @override
-  String get catQuitBadHabit => 'Quit a bad habit';
-
-  @override
-  String get catArt => 'Art';
-
-  @override
-  String get catMeditate => 'Meditate';
+  String get catArt => 'Art & creativity';
 
   @override
   String get catStudy => 'Study';
 
   @override
   String get catSport => 'Sport';
-
-  @override
-  String get catEntertainment => 'Entertainment';
 
   @override
   String get catFinance => 'Finance';
@@ -113,9 +104,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get catFamilyTime => 'Family quality time';
-
-  @override
-  String get catFamilyTable => 'Family dinner & gatherings';
 
   @override
   String get catSleep => 'Sleep';
@@ -350,9 +338,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get category => 'Category';
 
   @override
-  String get subcategory => 'Subcategory';
-
-  @override
   String get habitFor => 'For';
 
   @override
@@ -385,6 +370,84 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get everyDay => 'Every day';
+
+  @override
+  String get catBreakHabit => 'Break a habit';
+
+  @override
+  String get catMindfulness => 'Mindfulness';
+
+  @override
+  String get catFamilyCare => 'Family care & parenting';
+
+  @override
+  String get catFamilyMeals => 'Family meals & gatherings';
+
+  @override
+  String get catHobbies => 'Hobbies & fun';
+
+  @override
+  String get groupSelf => 'Take care of myself';
+
+  @override
+  String get groupFamily => 'Take care of my family';
+
+  @override
+  String get groupDaily => 'My responsibilities';
+
+  @override
+  String get groupLeisure => 'Enjoy my life';
+
+  @override
+  String get createMyOwnHabit => 'Create my own habit';
+
+  @override
+  String get createMyOwnCategory => 'Create my own category';
+
+  @override
+  String createNamedHabit(String name) {
+    return 'Create “$name” as my own habit';
+  }
+
+  @override
+  String get searchHabitsHint => 'Search, for example “park” or “book”';
+
+  @override
+  String get noMatchingHabits =>
+      'No ready-made habit matches. You can create your own.';
+
+  @override
+  String get ourCategories => 'Our family\'s categories';
+
+  @override
+  String get personalDefinition => 'What counts as done? (optional)';
+
+  @override
+  String get personalDefinitionHint =>
+      'For example: I drank enough water today';
+
+  @override
+  String get categoryName => 'Category name';
+
+  @override
+  String get categoryHabits => 'Habits in this category';
+
+  @override
+  String get addHabitToCategory => 'Add a habit';
+
+  @override
+  String get editCategory => 'Edit category';
+
+  @override
+  String get deleteCategory => 'Delete category';
+
+  @override
+  String deleteCategoryConfirm(String name) {
+    return 'Delete “$name”? Habits already in it are kept.';
+  }
+
+  @override
+  String get otherCategory => 'Other';
 
   @override
   String get loadFailed =>

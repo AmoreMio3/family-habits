@@ -219,23 +219,11 @@ abstract class AppLocalizations {
   /// **'Switch profile'**
   String get switchProfile;
 
-  /// No description provided for @catQuitBadHabit.
-  ///
-  /// In en, this message translates to:
-  /// **'Quit a bad habit'**
-  String get catQuitBadHabit;
-
   /// No description provided for @catArt.
   ///
   /// In en, this message translates to:
-  /// **'Art'**
+  /// **'Art & creativity'**
   String get catArt;
-
-  /// No description provided for @catMeditate.
-  ///
-  /// In en, this message translates to:
-  /// **'Meditate'**
-  String get catMeditate;
 
   /// No description provided for @catStudy.
   ///
@@ -248,12 +236,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sport'**
   String get catSport;
-
-  /// No description provided for @catEntertainment.
-  ///
-  /// In en, this message translates to:
-  /// **'Entertainment'**
-  String get catEntertainment;
 
   /// No description provided for @catFinance.
   ///
@@ -296,12 +278,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Family quality time'**
   String get catFamilyTime;
-
-  /// No description provided for @catFamilyTable.
-  ///
-  /// In en, this message translates to:
-  /// **'Family dinner & gatherings'**
-  String get catFamilyTable;
 
   /// No description provided for @catSleep.
   ///
@@ -735,12 +711,6 @@ abstract class AppLocalizations {
   /// **'Category'**
   String get category;
 
-  /// No description provided for @subcategory.
-  ///
-  /// In en, this message translates to:
-  /// **'Subcategory'**
-  String get subcategory;
-
   /// No description provided for @habitFor.
   ///
   /// In en, this message translates to:
@@ -788,6 +758,150 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Every day'**
   String get everyDay;
+
+  /// No description provided for @catBreakHabit.
+  ///
+  /// In en, this message translates to:
+  /// **'Break a habit'**
+  String get catBreakHabit;
+
+  /// No description provided for @catMindfulness.
+  ///
+  /// In en, this message translates to:
+  /// **'Mindfulness'**
+  String get catMindfulness;
+
+  /// No description provided for @catFamilyCare.
+  ///
+  /// In en, this message translates to:
+  /// **'Family care & parenting'**
+  String get catFamilyCare;
+
+  /// No description provided for @catFamilyMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Family meals & gatherings'**
+  String get catFamilyMeals;
+
+  /// No description provided for @catHobbies.
+  ///
+  /// In en, this message translates to:
+  /// **'Hobbies & fun'**
+  String get catHobbies;
+
+  /// No description provided for @groupSelf.
+  ///
+  /// In en, this message translates to:
+  /// **'Take care of myself'**
+  String get groupSelf;
+
+  /// No description provided for @groupFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Take care of my family'**
+  String get groupFamily;
+
+  /// No description provided for @groupDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'My responsibilities'**
+  String get groupDaily;
+
+  /// No description provided for @groupLeisure.
+  ///
+  /// In en, this message translates to:
+  /// **'Enjoy my life'**
+  String get groupLeisure;
+
+  /// No description provided for @createMyOwnHabit.
+  ///
+  /// In en, this message translates to:
+  /// **'Create my own habit'**
+  String get createMyOwnHabit;
+
+  /// No description provided for @createMyOwnCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Create my own category'**
+  String get createMyOwnCategory;
+
+  /// No description provided for @createNamedHabit.
+  ///
+  /// In en, this message translates to:
+  /// **'Create “{name}” as my own habit'**
+  String createNamedHabit(String name);
+
+  /// Hint in the habit search box. The examples should be words that find habits in this language.
+  ///
+  /// In en, this message translates to:
+  /// **'Search, for example “park” or “book”'**
+  String get searchHabitsHint;
+
+  /// No description provided for @noMatchingHabits.
+  ///
+  /// In en, this message translates to:
+  /// **'No ready-made habit matches. You can create your own.'**
+  String get noMatchingHabits;
+
+  /// No description provided for @ourCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Our family\'s categories'**
+  String get ourCategories;
+
+  /// No description provided for @personalDefinition.
+  ///
+  /// In en, this message translates to:
+  /// **'What counts as done? (optional)'**
+  String get personalDefinition;
+
+  /// No description provided for @personalDefinitionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: I drank enough water today'**
+  String get personalDefinitionHint;
+
+  /// No description provided for @categoryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Category name'**
+  String get categoryName;
+
+  /// No description provided for @categoryHabits.
+  ///
+  /// In en, this message translates to:
+  /// **'Habits in this category'**
+  String get categoryHabits;
+
+  /// No description provided for @addHabitToCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a habit'**
+  String get addHabitToCategory;
+
+  /// No description provided for @editCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit category'**
+  String get editCategory;
+
+  /// No description provided for @deleteCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete category'**
+  String get deleteCategory;
+
+  /// No description provided for @deleteCategoryConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete “{name}”? Habits already in it are kept.'**
+  String deleteCategoryConfirm(String name);
+
+  /// No description provided for @otherCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get otherCategory;
 
   /// Shown when the family's data can't be loaded.
   ///

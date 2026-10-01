@@ -76,22 +76,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get switchProfile => 'Cambiar de perfil';
 
   @override
-  String get catQuitBadHabit => 'Dejar un mal hábito';
-
-  @override
-  String get catArt => 'Arte';
-
-  @override
-  String get catMeditate => 'Meditar';
+  String get catArt => 'Arte y creatividad';
 
   @override
   String get catStudy => 'Estudio';
 
   @override
   String get catSport => 'Deporte';
-
-  @override
-  String get catEntertainment => 'Entretenimiento';
 
   @override
   String get catFinance => 'Finanzas';
@@ -103,7 +94,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get catWork => 'Trabajo';
 
   @override
-  String get catNutrition => 'Nutrición';
+  String get catNutrition => 'Alimentación';
 
   @override
   String get catHomeTasks => 'Tareas del hogar';
@@ -113,9 +104,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get catFamilyTime => 'Tiempo en familia';
-
-  @override
-  String get catFamilyTable => 'Comidas y reuniones familiares';
 
   @override
   String get catSleep => 'Sueño';
@@ -351,9 +339,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get category => 'Categoría';
 
   @override
-  String get subcategory => 'Subcategoría';
-
-  @override
   String get habitFor => 'Para';
 
   @override
@@ -388,6 +373,84 @@ class AppLocalizationsEs extends AppLocalizations {
   String get everyDay => 'Todos los días';
 
   @override
+  String get catBreakHabit => 'Dejar un hábito';
+
+  @override
+  String get catMindfulness => 'Mindfulness';
+
+  @override
+  String get catFamilyCare => 'Cuidado familiar y crianza';
+
+  @override
+  String get catFamilyMeals => 'Comidas y reuniones familiares';
+
+  @override
+  String get catHobbies => 'Aficiones y diversión';
+
+  @override
+  String get groupSelf => 'Cuidar de mí';
+
+  @override
+  String get groupFamily => 'Cuidar de mi familia';
+
+  @override
+  String get groupDaily => 'Mis responsabilidades';
+
+  @override
+  String get groupLeisure => 'Disfrutar de la vida';
+
+  @override
+  String get createMyOwnHabit => 'Crear mi propio hábito';
+
+  @override
+  String get createMyOwnCategory => 'Crear mi propia categoría';
+
+  @override
+  String createNamedHabit(String name) {
+    return 'Crear «$name» como hábito propio';
+  }
+
+  @override
+  String get searchHabitsHint => 'Busca, por ejemplo «parque» o «libro»';
+
+  @override
+  String get noMatchingHabits =>
+      'Ningún hábito predefinido coincide. Puedes crear el tuyo.';
+
+  @override
+  String get ourCategories => 'Categorías de nuestra familia';
+
+  @override
+  String get personalDefinition => '¿Qué cuenta como hecho? (opcional)';
+
+  @override
+  String get personalDefinitionHint =>
+      'Por ejemplo: hoy he bebido suficiente agua';
+
+  @override
+  String get categoryName => 'Nombre de la categoría';
+
+  @override
+  String get categoryHabits => 'Hábitos de esta categoría';
+
+  @override
+  String get addHabitToCategory => 'Añadir un hábito';
+
+  @override
+  String get editCategory => 'Editar categoría';
+
+  @override
+  String get deleteCategory => 'Eliminar categoría';
+
+  @override
+  String deleteCategoryConfirm(String name) {
+    return '¿Eliminar «$name»? Los hábitos que ya tiene se conservan.';
+  }
+
+  @override
+  String get otherCategory => 'Otros';
+
+  @override
   String get loadFailed =>
       'No se ha podido cargar tu familia. Comprueba tu conexión a internet e inténtalo de nuevo.';
 
@@ -408,7 +471,40 @@ class AppLocalizationsEs419 extends AppLocalizationsEs {
   String get phoneLanguage => 'Idioma del celular';
 
   @override
-  String get catHomeTasks => 'Tareas de la casa';
+  String get catArt => 'Arte y creatividad';
+
+  @override
+  String get catStudy => 'Estudio';
+
+  @override
+  String get catSport => 'Deporte';
+
+  @override
+  String get catFinance => 'Finanzas';
+
+  @override
+  String get catHealth => 'Salud';
+
+  @override
+  String get catWork => 'Trabajo';
+
+  @override
+  String get catNutrition => 'Nutrición';
+
+  @override
+  String get catHomeTasks => 'Tareas del hogar';
+
+  @override
+  String get catOutdoor => 'Actividades al aire libre';
+
+  @override
+  String get catFamilyTime => 'Tiempo en familia';
+
+  @override
+  String get catSleep => 'Sueño';
+
+  @override
+  String get catSelfCare => 'Cuidado personal e higiene';
 
   @override
   String get imParent => 'Soy papá o mamá';
@@ -465,4 +561,41 @@ class AppLocalizationsEs419 extends AppLocalizationsEs {
 
   @override
   String get settings => 'Configuración';
+
+  @override
+  String get catBreakHabit => 'Dejar un hábito';
+
+  @override
+  String get catMindfulness => 'Atención plena';
+
+  @override
+  String get catFamilyCare => 'Cuidado familiar y crianza';
+
+  @override
+  String get catFamilyMeals => 'Comidas y reuniones familiares';
+
+  @override
+  String get catHobbies => 'Pasatiempos y diversión';
+
+  @override
+  String get groupSelf => 'Cuidar de mí';
+
+  @override
+  String get groupFamily => 'Cuidar de mi familia';
+
+  @override
+  String get groupDaily => 'Mis responsabilidades';
+
+  @override
+  String get groupLeisure => 'Disfrutar de la vida';
+
+  @override
+  String get noMatchingHabits =>
+      'Ningún hábito predefinido coincide. Puedes crear el tuyo.';
+
+  @override
+  String get personalDefinitionHint => 'Por ejemplo: hoy tomé suficiente agua';
+
+  @override
+  String get addHabitToCategory => 'Agregar un hábito';
 }

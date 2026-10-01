@@ -35,7 +35,7 @@ void main() {
       id: 'read',
       name: 'Read',
       owner: PersonalOwner('maya'),
-      category: BuiltInCategory.study,
+      category: BuiltInRef(BuiltInCategory.study),
       timesPerWeek: 5,
     );
 
@@ -309,7 +309,7 @@ void main() {
           id: 'h',
           name: 'Read',
           owner: PersonalOwner('maya'),
-          category: BuiltInCategory.study,
+          category: BuiltInRef(BuiltInCategory.study),
         ),
       );
       await db.collection('users').doc('tablet').set({

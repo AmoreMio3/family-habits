@@ -79,22 +79,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get switchProfile => 'تبديل الملف الشخصي';
 
   @override
-  String get catQuitBadHabit => 'الإقلاع عن عادة سيئة';
-
-  @override
-  String get catArt => 'الفن';
-
-  @override
-  String get catMeditate => 'التأمل';
+  String get catArt => 'الفن والإبداع';
 
   @override
   String get catStudy => 'الدراسة';
 
   @override
   String get catSport => 'الرياضة';
-
-  @override
-  String get catEntertainment => 'الترفيه';
 
   @override
   String get catFinance => 'المال';
@@ -109,16 +100,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get catNutrition => 'التغذية';
 
   @override
-  String get catHomeTasks => 'أعمال المنزل';
+  String get catHomeTasks => 'مهام المنزل';
 
   @override
-  String get catOutdoor => 'أنشطة في الهواء الطلق';
+  String get catOutdoor => 'أنشطة خارجية';
 
   @override
   String get catFamilyTime => 'وقت العائلة';
-
-  @override
-  String get catFamilyTable => 'وجبات ولقاءات عائلية';
 
   @override
   String get catSleep => 'النوم';
@@ -353,9 +341,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get category => 'الفئة';
 
   @override
-  String get subcategory => 'الفئة الفرعية';
-
-  @override
   String get habitFor => 'لمن';
 
   @override
@@ -391,6 +376,83 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get everyDay => 'كل يوم';
+
+  @override
+  String get catBreakHabit => 'ترك عادة';
+
+  @override
+  String get catMindfulness => 'اليقظة الذهنية';
+
+  @override
+  String get catFamilyCare => 'رعاية الأسرة والأبناء';
+
+  @override
+  String get catFamilyMeals => 'الوجبات واللقاءات العائلية';
+
+  @override
+  String get catHobbies => 'الهوايات والمرح';
+
+  @override
+  String get groupSelf => 'أعتني بنفسي';
+
+  @override
+  String get groupFamily => 'أعتني بعائلتي';
+
+  @override
+  String get groupDaily => 'مسؤولياتي';
+
+  @override
+  String get groupLeisure => 'أستمتع بحياتي';
+
+  @override
+  String get createMyOwnHabit => 'إنشاء عادة خاصة بي';
+
+  @override
+  String get createMyOwnCategory => 'إنشاء فئة خاصة بي';
+
+  @override
+  String createNamedHabit(String name) {
+    return 'إنشاء «$name» كعادة خاصة بي';
+  }
+
+  @override
+  String get searchHabitsHint => 'ابحث، مثلًا «حديقة» أو «كتاب»';
+
+  @override
+  String get noMatchingHabits =>
+      'لا توجد عادة جاهزة مطابقة. يمكنك إنشاء عادتك.';
+
+  @override
+  String get ourCategories => 'فئات عائلتنا';
+
+  @override
+  String get personalDefinition => 'ما الذي يُعدّ إنجازًا؟ (اختياري)';
+
+  @override
+  String get personalDefinitionHint => 'مثلًا: شربت ما يكفي من الماء اليوم';
+
+  @override
+  String get categoryName => 'اسم الفئة';
+
+  @override
+  String get categoryHabits => 'العادات في هذه الفئة';
+
+  @override
+  String get addHabitToCategory => 'إضافة عادة';
+
+  @override
+  String get editCategory => 'تعديل الفئة';
+
+  @override
+  String get deleteCategory => 'حذف الفئة';
+
+  @override
+  String deleteCategoryConfirm(String name) {
+    return 'حذف «$name»؟ ستبقى العادات الموجودة فيها.';
+  }
+
+  @override
+  String get otherCategory => 'أخرى';
 
   @override
   String get loadFailed =>

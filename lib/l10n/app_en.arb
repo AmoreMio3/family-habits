@@ -57,12 +57,9 @@
   "parent": "Parent",
   "child": "Child",
   "switchProfile": "Switch profile",
-  "catQuitBadHabit": "Quit a bad habit",
-  "catArt": "Art",
-  "catMeditate": "Meditate",
+  "catArt": "Art & creativity",
   "catStudy": "Study",
   "catSport": "Sport",
-  "catEntertainment": "Entertainment",
   "catFinance": "Finance",
   "catHealth": "Health",
   "catWork": "Work",
@@ -70,7 +67,6 @@
   "catHomeTasks": "Home tasks",
   "catOutdoor": "Outdoor activities",
   "catFamilyTime": "Family quality time",
-  "catFamilyTable": "Family dinner & gatherings",
   "catSleep": "Sleep",
   "catSelfCare": "Self-care & hygiene",
   "welcomeTitle": "Build good habits together",
@@ -157,7 +153,6 @@
   "editHabit": "Edit habit",
   "habitName": "Habit name",
   "category": "Category",
-  "subcategory": "Subcategory",
   "habitFor": "For",
   "wholeFamily": "Whole family",
   "timesPerWeek": "{count, plural, =1{Once a week} other{{count} times a week}}",
@@ -180,6 +175,47 @@
   "members": "Members",
   "settings": "Settings",
   "everyDay": "Every day",
+  "catBreakHabit": "Break a habit",
+  "catMindfulness": "Mindfulness",
+  "catFamilyCare": "Family care & parenting",
+  "catFamilyMeals": "Family meals & gatherings",
+  "catHobbies": "Hobbies & fun",
+  "groupSelf": "Take care of myself",
+  "groupFamily": "Take care of my family",
+  "groupDaily": "My responsibilities",
+  "groupLeisure": "Enjoy my life",
+  "createMyOwnHabit": "Create my own habit",
+  "createMyOwnCategory": "Create my own category",
+  "createNamedHabit": "Create “{name}” as my own habit",
+  "searchHabitsHint": "Search, for example “park” or “book”",
+  "noMatchingHabits": "No ready-made habit matches. You can create your own.",
+  "ourCategories": "Our family's categories",
+  "personalDefinition": "What counts as done? (optional)",
+  "personalDefinitionHint": "For example: I drank enough water today",
+  "categoryName": "Category name",
+  "categoryHabits": "Habits in this category",
+  "addHabitToCategory": "Add a habit",
+  "editCategory": "Edit category",
+  "deleteCategory": "Delete category",
+  "deleteCategoryConfirm": "Delete “{name}”? Habits already in it are kept.",
+  "otherCategory": "Other",
+  "@createNamedHabit": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@deleteCategoryConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "@searchHabitsHint": {
+    "description": "Hint in the habit search box. The examples should be words that find habits in this language."
+  },
   "loadFailed": "Couldn't load your family. Check your internet connection and try again.",
   "tryAgain": "Try again",
   "@loadFailed": {

@@ -7,7 +7,7 @@ import '../l10n/app_localizations.dart';
 import 'categories_screen.dart';
 import 'common.dart';
 import 'family_screen.dart';
-import 'habit_editor.dart';
+import 'habit_picker.dart';
 import 'today_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -56,14 +56,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           store: store,
                           accounts: widget.accounts,
                         ),
-                        _ => const CategoriesScreen(),
+                        _ => CategoriesScreen(store: store),
                       },
               ),
             ],
           ),
           floatingActionButton: _tab == 0 && store.hasData && store.canManage
               ? FloatingActionButton.extended(
-                  onPressed: () => showHabitEditor(context, store),
+                  onPressed: () => showHabitPicker(context, store),
                   icon: const Icon(Icons.add),
                   label: Text(l10n.addHabit),
                 )

@@ -166,14 +166,28 @@ service cloud.firestore {
 
         function validHabit() {
           let d = request.resource.data;
-          return d.keys().hasOnly(['name', 'ownerMemberId', 'category', 'subcategory', 'timesPerWeek'])
+          // subcategory is only on habits saved before Habit Library V1.
+          return d.keys().hasOnly(['name', 'ownerMemberId', 'category', 'subcategory', 'templateId', 'definition', 'timesPerWeek'])
             && isShortText(d.name, 80)
             && isShortText(d.category, 40)
-            && (d.subcategory == null || isShortText(d.subcategory, 60))
+            && (d.get('subcategory', null) == null || isShortText(d.subcategory, 60))
+            && (d.get('templateId', null) == null || isShortText(d.templateId, 40))
+            && (d.get('definition', null) == null || isShortText(d.definition, 120))
             && d.timesPerWeek is int && d.timesPerWeek >= 1 && d.timesPerWeek <= 7
             && (d.ownerMemberId == null
                 || exists(/databases/$(database)/documents/families/$(fid)/members/$(d.ownerMemberId)));
         }
+      }
+
+      // Categories the family made, each with its own habit names.
+      match /categories/{catId} {
+        allow read: if inFamily(fid);
+        allow create, update: if isParent(fid)
+          && request.resource.data.keys().hasOnly(['name', 'habits'])
+          && isShortText(request.resource.data.name, 40)
+          && request.resource.data.habits is list
+          && request.resource.data.habits.size() <= 50;
+        allow delete: if isParent(fid);
       }
 
       match /checkIns/{cid} {
