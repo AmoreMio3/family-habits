@@ -104,7 +104,11 @@ void main() {
         matching: find.byType(CheckCircle),
       );
       await tester.tap(dinner);
+      await tester.pump(const Duration(milliseconds: 300));
+      // The check-off animation shows the habit's name, then goes away.
+      expect(find.text('Have a phone-free meal'), findsNWidgets(2));
       await tester.pumpAndSettle();
+      expect(find.text('Have a phone-free meal'), findsOneWidget);
       expect(tester.widget<CheckCircle>(dinner).done, isTrue);
       expect(
         find.text(

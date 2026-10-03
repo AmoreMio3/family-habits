@@ -7,6 +7,7 @@ import '../logic/progress.dart';
 import '../logic/week.dart';
 import '../models/family.dart';
 import 'family_progress_card.dart';
+import 'celebration.dart';
 import 'common.dart';
 import 'habit_editor.dart';
 import 'look.dart';
@@ -280,6 +281,9 @@ class HabitCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     final name = store.activeMember?.nickname ?? '';
+    if (!store.isDoneToday(habit)) {
+      celebrate(context, celebrationFor(habit), habit.name);
+    }
     final familyCheckIn = await store.toggleToday(habit);
     if (familyCheckIn) {
       // Stand-in for the push notification every member will get.
