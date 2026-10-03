@@ -7,6 +7,7 @@ import '../data/family_store.dart';
 import '../l10n/app_localizations.dart';
 import '../models/family.dart';
 import 'common.dart';
+import 'look.dart';
 import 'member_editor.dart';
 
 /// Members, device codes and account settings.
@@ -26,41 +27,57 @@ class FamilyScreen extends StatelessWidget {
         .map((m) => m.id)
         .toList();
 
+    final look = Look.of(context);
+    Widget group(List<Widget> tiles) => SoftCard(
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Column(children: tiles),
+    );
+
     return ListView(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
       children: [
-        _Header(l10n.members),
-        for (final m in store.sortedMembers)
-          ListTile(
-            leading: CircleAvatar(
-              child: Text(m.nickname.characters.firstOrNull ?? '?'),
+        SectionTitle(l10n.members),
+        group([
+          for (final m in store.sortedMembers)
+            ListTile(
+              leading: MemberAvatar(
+                name: m.nickname,
+                color: memberColor(context, store, m.id),
+              ),
+              title: Text(
+                m.nickname,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+              subtitle: Text(
+                m.isParent
+                    ? l10n.parent
+                    : '${l10n.child} · ${ageBandLabel(l10n, m.ageBand)}',
+              ),
+              trailing: manage ? const Icon(Icons.edit_outlined) : null,
+              onTap: manage
+                  ? () => showMemberEditor(context, store, member: m)
+                  : null,
             ),
-            title: Text(m.nickname),
-            subtitle: Text(
-              m.isParent
-                  ? l10n.parent
-                  : '${l10n.child} · ${ageBandLabel(l10n, m.ageBand)}',
-            ),
-            trailing: manage ? const Icon(Icons.edit_outlined) : null,
-            onTap: manage
-                ? () => showMemberEditor(context, store, member: m)
-                : null,
-          ),
+        ]),
         if (manage) ...[
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           _Action(
-            icon: Icons.child_care,
+            icon: Icons.child_care_rounded,
+            color: look.memberColors[2],
             label: l10n.addChild,
             onTap: () => showMemberEditor(context, store),
           ),
           _Action(
-            icon: Icons.person_add_alt,
+            icon: Icons.person_add_alt_rounded,
+            color: look.memberColors[1],
             label: l10n.inviteParent,
             onTap: () => showPairingCode(context, store, PairingKind.coParent),
           ),
           if (children.isNotEmpty)
             _Action(
-              icon: Icons.tablet_android,
+              icon: Icons.tablet_android_rounded,
+              color: look.memberColors[3],
               label: l10n.sharedDevice,
               onTap: () => showPairingCode(
                 context,
@@ -69,45 +86,54 @@ class FamilyScreen extends StatelessWidget {
                 memberIds: children,
               ),
             ),
-          _Header(l10n.settings),
-          ListTile(
-            leading: const Icon(Icons.calendar_view_week),
-            title: Text(l10n.weekStartsOn),
-            trailing: _WeekStartMenu(store: store),
-          ),
+          SectionTitle(l10n.settings),
+          group([
+            ListTile(
+              leading: const Icon(Icons.calendar_view_week_rounded),
+              title: Text(l10n.weekStartsOn),
+              trailing: _WeekStartMenu(store: store),
+            ),
+          ]),
         ],
-        const Divider(height: 32),
-        if (store.access.isParent) ...[
-          ListTile(
-            leading: const Icon(Icons.logout),
-            title: Text(l10n.signOut),
-            onTap: accounts.signOut,
-          ),
-          ListTile(
-            leading: Icon(Icons.delete_forever, color: theme.colorScheme.error),
-            title: Text(
-              l10n.deleteAccount,
-              style: TextStyle(color: theme.colorScheme.error),
+        const SizedBox(height: 12),
+        if (store.access.isParent)
+          group([
+            ListTile(
+              leading: const Icon(Icons.logout_rounded),
+              title: Text(l10n.signOut),
+              onTap: accounts.signOut,
             ),
-            onTap: () => _confirmDelete(
-              context,
-              title: l10n.deleteAccount,
-              body: _isOwner ? l10n.deleteOwnerBody : l10n.deleteParentBody,
+            ListTile(
+              leading: Icon(
+                Icons.delete_forever_rounded,
+                color: theme.colorScheme.error,
+              ),
+              title: Text(
+                l10n.deleteAccount,
+                style: TextStyle(color: theme.colorScheme.error),
+              ),
+              onTap: () => _confirmDelete(
+                context,
+                title: l10n.deleteAccount,
+                body: _isOwner ? l10n.deleteOwnerBody : l10n.deleteParentBody,
+              ),
             ),
-          ),
-        ] else
-          ListTile(
-            leading: Icon(Icons.link_off, color: theme.colorScheme.error),
-            title: Text(
-              l10n.unpairDevice,
-              style: TextStyle(color: theme.colorScheme.error),
+          ])
+        else
+          group([
+            ListTile(
+              leading: Icon(Icons.link_off, color: theme.colorScheme.error),
+              title: Text(
+                l10n.unpairDevice,
+                style: TextStyle(color: theme.colorScheme.error),
+              ),
+              onTap: () => _confirmDelete(
+                context,
+                title: l10n.unpairDevice,
+                body: l10n.unpairBody,
+              ),
             ),
-            onTap: () => _confirmDelete(
-              context,
-              title: l10n.unpairDevice,
-              body: l10n.unpairBody,
-            ),
-          ),
+          ]),
       ],
     );
   }
@@ -249,32 +275,42 @@ class _WeekStartMenu extends StatelessWidget {
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 4),
-    child: Text(text, style: Theme.of(context).textTheme.titleMedium),
-  );
-}
-
 class _Action extends StatelessWidget {
-  const _Action({required this.icon, required this.label, required this.onTap});
+  const _Action({
+    required this.icon,
+    required this.color,
+    required this.label,
+    required this.onTap,
+  });
 
   final IconData icon;
+  final Color color;
   final String label;
   final VoidCallback onTap;
 
   @override
-  Widget build(BuildContext context) => ListTile(
-    leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
-    title: Text(
-      label,
-      style: TextStyle(color: Theme.of(context).colorScheme.primary),
-    ),
-    onTap: onTap,
-  );
+  Widget build(BuildContext context) {
+    final look = Look.of(context);
+    return SoftCard(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      onTap: onTap,
+      child: Row(
+        children: [
+          IconBubble(icon: icon, color: color, size: 40),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: look.ink,
+              ),
+            ),
+          ),
+          Icon(Icons.chevron_right_rounded, color: look.muted),
+        ],
+      ),
+    );
+  }
 }

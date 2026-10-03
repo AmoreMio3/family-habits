@@ -460,4 +460,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get tryAgain => 'Réessayer';
+
+  @override
+  String hiName(String name) {
+    return 'Salut, $name !';
+  }
 }

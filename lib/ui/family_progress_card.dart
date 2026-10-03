@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../data/family_store.dart';
 import '../l10n/app_localizations.dart';
 import '../logic/progress.dart';
+import 'common.dart';
+import 'look.dart';
 
 /// The shared family bar. Segments follow reading direction, so the bar fills
 /// from the right in Hebrew and Arabic.
@@ -16,110 +18,153 @@ class FamilyProgressCard extends StatelessWidget {
   final FamilyStore store;
   final DateTime weekStart;
 
-  static const _familyColor = Color(0xFFD9961A);
-  static const _memberColors = [
-    Color(0xFF1D6F55),
-    Color(0xFF3C9C7C),
-    Color(0xFF5A62C9),
-    Color(0xFF8C92E0),
-    Color(0xFFC2185B),
-    Color(0xFF0097A7),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
+    final look = Look.of(context);
     final progress = familyProgress(store.habits, store.checkIns, weekStart);
     final percent = (progress.fraction * 100).round();
 
     final segments = <(String, Color, int)>[
-      for (final (i, m) in store.members.indexed)
+      for (final m in store.members)
         (
           m.nickname,
-          _memberColors[i % _memberColors.length],
+          memberColor(context, store, m.id),
           progress.byOwner[m.id] ?? 0,
         ),
-      (l10n.familyHabits, _familyColor, progress.byOwner[familyKey] ?? 0),
+      (l10n.familyHabits, look.familyColor, progress.byOwner[familyKey] ?? 0),
     ];
     final remaining = progress.target - progress.done;
+    final radius = BorderRadius.circular(look.radius + 4);
 
-    return Card(
-      color: theme.colorScheme.secondaryContainer,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: look.hero,
+        borderRadius: radius,
+        border: look.borderWidth > 0
+            ? Border.all(color: look.border, width: look.borderWidth)
+            : null,
+        boxShadow: look.shadows,
+      ),
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 10, 14),
+            child: Row(
               children: [
                 Expanded(
-                  child: Text(
-                    l10n.familyWeek,
-                    style: theme.textTheme.titleMedium,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.familyWeek,
+                        style: look.heading(22, color: look.heroInk),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        l10n.checkInsProgress(progress.done, progress.target),
+                        style: TextStyle(
+                          color: look.heroInk.withValues(alpha: 0.85),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Text(
-                  '$percent%',
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 76,
+                  height: 76,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox.expand(
+                        child: CircularProgressIndicator(
+                          value: progress.fraction,
+                          strokeWidth: 8,
+                          strokeCap: StrokeCap.round,
+                          color: look.heroInk,
+                          backgroundColor: look.heroInk.withValues(alpha: 0.25),
+                        ),
+                      ),
+                      Text(
+                        '$percent%',
+                        style: look.heading(20, color: look.heroInk),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(99),
-              child: SizedBox(
-                height: 12,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
+            decoration: BoxDecoration(
+              color: look.card,
+              borderRadius: BorderRadius.circular(look.radius - 4),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(99),
+                  child: SizedBox(
+                    height: 14,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        for (final (_, color, value) in segments)
+                          if (value > 0)
+                            Expanded(
+                              flex: value,
+                              child: ColoredBox(color: color),
+                            ),
+                        if (remaining > 0)
+                          Expanded(
+                            flex: remaining,
+                            child: ColoredBox(
+                              color: look.muted.withValues(alpha: 0.14),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Wrap(
+                  spacing: 14,
+                  runSpacing: 6,
                   children: [
-                    for (final (_, color, value) in segments)
-                      if (value > 0)
-                        Expanded(
-                          flex: value,
-                          child: ColoredBox(color: color),
-                        ),
-                    if (remaining > 0)
-                      Expanded(
-                        flex: remaining,
-                        child: ColoredBox(color: theme.colorScheme.surface),
+                    for (final (name, color, value) in segments)
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 10,
+                            height: 10,
+                            decoration: BoxDecoration(
+                              color: color,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            '$name $value',
+                            style: TextStyle(
+                              color: look.ink,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       ),
                   ],
                 ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 12,
-              runSpacing: 4,
-              children: [
-                for (final (name, color, _) in segments)
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: color,
-                          borderRadius: BorderRadius.circular(3),
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(name, style: theme.textTheme.bodySmall),
-                    ],
-                  ),
               ],
             ),
-            const SizedBox(height: 6),
-            Text(
-              l10n.checkInsProgress(progress.done, progress.target),
-              style: theme.textTheme.bodySmall,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

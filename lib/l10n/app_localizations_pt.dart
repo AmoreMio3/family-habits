@@ -454,4 +454,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get tryAgain => 'Tentar de novo';
+
+  @override
+  String hiName(String name) {
+    return 'Olá, $name!';
+  }
 }

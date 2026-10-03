@@ -456,6 +456,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tryAgain => 'Reintentar';
+
+  @override
+  String hiName(String name) {
+    return '¡Hola, $name!';
+  }
 }
 
 /// The translations for Spanish Castilian, as used in Latin America and the Caribbean (`es_419`).
@@ -598,4 +603,9 @@ class AppLocalizationsEs419 extends AppLocalizationsEs {
 
   @override
   String get addHabitToCategory => 'Agregar un hábito';
+
+  @override
+  String hiName(String name) {
+    return '¡Hola, $name!';
+  }
 }

@@ -455,9 +455,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tryAgain => 'Try again';
+
+  @override
+  String hiName(String name) {
+    return 'Hi, $name!';
+  }
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
 class AppLocalizationsEnGb extends AppLocalizationsEn {
   AppLocalizationsEnGb() : super('en_GB');
+
+  @override
+  String hiName(String name) {
+    return 'Hi, $name!';
+  }
 }

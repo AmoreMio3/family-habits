@@ -460,4 +460,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tryAgain => 'إعادة المحاولة';
+
+  @override
+  String hiName(String name) {
+    return 'مرحبًا، $name!';
+  }
 }

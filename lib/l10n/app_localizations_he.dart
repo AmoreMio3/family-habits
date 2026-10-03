@@ -453,4 +453,9 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get tryAgain => 'לנסות שוב';
+
+  @override
+  String hiName(String name) {
+    return 'היי, $name!';
+  }
 }
