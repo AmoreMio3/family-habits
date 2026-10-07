@@ -8,8 +8,30 @@ import '../models/family.dart';
 import '../models/habit_library.dart';
 import 'look.dart';
 
-/// The little animation that plays when a habit is checked off.
-enum Celebration { water, sleep, reading, sport, family, confetti }
+/// The little animation that plays when a habit is checked off: one per
+/// built-in category, plus water for drinking habits and confetti for the
+/// family's own categories.
+enum Celebration {
+  water,
+  health,
+  breakHabit,
+  nutrition,
+  sleep,
+  sport,
+  selfCare,
+  mindfulness,
+  familyTime,
+  familyCare,
+  familyMeals,
+  homeTasks,
+  reading,
+  work,
+  finance,
+  outdoor,
+  art,
+  hobbies,
+  confetti,
+}
 
 const _waterWords = ['water', 'drink', 'hydrat', 'מים', 'לשתות', 'ماء', 'agua'];
 const _sleepWords = ['sleep', 'nap', 'bedtime', 'שינה', 'לישון', 'نوم'];
@@ -28,8 +50,9 @@ const _sportWords = [
   'כושר',
 ];
 
-/// Picks the animation from what the habit is about: its words first, then
-/// its category, then whether the whole family shares it.
+/// Picks the animation from what the habit is about: drinking habits get
+/// water, built-in categories get their own, and habits in the family's own
+/// categories are matched by their words.
 Celebration celebrationFor(Habit habit) {
   final template = habit.templateId == null
       ? null
@@ -48,18 +71,31 @@ Celebration celebrationFor(Habit habit) {
   if (has(_waterWords) && category != BuiltInCategory.homeTasks) {
     return Celebration.water;
   }
-  if (category == BuiltInCategory.sleep || has(_sleepWords)) {
-    return Celebration.sleep;
+  if (category != null) {
+    return switch (category) {
+      BuiltInCategory.health => Celebration.health,
+      BuiltInCategory.breakHabit => Celebration.breakHabit,
+      BuiltInCategory.nutrition => Celebration.nutrition,
+      BuiltInCategory.sleep => Celebration.sleep,
+      BuiltInCategory.sport => Celebration.sport,
+      BuiltInCategory.selfCare => Celebration.selfCare,
+      BuiltInCategory.mindfulness => Celebration.mindfulness,
+      BuiltInCategory.familyTime => Celebration.familyTime,
+      BuiltInCategory.familyCare => Celebration.familyCare,
+      BuiltInCategory.familyMeals => Celebration.familyMeals,
+      BuiltInCategory.homeTasks => Celebration.homeTasks,
+      BuiltInCategory.study => Celebration.reading,
+      BuiltInCategory.work => Celebration.work,
+      BuiltInCategory.finance => Celebration.finance,
+      BuiltInCategory.outdoor => Celebration.outdoor,
+      BuiltInCategory.art => Celebration.art,
+      BuiltInCategory.hobbies => Celebration.hobbies,
+    };
   }
-  if (category == BuiltInCategory.study || has(_readingWords)) {
-    return Celebration.reading;
-  }
-  if (category == BuiltInCategory.sport ||
-      category == BuiltInCategory.outdoor ||
-      has(_sportWords)) {
-    return Celebration.sport;
-  }
-  if (habit.isFamily) return Celebration.family;
+  if (has(_sleepWords)) return Celebration.sleep;
+  if (has(_readingWords)) return Celebration.reading;
+  if (has(_sportWords)) return Celebration.sport;
+  if (habit.isFamily) return Celebration.familyTime;
   return Celebration.confetti;
 }
 
@@ -122,72 +158,78 @@ class _CelebrationOverlayState extends State<_CelebrationOverlay>
   Widget build(BuildContext context) {
     final look = widget.look;
     final color = celebrationColor(widget.kind, look);
+    // The overlay sits outside the page's Material, so give the caption a
+    // text style of its own (otherwise it shows the debug underline).
     return IgnorePointer(
-      child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, _) {
-          final t = _controller.value;
-          // Pop in over the first 18%, fade out over the last 15%.
-          final scaleIn = Curves.elasticOut.transform(
-            (t / 0.3).clamp(0.0, 1.0),
-          );
-          final fade =
-              1 - Curves.easeIn.transform(((t - 0.85) / 0.15).clamp(0.0, 1.0));
-          return Center(
-            child: Opacity(
-              opacity: fade,
-              child: Transform.scale(
-                scale: 0.6 + 0.4 * scaleIn,
-                child: Container(
-                  width: 210,
-                  padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
-                  decoration: BoxDecoration(
-                    color: look.card,
-                    borderRadius: BorderRadius.circular(32),
-                    border: look.borderWidth > 0
-                        ? Border.all(
-                            color: look.border,
-                            width: look.borderWidth,
-                          )
-                        : null,
-                    boxShadow: [
-                      BoxShadow(
-                        color: color.withValues(alpha: 0.35),
-                        blurRadius: 40,
-                        offset: const Offset(0, 12),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox.square(
-                        dimension: 150,
-                        child: CustomPaint(
-                          painter: CelebrationPainter(
-                            kind: widget.kind,
-                            t: t,
-                            color: color,
-                            look: look,
-                            textDirection: Directionality.of(context),
+      child: Material(
+        type: MaterialType.transparency,
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, _) {
+            final t = _controller.value;
+            // Pop in over the first 18%, fade out over the last 15%.
+            final scaleIn = Curves.elasticOut.transform(
+              (t / 0.3).clamp(0.0, 1.0),
+            );
+            final fade =
+                1 -
+                Curves.easeIn.transform(((t - 0.85) / 0.15).clamp(0.0, 1.0));
+            return Center(
+              child: Opacity(
+                opacity: fade,
+                child: Transform.scale(
+                  scale: 0.6 + 0.4 * scaleIn,
+                  child: Container(
+                    width: 210,
+                    padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+                    decoration: BoxDecoration(
+                      color: look.card,
+                      borderRadius: BorderRadius.circular(32),
+                      border: look.borderWidth > 0
+                          ? Border.all(
+                              color: look.border,
+                              width: look.borderWidth,
+                            )
+                          : null,
+                      boxShadow: [
+                        BoxShadow(
+                          color: color.withValues(alpha: 0.35),
+                          blurRadius: 40,
+                          offset: const Offset(0, 12),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox.square(
+                          dimension: 150,
+                          child: CustomPaint(
+                            painter: CelebrationPainter(
+                              kind: widget.kind,
+                              t: t,
+                              color: color,
+                              look: look,
+                              textDirection: Directionality.of(context),
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        widget.caption,
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: look.heading(17),
-                      ),
-                    ],
+                        const SizedBox(height: 10),
+                        Text(
+                          widget.caption,
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: look.heading(17),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -195,10 +237,23 @@ class _CelebrationOverlayState extends State<_CelebrationOverlay>
 
 Color celebrationColor(Celebration kind, Look look) => switch (kind) {
   Celebration.water => const Color(0xFF2F9BFF),
+  Celebration.health => const Color(0xFFE8496A),
+  Celebration.breakHabit => const Color(0xFFE0603B),
+  Celebration.nutrition => const Color(0xFF5DB33A),
   Celebration.sleep => const Color(0xFF6C5CE7),
-  Celebration.reading => const Color(0xFFF2994A),
   Celebration.sport => const Color(0xFFF2B01E),
-  Celebration.family => const Color(0xFFF2547D),
+  Celebration.selfCare => const Color(0xFF1FB5C9),
+  Celebration.mindfulness => const Color(0xFF9B7BE0),
+  Celebration.familyTime => const Color(0xFFF2547D),
+  Celebration.familyCare => const Color(0xFFEC5F9A),
+  Celebration.familyMeals => const Color(0xFFF28C28),
+  Celebration.homeTasks => const Color(0xFF8D6E63),
+  Celebration.reading => const Color(0xFFF2994A),
+  Celebration.work => const Color(0xFF5C7CFA),
+  Celebration.finance => const Color(0xFF2E9E5B),
+  Celebration.outdoor => const Color(0xFF43A047),
+  Celebration.art => const Color(0xFFE05297),
+  Celebration.hobbies => const Color(0xFF8E5BD9),
   Celebration.confetti => look.done,
 };
 
@@ -230,14 +285,40 @@ class CelebrationPainter extends CustomPainter {
     switch (kind) {
       case Celebration.water:
         _water(canvas, size);
+      case Celebration.health:
+        _health(canvas, size);
+      case Celebration.breakHabit:
+        _breakHabit(canvas, size);
+      case Celebration.nutrition:
+        _nutrition(canvas, size);
       case Celebration.sleep:
         _sleep(canvas, size);
-      case Celebration.reading:
-        _reading(canvas, size);
       case Celebration.sport:
         _sport(canvas, size);
-      case Celebration.family:
+      case Celebration.selfCare:
+        _selfCare(canvas, size);
+      case Celebration.mindfulness:
+        _mindfulness(canvas, size);
+      case Celebration.familyTime:
         _family(canvas, size);
+      case Celebration.familyCare:
+        _familyCare(canvas, size);
+      case Celebration.familyMeals:
+        _familyMeals(canvas, size);
+      case Celebration.homeTasks:
+        _homeTasks(canvas, size);
+      case Celebration.reading:
+        _reading(canvas, size);
+      case Celebration.work:
+        _work(canvas, size);
+      case Celebration.finance:
+        _finance(canvas, size);
+      case Celebration.outdoor:
+        _outdoor(canvas, size);
+      case Celebration.art:
+        _art(canvas, size);
+      case Celebration.hobbies:
+        _hobbies(canvas, size);
       case Celebration.confetti:
         _confetti(canvas, size);
     }
@@ -663,6 +744,788 @@ class CelebrationPainter extends CustomPainter {
         canvas.restore();
       }
     }
+  }
+
+  Paint _stroke(Color color, double width) => Paint()
+    ..style = PaintingStyle.stroke
+    ..strokeWidth = width
+    ..strokeCap = StrokeCap.round
+    ..strokeJoin = StrokeJoin.round
+    ..color = color;
+
+  /// Draws the first [p] (0 to 1) of [path].
+  void _drawPartial(Canvas canvas, Path path, double p, Paint paint) {
+    if (p <= 0) return;
+    for (final metric in path.computeMetrics()) {
+      canvas.drawPath(metric.extractPath(0, metric.length * p), paint);
+    }
+  }
+
+  /// A heart beats twice while a heartbeat line runs across it.
+  void _health(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final c = Offset(w / 2, h * 0.5);
+    final pop = Curves.elasticOut.transform(_seg(t, 0, 0.35));
+    final beat = _seg(t, 0.35, 0.95);
+    final pulse = 1 + 0.12 * math.pow(math.sin(beat * math.pi * 4), 8);
+    _heart(canvas, c, w * 0.26 * pop * pulse, color);
+    final y = c.dy;
+    final line = Path()..moveTo(w * 0.04, y);
+    final pts = [
+      [0.30, 0.0],
+      [0.38, -0.05],
+      [0.44, 0.22],
+      [0.52, -0.34],
+      [0.60, 0.12],
+      [0.66, 0.0],
+      [0.96, 0.0],
+    ];
+    for (final p in pts) {
+      line.lineTo(w * p[0], y + h * p[1]);
+    }
+    final lineDir = forward;
+    canvas.save();
+    if (lineDir < 0) {
+      canvas.translate(w, 0);
+      canvas.scale(-1, 1);
+    }
+    _drawPartial(
+      canvas,
+      line,
+      Curves.easeInOut.transform(_seg(t, 0.2, 0.75)),
+      _stroke(Colors.white, 4.5),
+    );
+    canvas.restore();
+    _sparkles(canvas, size, start: 0.6, count: 4, color: color, fromY: h * 0.3);
+  }
+
+  /// A chain snaps in the middle and its links fly apart.
+  void _breakHabit(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final c = Offset(w / 2, h / 2);
+    final appear = Curves.easeOutBack.transform(_seg(t, 0, 0.25));
+    final snap = Curves.easeOutCubic.transform(_seg(t, 0.38, 0.75));
+    final shake = t < 0.38 && t > 0.2 ? math.sin(t * 120) * 2 : 0.0;
+    final linkW = w * 0.34, linkH = h * 0.2;
+    final paint = _stroke(look.muted.withValues(alpha: 0.9), 9);
+    void link(double dx, double angle) {
+      canvas.save();
+      canvas.translate(c.dx + dx + shake, c.dy);
+      canvas.rotate(angle);
+      canvas.scale(appear);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(
+          Rect.fromCenter(center: Offset.zero, width: linkW, height: linkH),
+          Radius.circular(linkH / 2),
+        ),
+        paint,
+      );
+      canvas.restore();
+    }
+
+    link(-linkW * 0.38 - snap * w * 0.14, -snap * 0.5);
+    link(linkW * 0.38 + snap * w * 0.14, snap * 0.5);
+    // Sparks fly out of the break.
+    if (snap > 0 && snap < 1) {
+      final rnd = math.Random(3);
+      for (var i = 0; i < 10; i++) {
+        final a = rnd.nextDouble() * math.pi * 2;
+        final d = w * 0.35 * snap;
+        final p = c + Offset(math.cos(a) * d, math.sin(a) * d);
+        canvas.drawLine(
+          p,
+          p + Offset(math.cos(a) * 8, math.sin(a) * 8),
+          _stroke(color.withValues(alpha: 1 - snap), 3),
+        );
+      }
+    }
+    // A "free" burst ring.
+    final ring = _seg(t, 0.4, 0.8);
+    if (ring > 0 && ring < 1) {
+      canvas.drawCircle(
+        c,
+        w * 0.1 + w * 0.3 * ring,
+        _stroke(color.withValues(alpha: 1 - ring), 3),
+      );
+    }
+  }
+
+  /// An apple bounces in and its leaf unfurls.
+  void _nutrition(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final drop = Curves.bounceOut.transform(_seg(t, 0, 0.45));
+    final c = Offset(w / 2, h * 0.58 - h * 0.6 * (1 - drop));
+    final r = w * 0.25;
+    final apple = Path()
+      ..moveTo(c.dx, c.dy - r * 0.75)
+      ..cubicTo(
+        c.dx + r * 0.6,
+        c.dy - r * 1.15,
+        c.dx + r * 1.35,
+        c.dy - r * 0.6,
+        c.dx + r * 1.05,
+        c.dy + r * 0.35,
+      )
+      ..cubicTo(
+        c.dx + r * 0.8,
+        c.dy + r * 1.1,
+        c.dx + r * 0.25,
+        c.dy + r * 1.05,
+        c.dx,
+        c.dy + r * 0.85,
+      )
+      ..cubicTo(
+        c.dx - r * 0.25,
+        c.dy + r * 1.05,
+        c.dx - r * 0.8,
+        c.dy + r * 1.1,
+        c.dx - r * 1.05,
+        c.dy + r * 0.35,
+      )
+      ..cubicTo(
+        c.dx - r * 1.35,
+        c.dy - r * 0.6,
+        c.dx - r * 0.6,
+        c.dy - r * 1.15,
+        c.dx,
+        c.dy - r * 0.75,
+      )
+      ..close();
+    canvas.drawPath(
+      apple,
+      Paint()
+        ..shader = const RadialGradient(
+          center: Alignment(-0.3, -0.4),
+          colors: [Color(0xFFFF7A6B), Color(0xFFE5383B)],
+        ).createShader(Rect.fromCircle(center: c, radius: r * 1.2)),
+    );
+    // Shine.
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: c + Offset(-r * 0.45, -r * 0.25),
+        width: r * 0.28,
+        height: r * 0.5,
+      ),
+      Paint()..color = Colors.white.withValues(alpha: 0.55),
+    );
+    // Stem.
+    canvas.drawLine(
+      c + Offset(0, -r * 0.7),
+      c + Offset(r * 0.08, -r * 1.15),
+      _stroke(const Color(0xFF6D4C41), 4),
+    );
+    // Leaf grows and wiggles.
+    final grow = Curves.elasticOut.transform(_seg(t, 0.35, 0.8));
+    final wiggle = math.sin(t * math.pi * 6) * 0.15 * (1 - _seg(t, 0.7, 1));
+    canvas.save();
+    canvas.translate(c.dx + r * 0.1, c.dy - r * 1.05);
+    canvas.rotate(-0.5 + wiggle);
+    canvas.scale(grow);
+    final leaf = Path()
+      ..moveTo(0, 0)
+      ..quadraticBezierTo(r * 0.35, -r * 0.35, r * 0.8, 0)
+      ..quadraticBezierTo(r * 0.35, r * 0.3, 0, 0)
+      ..close();
+    canvas.drawPath(leaf, Paint()..color = color);
+    canvas.restore();
+    _sparkles(
+      canvas,
+      size,
+      start: 0.45,
+      count: 5,
+      color: color,
+      fromY: h * 0.4,
+    );
+  }
+
+  /// Soap bubbles float up, wobble and pop.
+  void _selfCare(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final rnd = math.Random(21);
+    for (var i = 0; i < 9; i++) {
+      final start = i * 0.06;
+      final p = _seg(t, start, start + 0.6);
+      if (p <= 0) continue;
+      final r = 8 + rnd.nextDouble() * 16;
+      final x0 = w * (0.2 + rnd.nextDouble() * 0.6);
+      final x = x0 + math.sin(p * math.pi * 3 + i) * 8;
+      final y = h * 0.95 - h * 0.8 * Curves.easeOut.transform(p);
+      final popping = _seg(p, 0.85, 1);
+      if (popping >= 1) continue;
+      final rr = r * (1 + popping * 0.5);
+      final alpha = 1 - popping;
+      final c = Offset(x, y);
+      canvas.drawCircle(
+        c,
+        rr,
+        Paint()
+          ..shader = RadialGradient(
+            colors: [
+              color.withValues(alpha: 0.05 * alpha),
+              color.withValues(alpha: 0.25 * alpha),
+              const Color(0xFFB388FF).withValues(alpha: 0.45 * alpha),
+            ],
+            stops: const [0.5, 0.85, 1],
+          ).createShader(Rect.fromCircle(center: c, radius: rr)),
+      );
+      canvas.drawCircle(
+        c,
+        rr,
+        _stroke(color.withValues(alpha: 0.7 * alpha), 1.5),
+      );
+      canvas.drawCircle(
+        c + Offset(-rr * 0.35, -rr * 0.35),
+        rr * 0.22,
+        Paint()..color = Colors.white.withValues(alpha: 0.85 * alpha),
+      );
+    }
+    _sparkles(
+      canvas,
+      size,
+      start: 0.55,
+      count: 4,
+      color: color,
+      fromY: h * 0.35,
+    );
+  }
+
+  /// A lotus opens its petals over calm ripples.
+  void _mindfulness(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final base = Offset(w / 2, h * 0.68);
+    // Ripples.
+    for (var i = 0; i < 3; i++) {
+      final p = _seg(t, 0.1 + i * 0.2, 0.75 + i * 0.1);
+      if (p <= 0 || p >= 1) continue;
+      canvas.drawOval(
+        Rect.fromCenter(
+          center: base + const Offset(0, 8),
+          width: w * 0.3 + w * 0.6 * p,
+          height: 14 + 22 * p,
+        ),
+        _stroke(color.withValues(alpha: 0.6 * (1 - p)), 2.5),
+      );
+    }
+    final open = Curves.easeOutBack.transform(_seg(t, 0.1, 0.65));
+    final petalH = h * 0.42, petalW = w * 0.15;
+    Path petal() => Path()
+      ..moveTo(0, 0)
+      ..quadraticBezierTo(petalW, -petalH * 0.5, 0, -petalH)
+      ..quadraticBezierTo(-petalW, -petalH * 0.5, 0, 0)
+      ..close();
+    final angles = [-1.1, -0.55, 0.55, 1.1, 0.0];
+    for (final (i, a) in angles.indexed) {
+      canvas.save();
+      canvas.translate(base.dx, base.dy);
+      canvas.rotate(a * open);
+      final shade = i == 4 ? 1.0 : (a.abs() > 1 ? 0.55 : 0.78);
+      canvas.drawPath(
+        petal(),
+        Paint()
+          ..shader = LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [
+              Color.lerp(color, Colors.white, 0.1)!.withValues(alpha: shade),
+              Color.lerp(
+                color,
+                const Color(0xFFFFB3D1),
+                0.6,
+              )!.withValues(alpha: shade),
+            ],
+          ).createShader(Rect.fromLTWH(-petalW, -petalH, petalW * 2, petalH)),
+      );
+      canvas.restore();
+    }
+    // Glow dot rising above the flower.
+    final glow = _seg(t, 0.5, 1);
+    if (glow > 0) {
+      canvas.drawCircle(
+        base - Offset(0, petalH + 14 + 10 * glow),
+        5,
+        Paint()
+          ..color = const Color(0xFFFFD66B)
+              .withValues(alpha: math.sin(glow * math.pi)),
+      );
+    }
+  }
+
+  /// Two arms wrap around a heart in a hug.
+  void _familyCare(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final c = Offset(w / 2, h * 0.48);
+    final pop = Curves.elasticOut.transform(_seg(t, 0, 0.4));
+    final beat = 1 + 0.06 * math.sin(_seg(t, 0.5, 1) * math.pi * 4);
+    _heart(canvas, c, w * 0.2 * pop * beat, color);
+    final hug = Curves.easeOutCubic.transform(_seg(t, 0.2, 0.6));
+    final r = w * 0.36;
+    final armPaint = _stroke(const Color(0xFFF2A65A), 10);
+    final sweep = math.pi * 0.62 * hug;
+    canvas.drawArc(
+      Rect.fromCircle(center: c, radius: r),
+      math.pi * 0.95,
+      -sweep,
+      false,
+      armPaint,
+    );
+    canvas.drawArc(
+      Rect.fromCircle(center: c, radius: r),
+      math.pi * 0.05,
+      sweep,
+      false,
+      armPaint,
+    );
+    // Hands at the ends of the arms.
+    if (hug > 0) {
+      final hand = Paint()..color = const Color(0xFFF2A65A);
+      for (final a in [math.pi * 0.95 - sweep, math.pi * 0.05 + sweep]) {
+        canvas.drawCircle(c + Offset(math.cos(a), math.sin(a)) * r, 9, hand);
+      }
+    }
+    // Small hearts rise after the hug closes.
+    final rnd = math.Random(9);
+    for (var i = 0; i < 4; i++) {
+      final p = _seg(t, 0.55 + i * 0.06, 0.95 + i * 0.02);
+      if (p <= 0 || p >= 1) continue;
+      final x = c.dx + (rnd.nextDouble() - 0.5) * w * 0.7;
+      _heart(
+        canvas,
+        Offset(x, c.dy - r * 0.6 - 40 * p),
+        6,
+        color.withValues(alpha: math.sin(p * math.pi)),
+      );
+    }
+  }
+
+  /// A warm bowl slides up and steam curls out of it.
+  void _familyMeals(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final rise = Curves.easeOutBack.transform(_seg(t, 0, 0.35));
+    final rimY = h * 0.6 + h * 0.4 * (1 - rise);
+    final cx = w / 2, bw = w * 0.36;
+    // Food peeking over the rim.
+    canvas.drawOval(
+      Rect.fromCenter(center: Offset(cx, rimY), width: bw * 2, height: 18),
+      Paint()..color = const Color(0xFFFFD08A),
+    );
+    for (final (i, dx) in [-0.45, 0.0, 0.42].indexed) {
+      canvas.drawCircle(
+        Offset(cx + bw * dx, rimY - 4),
+        7,
+        Paint()
+          ..color = [
+            const Color(0xFF6DBE45),
+            const Color(0xFFE5383B),
+            const Color(0xFFF2B01E),
+          ][i],
+      );
+    }
+    final bowl = Path()
+      ..moveTo(cx - bw, rimY)
+      ..quadraticBezierTo(cx - bw, rimY + h * 0.3, cx, rimY + h * 0.3)
+      ..quadraticBezierTo(cx + bw, rimY + h * 0.3, cx + bw, rimY)
+      ..close();
+    canvas.drawPath(bowl, Paint()..color = color);
+    canvas.drawLine(
+      Offset(cx - bw * 0.6, rimY + h * 0.08),
+      Offset(cx - bw * 0.3, rimY + h * 0.18),
+      _stroke(Colors.white.withValues(alpha: 0.5), 4),
+    );
+    // Steam.
+    for (var i = 0; i < 3; i++) {
+      final p = _seg(t, 0.3 + i * 0.1, 0.9 + i * 0.03);
+      if (p <= 0 || p >= 1) continue;
+      final x = cx + (i - 1) * bw * 0.5;
+      final steam = Path()..moveTo(x, rimY - 10);
+      for (var s = 1; s <= 12; s++) {
+        final f = s / 12;
+        steam.lineTo(
+          x + math.sin(f * math.pi * 2 + t * 10 + i) * 6,
+          rimY - 10 - f * h * 0.4,
+        );
+      }
+      _drawPartial(
+        canvas,
+        steam,
+        Curves.easeOut.transform(p),
+        _stroke(look.muted.withValues(alpha: 0.5 * math.sin(p * math.pi)), 4),
+      );
+    }
+  }
+
+  /// A house draws itself, its windows light up and it sparkles clean.
+  void _homeTasks(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final l = w * 0.22,
+        r = w * 0.78,
+        top = h * 0.2,
+        eave = h * 0.45,
+        bottom = h * 0.88;
+    final house = Path()
+      ..moveTo(l, bottom)
+      ..lineTo(l, eave)
+      ..lineTo(w / 2, top)
+      ..lineTo(r, eave)
+      ..lineTo(r, bottom)
+      ..close();
+    final draw = Curves.easeInOut.transform(_seg(t, 0, 0.45));
+    final fill = _seg(t, 0.35, 0.55);
+    if (fill > 0) {
+      canvas.drawPath(
+        house,
+        Paint()..color = color.withValues(alpha: 0.18 * fill),
+      );
+    }
+    _drawPartial(canvas, house, draw, _stroke(color, 6));
+    // Door.
+    if (fill > 0) {
+      canvas.drawRRect(
+        RRect.fromRectAndCorners(
+          Rect.fromLTRB(w / 2 - 12, bottom - 34 * fill, w / 2 + 12, bottom),
+          topLeft: const Radius.circular(10),
+          topRight: const Radius.circular(10),
+        ),
+        Paint()..color = color,
+      );
+    }
+    // Windows light up one after the other.
+    for (final (i, x) in [l + 14.0, r - 34.0].indexed) {
+      final on = Curves.easeOut.transform(
+        _seg(t, 0.5 + i * 0.1, 0.65 + i * 0.1),
+      );
+      final rect = Rect.fromLTWH(x, eave + 10, 20, 20);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(rect, const Radius.circular(4)),
+        Paint()
+          ..color = Color.lerp(
+            color.withValues(alpha: 0.25),
+            const Color(0xFFFFD166),
+            on,
+          )!,
+      );
+      if (on > 0) {
+        canvas.drawCircle(
+          rect.center,
+          18 * on,
+          Paint()..color = const Color(0xFFFFD166).withValues(alpha: 0.25 * on),
+        );
+      }
+    }
+    _sparkles(
+      canvas,
+      size,
+      start: 0.6,
+      count: 5,
+      color: const Color(0xFFFFB443),
+      fromY: top + 20,
+    );
+  }
+
+  /// A checklist ticks its items one by one.
+  void _work(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final slide = Curves.easeOutBack.transform(_seg(t, 0, 0.3));
+    final board = Rect.fromLTRB(
+      w * 0.22,
+      h * 0.1 + h * 0.3 * (1 - slide),
+      w * 0.78,
+      h * 0.94 + h * 0.3 * (1 - slide),
+    );
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(board, const Radius.circular(14)),
+      Paint()..color = color,
+    );
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(board.deflate(8), const Radius.circular(8)),
+      Paint()..color = Colors.white,
+    );
+    // Clip at the top.
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(
+          center: Offset(board.center.dx, board.top + 4),
+          width: w * 0.22,
+          height: 14,
+        ),
+        const Radius.circular(6),
+      ),
+      Paint()..color = look.ink.withValues(alpha: 0.75),
+    );
+    for (var i = 0; i < 3; i++) {
+      final y = board.top + 34 + i * (board.height - 50) / 3;
+      final startX = forward > 0 ? board.left + 18 : board.right - 18;
+      final box = Rect.fromCenter(
+        center: Offset(startX, y),
+        width: 16,
+        height: 16,
+      );
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(box, const Radius.circular(4)),
+        _stroke(look.muted.withValues(alpha: 0.6), 2),
+      );
+      canvas.drawLine(
+        Offset(startX + forward * 18, y),
+        Offset(startX + forward * (board.width - 54), y),
+        _stroke(look.muted.withValues(alpha: 0.3), 4),
+      );
+      final tick = Curves.easeOut.transform(
+        _seg(t, 0.35 + i * 0.15, 0.5 + i * 0.15),
+      );
+      final check = Path()
+        ..moveTo(box.left + 2, box.center.dy)
+        ..lineTo(box.center.dx - 1, box.bottom - 2)
+        ..lineTo(box.right + 6, box.top - 6);
+      _drawPartial(canvas, check, tick, _stroke(look.done, 4));
+    }
+  }
+
+  /// Gold coins drop into a jar one after another.
+  void _finance(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final cx = w / 2, top = h * 0.36, bottom = h * 0.94, half = w * 0.27;
+    final jar = Rect.fromLTRB(cx - half, top, cx + half, bottom);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(jar, const Radius.circular(18)),
+      Paint()..color = color.withValues(alpha: 0.15),
+    );
+    // Coins already in the jar.
+    var landed = 0;
+    for (var i = 0; i < 4; i++) {
+      final p = _seg(t, 0.08 + i * 0.13, 0.28 + i * 0.13);
+      if (p <= 0) continue;
+      final restY = bottom - 14 - landed * 12.0;
+      final y = Curves.bounceOut.transform(p) * (restY + 20) - 20;
+      if (p >= 1) landed++;
+      _coin(
+        canvas,
+        Offset(cx + (i.isEven ? -6 : 6), y),
+        w * 0.12,
+        p >= 1 ? 0 : p * 6,
+      );
+    }
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(jar, const Radius.circular(18)),
+      _stroke(color, 5),
+    );
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(center: Offset(cx, top), width: half * 1.6, height: 12),
+        const Radius.circular(6),
+      ),
+      Paint()..color = color,
+    );
+    _sparkles(
+      canvas,
+      size,
+      start: 0.65,
+      count: 4,
+      color: const Color(0xFFF2B01E),
+      fromY: top,
+    );
+  }
+
+  void _coin(Canvas canvas, Offset c, double r, double spin) {
+    final squash = math.cos(spin).abs().clamp(0.25, 1.0);
+    canvas.save();
+    canvas.translate(c.dx, c.dy);
+    canvas.scale(1, squash * 0.55 + 0.45 * squash);
+    canvas.drawCircle(Offset.zero, r, Paint()..color = const Color(0xFFE09A12));
+    canvas.drawCircle(
+      Offset.zero,
+      r * 0.8,
+      Paint()..color = const Color(0xFFFFCF3F),
+    );
+    canvas.restore();
+  }
+
+  /// The sun rises over green hills and a little tree pops up.
+  void _outdoor(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final rise = Curves.easeOutCubic.transform(_seg(t, 0.05, 0.55));
+    final sun = Offset(
+      w * 0.5 + forward * w * 0.12,
+      h * 0.75 - h * 0.45 * rise,
+    );
+    // Rays.
+    final rays = _seg(t, 0.3, 1);
+    for (var i = 0; i < 10; i++) {
+      final a = i * math.pi / 5 + t * 1.5;
+      final inner = w * 0.15,
+          outer = w * (0.19 + 0.04 * math.sin(t * 12 + i)) * (0.4 + 0.6 * rays);
+      if (rays <= 0) break;
+      canvas.drawLine(
+        sun + Offset(math.cos(a), math.sin(a)) * inner,
+        sun + Offset(math.cos(a), math.sin(a)) * (inner + outer * 0.6),
+        _stroke(const Color(0xFFFFC233).withValues(alpha: rays), 4),
+      );
+    }
+    canvas.drawCircle(sun, w * 0.12, Paint()..color = const Color(0xFFFFC233));
+    // Hills in front of the sun.
+    final back = Path()
+      ..moveTo(0, h)
+      ..lineTo(0, h * 0.72)
+      ..quadraticBezierTo(w * 0.3, h * 0.52, w * 0.62, h * 0.72)
+      ..lineTo(w * 0.62, h)
+      ..close();
+    final front = Path()
+      ..moveTo(w * 0.3, h)
+      ..quadraticBezierTo(w * 0.65, h * 0.55, w, h * 0.68)
+      ..lineTo(w, h)
+      ..close();
+    canvas.drawPath(back, Paint()..color = const Color(0xFF8BD17C));
+    canvas.drawPath(front, Paint()..color = color);
+    // Tree pops up on the front hill.
+    final tree = Curves.elasticOut.transform(_seg(t, 0.45, 0.9));
+    if (tree > 0) {
+      final base = Offset(w * 0.5 - forward * w * 0.22, h * 0.8);
+      canvas.drawLine(
+        base,
+        base - Offset(0, 18 * tree),
+        _stroke(const Color(0xFF6D4C41), 5),
+      );
+      canvas.drawCircle(
+        base - Offset(0, 28 * tree),
+        14 * tree,
+        Paint()..color = const Color(0xFF2E8B57),
+      );
+    }
+  }
+
+  /// Paint splats land in bright colors and a brush stroke sweeps across.
+  void _art(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    const colors = [
+      Color(0xFFFF5C8A),
+      Color(0xFF3D9BFF),
+      Color(0xFFFFC233),
+      Color(0xFF22B455),
+    ];
+    final spots = [
+      Offset(w * 0.3, h * 0.32),
+      Offset(w * 0.7, h * 0.3),
+      Offset(w * 0.32, h * 0.7),
+      Offset(w * 0.7, h * 0.68),
+    ];
+    for (var i = 0; i < 4; i++) {
+      final p = Curves.elasticOut.transform(_seg(t, i * 0.1, 0.35 + i * 0.1));
+      if (p <= 0) continue;
+      final c = Offset(w / 2 + (spots[i].dx - w / 2) * forward, spots[i].dy);
+      final rnd = math.Random(i + 30);
+      final r = w * 0.13 * p;
+      // A wobbly round splat: smooth curves through jittered points.
+      const n = 10;
+      final pts = [
+        for (var k = 0; k < n; k++)
+          c +
+              Offset(
+                    math.cos(k / n * math.pi * 2),
+                    math.sin(k / n * math.pi * 2),
+                  ) *
+                  (r * (0.8 + rnd.nextDouble() * 0.35)),
+      ];
+      Offset mid(int k) => (pts[k % n] + pts[(k + 1) % n]) / 2;
+      final blob = Path()..moveTo(mid(0).dx, mid(0).dy);
+      for (var k = 1; k <= n; k++) {
+        final m = mid(k);
+        blob.quadraticBezierTo(pts[k % n].dx, pts[k % n].dy, m.dx, m.dy);
+      }
+      blob.close();
+      canvas.drawPath(blob, Paint()..color = colors[i]);
+      // Droplets.
+      for (var k = 0; k < 3; k++) {
+        final a = rnd.nextDouble() * math.pi * 2;
+        canvas.drawCircle(
+          c + Offset(math.cos(a), math.sin(a)) * r * 1.4,
+          3 * p,
+          Paint()..color = colors[i],
+        );
+      }
+    }
+    // Brush stroke.
+    final stroke = Path()
+      ..moveTo(w * 0.12, h * 0.55)
+      ..cubicTo(w * 0.35, h * 0.35, w * 0.6, h * 0.75, w * 0.88, h * 0.45);
+    canvas.save();
+    if (forward < 0) {
+      canvas.translate(w, 0);
+      canvas.scale(-1, 1);
+    }
+    _drawPartial(
+      canvas,
+      stroke,
+      Curves.easeInOut.transform(_seg(t, 0.45, 0.8)),
+      _stroke(color, 9),
+    );
+    canvas.restore();
+  }
+
+  /// Two puzzle pieces slide together and click.
+  void _hobbies(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    final s = w * 0.3;
+    final c = Offset(w / 2, h / 2);
+    final slide = Curves.easeOutBack.transform(_seg(t, 0.05, 0.5));
+    Path piece({required bool tab}) {
+      final knob = s * 0.2;
+      final p = Path()
+        ..moveTo(0, 0)
+        ..lineTo(s, 0)
+        ..lineTo(s, s * 0.32);
+      if (tab) {
+        p.arcToPoint(
+          Offset(s, s * 0.68),
+          radius: Radius.circular(knob),
+          clockwise: true,
+        );
+      } else {
+        p.arcToPoint(
+          Offset(s, s * 0.68),
+          radius: Radius.circular(knob),
+          clockwise: false,
+        );
+      }
+      p
+        ..lineTo(s, s)
+        ..lineTo(0, s)
+        ..close();
+      return p;
+    }
+
+    final gap = (1 - slide) * w * 0.4;
+    canvas.save();
+    canvas.translate(c.dx - s - gap, c.dy - s / 2);
+    canvas.drawPath(piece(tab: true), Paint()..color = color);
+    canvas.restore();
+    canvas.save();
+    canvas.translate(c.dx + s + gap, c.dy - s / 2);
+    canvas.scale(-1, 1);
+    canvas.drawPath(
+      piece(tab: false),
+      Paint()..color = const Color(0xFFF2B01E),
+    );
+    canvas.restore();
+    // Click flash.
+    final click = _seg(t, 0.42, 0.7);
+    if (click > 0 && click < 1) {
+      for (var i = 0; i < 8; i++) {
+        final a = i * math.pi / 4;
+        final from =
+            c + Offset(math.cos(a), math.sin(a)) * (s * 0.9 + 20 * click);
+        canvas.drawLine(
+          from,
+          from + Offset(math.cos(a), math.sin(a)) * 10,
+          _stroke(color.withValues(alpha: 1 - click), 3),
+        );
+      }
+    }
+    _sparkles(
+      canvas,
+      size,
+      start: 0.55,
+      count: 4,
+      color: color,
+      fromY: c.dy - s / 2,
+    );
   }
 
   void _sparkles(
