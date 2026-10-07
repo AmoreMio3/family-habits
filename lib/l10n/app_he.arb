@@ -9,6 +9,7 @@
   "familyHabitTag": "הרגל משפחתי",
   "checkInForFamily": "סימון לכל המשפחה",
   "familyCheckedIn": "„{habit}” סומן לכל המשפחה על ידי {name}",
+  "habitAdded": "הרגל חדש: {habit}",
   "streakDays": "{count, plural, =0{עדיין אין רצף} =1{יום אחד} =2{יומיים} other{{count} ימים}}",
   "weekTarget": "{done}/{target} השבוע",
   "categories": "קטגוריות",

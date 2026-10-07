@@ -282,7 +282,7 @@ class HabitCard extends StatelessWidget {
     final messenger = ScaffoldMessenger.of(context);
     final name = store.activeMember?.nickname ?? '';
     if (!store.isDoneToday(habit)) {
-      celebrate(context, celebrationFor(habit), habit.name);
+      celebrateHabit(context, habit, habit.name);
     }
     final familyCheckIn = await store.toggleToday(habit);
     if (familyCheckIn) {

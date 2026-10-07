@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../models/category.dart';
 import '../models/family.dart';
 import '../models/habit_library.dart';
+import 'habit_scenes.dart';
 import 'look.dart';
 
 /// The little animation that plays when a habit is checked off: one per
@@ -99,17 +100,37 @@ Celebration celebrationFor(Habit habit) {
   return Celebration.confetti;
 }
 
+/// Plays the animation that fits [habit]: its own picture when it has one,
+/// otherwise its category's. Drinking water keeps its glass.
+void celebrateHabit(BuildContext context, Habit habit, String caption) {
+  final kind = celebrationFor(habit);
+  celebrate(
+    context,
+    kind,
+    caption,
+    scene: kind == Celebration.water ? null : sceneFor(habit),
+  );
+}
+
 /// Plays [kind] in a floating bubble over the screen, then removes it. Taps
 /// pass through, and nothing plays when the phone asks for reduced motion.
-void celebrate(BuildContext context, Celebration kind, String caption) {
+void celebrate(
+  BuildContext context,
+  Celebration kind,
+  String caption, {
+  Scene? scene,
+}) {
   if (MediaQuery.maybeDisableAnimationsOf(context) ?? false) return;
-  final overlay = Overlay.maybeOf(context);
+  // The root overlay, so the animation keeps playing while the habit
+  // editor closes.
+  final overlay = Overlay.maybeOf(context, rootOverlay: true);
   if (overlay == null) return;
   HapticFeedback.mediumImpact();
   late final OverlayEntry entry;
   entry = OverlayEntry(
     builder: (_) => _CelebrationOverlay(
       kind: kind,
+      scene: scene,
       caption: caption,
       look: Look.of(context),
       onDone: () => entry.remove(),
@@ -121,12 +142,14 @@ void celebrate(BuildContext context, Celebration kind, String caption) {
 class _CelebrationOverlay extends StatefulWidget {
   const _CelebrationOverlay({
     required this.kind,
+    required this.scene,
     required this.caption,
     required this.look,
     required this.onDone,
   });
 
   final Celebration kind;
+  final Scene? scene;
   final String caption;
   final Look look;
   final VoidCallback onDone;
@@ -207,6 +230,7 @@ class _CelebrationOverlayState extends State<_CelebrationOverlay>
                           child: CustomPaint(
                             painter: CelebrationPainter(
                               kind: widget.kind,
+                              scene: widget.scene,
                               t: t,
                               color: color,
                               look: look,
@@ -265,9 +289,13 @@ class CelebrationPainter extends CustomPainter {
     required this.color,
     required this.look,
     required this.textDirection,
+    this.scene,
   });
 
   final Celebration kind;
+
+  /// The habit's own picture; when set it plays instead of [kind]'s.
+  final Scene? scene;
   final double t;
   final Color color;
   final Look look;
@@ -282,6 +310,7 @@ class CelebrationPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (scene case final scene?) return _scene(canvas, size, scene);
     switch (kind) {
       case Celebration.water:
         _water(canvas, size);
@@ -1528,6 +1557,417 @@ class CelebrationPainter extends CustomPainter {
     );
   }
 
+  /// Draws [emoji] centred on [c]. Colour emoji ignore the text colour, so
+  /// see-through emoji are drawn on a faded layer.
+  void _emoji(
+    Canvas canvas,
+    String emoji,
+    Offset c,
+    double size, {
+    double scale = 1,
+    double scaleY = 1,
+    double angle = 0,
+    double opacity = 1,
+  }) {
+    if (scale <= 0 || opacity <= 0) return;
+    final painter = TextPainter(
+      text: TextSpan(
+        text: emoji,
+        style: TextStyle(
+          fontSize: size,
+          height: 1,
+          fontFamilyFallback: const ['Noto Color Emoji'],
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    canvas.save();
+    canvas.translate(c.dx, c.dy);
+    canvas.rotate(angle);
+    canvas.scale(scale, scale * scaleY);
+    if (opacity < 1) {
+      canvas.saveLayer(
+        null,
+        Paint()..color = Color.fromRGBO(0, 0, 0, opacity.clamp(0.0, 1.0)),
+      );
+    }
+    painter.paint(canvas, Offset(-painter.width / 2, -painter.height / 2));
+    if (opacity < 1) canvas.restore();
+    canvas.restore();
+    painter.dispose();
+  }
+
+  /// A habit's own picture, moving the way its [Scene] says.
+  void _scene(Canvas canvas, Size size, Scene scene) {
+    final w = size.width, h = size.height;
+    final c = Offset(w / 2, h * 0.54);
+    final extra = scene.extra;
+    // A soft glow in the category's colour behind every picture.
+    final glow = Curves.easeOutBack.transform(_seg(t, 0, 0.3));
+    canvas.drawCircle(
+      c,
+      w * 0.36 * glow,
+      Paint()..color = color.withValues(alpha: 0.14),
+    );
+    switch (scene.motion) {
+      case Motion.pop:
+        _emoji(
+          canvas,
+          scene.emoji,
+          c,
+          70,
+          scale: Curves.elasticOut.transform(_seg(t, 0, 0.4)),
+          angle: math.sin(t * 14) * 0.12 * (1 - _seg(t, 0.3, 0.8)),
+        );
+        _burst(canvas, c, extra, start: 0.18);
+      case Motion.ban:
+        _ban(canvas, c, scene);
+      case Motion.bounce:
+        final drop = Curves.bounceOut.transform(_seg(t, 0, 0.5));
+        final landing = _seg(t, 0.13, 0.5);
+        final squash =
+            1 - 0.18 * math.sin(landing * math.pi * 3).abs() * (1 - landing);
+        canvas.drawOval(
+          Rect.fromCenter(
+            center: Offset(c.dx, c.dy + 42),
+            width: 70 * drop,
+            height: 10 * drop,
+          ),
+          Paint()..color = color.withValues(alpha: 0.25),
+        );
+        _emoji(
+          canvas,
+          scene.emoji,
+          Offset(c.dx, c.dy - h * 0.7 * (1 - drop)),
+          66,
+          scaleY: squash,
+        );
+        _burst(canvas, c, extra, start: 0.45, count: 5);
+      case Motion.float:
+        final rise = Curves.easeOutCubic.transform(_seg(t, 0, 0.6));
+        _emoji(
+          canvas,
+          scene.emoji,
+          Offset(c.dx + math.sin(t * math.pi * 3) * 6, c.dy + 26 * (1 - rise)),
+          66,
+          scale: Curves.easeOutBack.transform(_seg(t, 0, 0.3)),
+          angle: math.sin(t * math.pi * 2) * 0.08,
+        );
+        for (var i = 0; i < 5; i++) {
+          final p = _seg(t, 0.12 + i * 0.1, 0.62 + i * 0.1);
+          if (p <= 0 || p >= 1) continue;
+          final side = i.isEven ? 1 : -1;
+          _emoji(
+            canvas,
+            extra ?? '✨',
+            Offset(
+              c.dx + side * (34 + i * 4) + math.sin(p * math.pi * 2) * 8,
+              c.dy + 20 - 85 * p,
+            ),
+            16 + i * 2,
+            opacity: math.sin(p * math.pi),
+          );
+        }
+      case Motion.wiggle:
+        final shake = _seg(t, 0.15, 0.8);
+        _emoji(
+          canvas,
+          scene.emoji,
+          c,
+          68,
+          scale: Curves.easeOutBack.transform(_seg(t, 0, 0.2)),
+          angle:
+              math.sin(shake * math.pi * 14) * 0.35 * math.sin(shake * math.pi),
+        );
+        for (var i = 0; i < 6; i++) {
+          final p = _seg(t, 0.2 + i * 0.08, 0.5 + i * 0.08);
+          if (p <= 0 || p >= 1) continue;
+          final side = i.isEven ? 1 : -1;
+          _emoji(
+            canvas,
+            extra ?? '✨',
+            Offset(
+              c.dx + side * (30 + 40 * p),
+              c.dy - 10 - 50 * p + 40 * p * p,
+            ),
+            16,
+            opacity: 1 - p,
+          );
+        }
+      case Motion.travel:
+        // The emoji face the start of the line, so they come in from the
+        // end of it.
+        final move = Curves.easeOutBack.transform(_seg(t, 0, 0.5));
+        final x = c.dx + (w * 0.75) * (1 - move);
+        final moving = 1 - _seg(t, 0.4, 0.55);
+        final hop = math.sin(_seg(t, 0.6, 0.78) * math.pi) * 14;
+        for (var i = 1; i <= 3; i++) {
+          final p = _seg(t, 0.05 + i * 0.05, 0.7);
+          _emoji(
+            canvas,
+            extra ?? '💨',
+            Offset(x + 30 + i * 22, c.dy + 22 - i * 3),
+            18 - i * 2,
+            opacity: (1 - p) * moving,
+          );
+        }
+        _emoji(
+          canvas,
+          scene.emoji,
+          Offset(
+            x,
+            c.dy - (math.sin(t * math.pi * 10).abs() * 6 * moving) - hop,
+          ),
+          68,
+        );
+        if (t > 0.6) {
+          _sparkles(
+            canvas,
+            size,
+            start: 0.6,
+            count: 4,
+            color: color,
+            fromY: c.dy - 20,
+          );
+        }
+      case Motion.grow:
+        final ground = c.dy + 38;
+        final line = Curves.easeOut.transform(_seg(t, 0, 0.2));
+        canvas.drawLine(
+          Offset(c.dx - 50 * line, ground),
+          Offset(c.dx + 50 * line, ground),
+          Paint()
+            ..color = color.withValues(alpha: 0.5)
+            ..strokeWidth = 5
+            ..strokeCap = StrokeCap.round,
+        );
+        final grow = Curves.elasticOut.transform(_seg(t, 0.12, 0.6));
+        canvas.save();
+        canvas.translate(c.dx, ground);
+        canvas.scale(0.4 + 0.6 * grow, grow);
+        _emoji(canvas, scene.emoji, const Offset(0, -36), 70);
+        canvas.restore();
+        for (var i = 0; i < 4; i++) {
+          final p = Curves.easeOutBack.transform(
+            _seg(t, 0.45 + i * 0.07, 0.7 + i * 0.07),
+          );
+          final a = -math.pi * (0.15 + i * 0.233);
+          _emoji(
+            canvas,
+            extra ?? '✨',
+            Offset(c.dx + math.cos(a) * 58, ground - 30 + math.sin(a) * 50),
+            18,
+            scale: p,
+          );
+        }
+      case Motion.rain:
+        var bump = 0.0;
+        for (var i = 0; i < 6; i++) {
+          final s = 0.12 + i * 0.08;
+          final p = _seg(t, s, s + 0.22);
+          final landed = _seg(t, s + 0.22, s + 0.3);
+          bump += math.sin(landed * math.pi) * 0.08;
+          if (p <= 0 || p >= 1) continue;
+          final x = c.dx + (i.isEven ? -1 : 1) * (6 + i * 3);
+          _emoji(
+            canvas,
+            extra ?? '✨',
+            Offset(x, c.dy - 80 + 85 * Curves.easeIn.transform(p)),
+            20,
+            angle: p * math.pi * (i.isEven ? 1 : -1),
+          );
+        }
+        _emoji(
+          canvas,
+          scene.emoji,
+          Offset(c.dx, c.dy + 20),
+          64,
+          scale: Curves.easeOutBack.transform(_seg(t, 0, 0.2)) + bump,
+        );
+        _sparkles(
+          canvas,
+          size,
+          start: 0.7,
+          count: 4,
+          color: color,
+          fromY: c.dy,
+        );
+      case Motion.orbit:
+        final appear = _seg(t, 0.15, 0.35);
+        final leave = 1 - _seg(t, 0.75, 0.9);
+        for (var i = 0; i < 5; i++) {
+          final a = t * math.pi * 2.4 * forward + i * math.pi * 2 / 5;
+          _emoji(
+            canvas,
+            extra ?? '❤️',
+            c + Offset(math.cos(a) * 58, math.sin(a) * 46),
+            18,
+            scale: Curves.easeOutBack.transform(appear),
+            opacity: leave,
+          );
+        }
+        _emoji(
+          canvas,
+          scene.emoji,
+          c,
+          64,
+          scale:
+              Curves.elasticOut.transform(_seg(t, 0, 0.4)) *
+              (1 + 0.06 * math.sin(t * math.pi * 6)),
+        );
+      case Motion.spin:
+        _emoji(
+          canvas,
+          scene.emoji,
+          c,
+          68,
+          scale: Curves.elasticOut.transform(_seg(t, 0, 0.4)),
+          angle:
+              math.pi *
+              2 *
+              forward *
+              Curves.easeOutCubic.transform(_seg(t, 0, 0.6)),
+        );
+        _burst(canvas, c, extra, start: 0.5);
+      case Motion.pulse:
+        double beat(double at) => math.sin(_seg(t, at, at + 0.12) * math.pi);
+        final beats = [0.25, 0.48];
+        for (final at in beats) {
+          final p = _seg(t, at, at + 0.45);
+          if (p <= 0 || p >= 1) continue;
+          canvas.drawCircle(
+            c,
+            36 + 40 * p,
+            Paint()
+              ..style = PaintingStyle.stroke
+              ..strokeWidth = 4 * (1 - p)
+              ..color = color.withValues(alpha: 0.6 * (1 - p)),
+          );
+        }
+        _emoji(
+          canvas,
+          scene.emoji,
+          c,
+          66,
+          scale:
+              Curves.easeOutBack.transform(_seg(t, 0, 0.22)) +
+              0.18 * (beat(0.25) + beat(0.48)),
+        );
+        for (var i = 0; i < 3; i++) {
+          final p = _seg(t, 0.3 + i * 0.12, 0.75 + i * 0.12);
+          if (p <= 0 || p >= 1) continue;
+          _emoji(
+            canvas,
+            extra ?? '✨',
+            Offset(c.dx + (i - 1) * 30, c.dy - 30 - 55 * p),
+            16,
+            opacity: math.sin(p * math.pi),
+          );
+        }
+    }
+  }
+
+  /// Throws [extra] (or sparkles) out from [c] in a ring.
+  void _burst(
+    Canvas canvas,
+    Offset c,
+    String? extra, {
+    required double start,
+    int count = 7,
+  }) {
+    final p = _seg(t, start, start + 0.45);
+    if (p <= 0 || p >= 1) return;
+    for (var i = 0; i < count; i++) {
+      final a = -math.pi / 2 + i * math.pi * 2 / count;
+      final d = 30 + 46 * Curves.easeOutCubic.transform(p);
+      final at = c + Offset(math.cos(a) * d, math.sin(a) * d);
+      if (extra == null) {
+        _star(canvas, at, 6 * (1 - p) + 2, color.withValues(alpha: 1 - p));
+      } else {
+        _emoji(canvas, extra, at, 18, opacity: 1 - p * p);
+      }
+    }
+  }
+
+  /// The habit's picture appears, its [Scene.extra] puffs out of it, then a
+  /// red "no" sign draws over it and a green tick says you held out.
+  void _ban(Canvas canvas, Offset c, Scene scene) {
+    const red = Color(0xFFE53935);
+    final banned = _seg(t, 0.55, 0.68);
+    final shake = math.sin(_seg(t, 0.62, 0.8) * math.pi * 6) * 5;
+    final extra = scene.extra;
+    if (extra != null) {
+      for (var i = 0; i < 3; i++) {
+        final p = _seg(t, 0.12 + i * 0.1, 0.55 + i * 0.1);
+        if (p <= 0) continue;
+        _emoji(
+          canvas,
+          extra,
+          Offset(
+            c.dx + 22 + math.sin(p * math.pi * 2 + i) * 8,
+            c.dy - 20 - 50 * p,
+          ),
+          16 + 8 * p,
+          opacity: math.sin(p.clamp(0.0, 1.0) * math.pi) * (1 - banned),
+        );
+      }
+    }
+    _emoji(
+      canvas,
+      scene.emoji,
+      c + Offset(shake, 0),
+      62,
+      scale: Curves.easeOutBack.transform(_seg(t, 0, 0.25)),
+      opacity: 1 - 0.3 * banned,
+    );
+    final ring = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 9
+      ..strokeCap = StrokeCap.round
+      ..color = red;
+    const r = 52.0;
+    canvas.drawArc(
+      Rect.fromCircle(center: c + Offset(shake, 0), radius: r),
+      -math.pi / 2,
+      math.pi * 2 * Curves.easeInOut.transform(_seg(t, 0.28, 0.55)),
+      false,
+      ring,
+    );
+    if (banned > 0) {
+      final from =
+          c + Offset(shake, 0) + Offset.fromDirection(-math.pi * 0.75, r);
+      final to = c + Offset(shake, 0) + Offset.fromDirection(math.pi * 0.25, r);
+      canvas.drawLine(
+        from,
+        Offset.lerp(from, to, Curves.easeOut.transform(banned))!,
+        ring,
+      );
+    }
+    // A green tick: you held out.
+    final tick = Curves.elasticOut.transform(_seg(t, 0.7, 0.95));
+    if (tick > 0) {
+      final at = c + Offset(forward * 44, 40);
+      canvas.drawCircle(
+        at,
+        16 * tick,
+        Paint()..color = const Color(0xFF2E9E5B),
+      );
+      final path = Path()
+        ..moveTo(at.dx - 7 * tick, at.dy)
+        ..lineTo(at.dx - 2 * tick, at.dy + 5 * tick)
+        ..lineTo(at.dx + 7 * tick, at.dy - 5 * tick);
+      canvas.drawPath(
+        path,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 3.5
+          ..strokeCap = StrokeCap.round
+          ..strokeJoin = StrokeJoin.round
+          ..color = Colors.white,
+      );
+    }
+  }
+
   void _sparkles(
     Canvas canvas,
     Size size, {
@@ -1589,5 +2029,8 @@ class CelebrationPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CelebrationPainter old) =>
-      old.t != t || old.kind != kind || old.color != color;
+      old.t != t ||
+      old.kind != kind ||
+      old.scene != scene ||
+      old.color != color;
 }

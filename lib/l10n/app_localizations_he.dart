@@ -41,6 +41,11 @@ class AppLocalizationsHe extends AppLocalizations {
   }
 
   @override
+  String habitAdded(String habit) {
+    return 'הרגל חדש: $habit';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

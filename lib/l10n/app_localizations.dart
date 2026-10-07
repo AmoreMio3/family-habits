@@ -171,6 +171,12 @@ abstract class AppLocalizations {
   /// **'{name} checked in “{habit}” for the whole family'**
   String familyCheckedIn(String name, String habit);
 
+  /// No description provided for @habitAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'New habit: {habit}'**
+  String habitAdded(String habit);
+
   /// No description provided for @streakDays.
   ///
   /// In en, this message translates to:
