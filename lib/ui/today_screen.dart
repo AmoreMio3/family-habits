@@ -48,6 +48,10 @@ class TodayScreen extends StatelessWidget {
           ),
         ),
         _ProfileSwitcher(store: store),
+        if (store.childInView case final child?) ...[
+          const SizedBox(height: 12),
+          _ChildDayHint(text: l10n.childDayHint(child.nickname)),
+        ],
         const SizedBox(height: 16),
         FamilyProgressCard(store: store, weekStart: weekStart),
         if (store.familyHabits.isNotEmpty) ...[
@@ -163,6 +167,35 @@ class _ProfileButton extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Tells a parent they are looking at a child's day.
+class _ChildDayHint extends StatelessWidget {
+  const _ChildDayHint({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final look = Look.of(context);
+    return Container(
+      key: const Key('childDayHint'),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: look.tint(look.primary),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.child_care_rounded, size: 20, color: look.primary),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(text, style: TextStyle(color: look.ink, fontSize: 13)),
+          ),
+        ],
       ),
     );
   }

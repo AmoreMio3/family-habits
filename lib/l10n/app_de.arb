@@ -10,6 +10,8 @@
   "checkInForFamily": "Für die ganze Familie abhaken",
   "familyCheckedIn": "{name} hat „{habit}“ für die ganze Familie abgehakt",
   "habitAdded": "Neue Gewohnheit: {habit}",
+  "addHabitFor": "Gewohnheit für {name} hinzufügen",
+  "childDayHint": "Du siehst den Tag von {name}. Gewohnheiten, die du hier hinzufügst, gehören nur {name}.",
   "streakDays": "{count, plural, =0{Noch keine Serie} =1{1 Tag} other{{count} Tage}}",
   "weekTarget": "{done}/{target} diese Woche",
   "categories": "Kategorien",

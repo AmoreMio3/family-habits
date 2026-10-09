@@ -69,8 +69,13 @@ class _HabitPickerState extends State<_HabitPicker> {
     final l10n = AppLocalizations.of(context);
     final store = widget.store;
     final query = _query.text.trim();
+    final child = store.childInView;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.addHabit)),
+      appBar: AppBar(
+        title: Text(
+          child == null ? l10n.addHabit : l10n.addHabitFor(child.nickname),
+        ),
+      ),
       body: ListenableBuilder(
         listenable: store,
         builder: (context, _) => ListView(

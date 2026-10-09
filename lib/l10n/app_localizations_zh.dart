@@ -46,6 +46,16 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String addHabitFor(String name) {
+    return '为$name添加习惯';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return '你正在查看$name的一天。在这里添加的习惯只属于$name。';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -490,6 +500,16 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   @override
   String habitAdded(String habit) {
     return '新習慣：$habit';
+  }
+
+  @override
+  String addHabitFor(String name) {
+    return '為$name新增習慣';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return '你正在查看$name的一天。在這裡新增的習慣只屬於$name。';
   }
 
   @override

@@ -46,6 +46,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String addHabitFor(String name) {
+    return 'Add a habit for $name';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return 'You\'re looking at $name\'s day. Habits you add here are for $name only.';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

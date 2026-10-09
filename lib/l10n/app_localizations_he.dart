@@ -46,6 +46,16 @@ class AppLocalizationsHe extends AppLocalizations {
   }
 
   @override
+  String addHabitFor(String name) {
+    return 'הוספת הרגל עבור $name';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return 'זה היום של $name. הרגלים שתוסיפו כאן יהיו רק של $name.';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

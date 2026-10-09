@@ -66,7 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ? FloatingActionButton.extended(
                   onPressed: () => showHabitPicker(context, store),
                   icon: const Icon(Icons.add_rounded),
-                  label: Text(l10n.addHabit),
+                  label: Text(
+                    store.childInView == null
+                        ? l10n.addHabit
+                        : l10n.addHabitFor(store.childInView!.nickname),
+                  ),
                 )
               : null,
           bottomNavigationBar: NavigationBar(
