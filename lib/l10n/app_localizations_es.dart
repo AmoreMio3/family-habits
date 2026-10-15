@@ -360,17 +360,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get wholeFamily => 'Toda la familia';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count veces a la semana',
-      one: 'Una vez a la semana',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return '¿Eliminar «$habit» y su historial?';
   }
@@ -436,13 +425,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ourCategories => 'Categorías de nuestra familia';
 
   @override
-  String get personalDefinition => '¿Qué cuenta como hecho? (opcional)';
-
-  @override
-  String get personalDefinitionHint =>
-      'Por ejemplo: hoy he bebido suficiente agua';
-
-  @override
   String get categoryName => 'Nombre de la categoría';
 
   @override
@@ -476,6 +458,69 @@ class AppLocalizationsEs extends AppLocalizations {
   String hiName(String name) {
     return '¡Hola, $name!';
   }
+
+  @override
+  String get howOften => 'Con qué frecuencia';
+
+  @override
+  String get specificDays => 'Días concretos';
+
+  @override
+  String get pickADay => 'Elige al menos un día';
+
+  @override
+  String get otherDays => 'Otros días';
+
+  @override
+  String get reminders => 'Recordatorios';
+
+  @override
+  String get remindersIntro =>
+      'Recibe un recordatorio diario para marcar tus hábitos. Los recordatorios se guardan en este teléfono.';
+
+  @override
+  String get reminderOff => 'Sin recordatorio';
+
+  @override
+  String get reminderMorning => 'Cada mañana';
+
+  @override
+  String get reminderEvening => 'Cada noche';
+
+  @override
+  String get reminderTwice => 'Dos veces al día';
+
+  @override
+  String get morningTime => 'Recordatorio de la mañana';
+
+  @override
+  String get eveningTime => 'Recordatorio de la noche';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return 'Cada mañana a las $time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return 'Cada noche a las $time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return 'Cada día a las $morning y a las $evening';
+  }
+
+  @override
+  String get remindersBlocked =>
+      'Las notificaciones de Family Habits están desactivadas. Actívalas en los ajustes del teléfono para recibir recordatorios.';
+
+  @override
+  String get reminderMorningBody =>
+      '¡Buenos días! Tus hábitos de hoy te esperan.';
+
+  @override
+  String get reminderEveningBody => '¿Qué tal hoy? Marca tus hábitos.';
 }
 
 /// The translations for Spanish Castilian, as used in Latin America and the Caribbean (`es_419`).
@@ -627,9 +672,6 @@ class AppLocalizationsEs419 extends AppLocalizationsEs {
   @override
   String get noMatchingHabits =>
       'Ningún hábito predefinido coincide. Puedes crear el tuyo.';
-
-  @override
-  String get personalDefinitionHint => 'Por ejemplo: hoy tomé suficiente agua';
 
   @override
   String get addHabitToCategory => 'Agregar un hábito';

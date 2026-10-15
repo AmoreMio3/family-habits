@@ -185,6 +185,17 @@ describe('habits and members', () => {
     await assertSucceeds(deleteDoc(doc(as('coparent'), 'families/f1/categories/c1')));
   });
 
+  test('a habit can be for chosen weekdays only', async () => {
+    const db = as('owner');
+    const ref = doc(db, 'families/f1/habits/run');
+    await assertSucceeds(setDoc(ref, { ...habit('Run', 'maya'), days: [1, 3, 5], timesPerWeek: 3 }));
+    await assertSucceeds(setDoc(ref, { ...habit('Run', 'maya'), days: null }));
+    await assertFails(setDoc(ref, { ...habit('Run', 'maya'), days: [] }));
+    await assertFails(setDoc(ref, { ...habit('Run', 'maya'), days: [0, 8] }));
+    await assertFails(setDoc(ref, { ...habit('Run', 'maya'), days: [1, 1] }));
+    await assertFails(setDoc(ref, { ...habit('Run', 'maya'), days: 'mon' }));
+  });
+
   test('a habit must belong to a real member', async () => {
     await assertFails(setDoc(doc(as('owner'), 'families/f1/habits/h1'), habit('Swim', 'ghost')));
   });

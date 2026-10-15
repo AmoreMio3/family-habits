@@ -43,7 +43,12 @@ InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
       owner: FamilyOwner(),
       category: BuiltInRef(BuiltInCategory.familyMeals),
       templateId: 'FAMILY_MEALS_005',
-      timesPerWeek: 4,
+      days: {
+        DateTime.sunday,
+        DateTime.tuesday,
+        DateTime.thursday,
+        DateTime.friday,
+      },
     ),
     Habit(
       id: 'hike',
@@ -51,7 +56,7 @@ InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
       owner: FamilyOwner(),
       category: BuiltInRef(BuiltInCategory.outdoor),
       templateId: 'OUTDOOR_002',
-      timesPerWeek: 1,
+      days: {DateTime.saturday},
     ),
     Habit(
       id: 'dad-run',
@@ -59,8 +64,7 @@ InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
       owner: PersonalOwner('dad'),
       category: BuiltInRef(BuiltInCategory.sport),
       templateId: 'SPORT_002',
-      definition: 'I ran 5 km',
-      timesPerWeek: 3,
+      days: {DateTime.sunday, DateTime.tuesday, DateTime.thursday},
     ),
     Habit(
       id: 'dad-phone',
@@ -68,7 +72,6 @@ InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
       owner: PersonalOwner('dad'),
       category: BuiltInRef(BuiltInCategory.breakHabit),
       templateId: 'BREAK_011',
-      definition: 'No phone after 22:00',
     ),
     Habit(
       id: 'mom-meditate',
@@ -76,7 +79,6 @@ InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
       owner: PersonalOwner('mom'),
       category: BuiltInRef(BuiltInCategory.mindfulness),
       templateId: 'MINDFUL_001',
-      definition: 'At least 10 minutes',
     ),
     Habit(
       id: 'noa-read',
@@ -84,7 +86,6 @@ InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
       owner: PersonalOwner('noa'),
       category: BuiltInRef(BuiltInCategory.study),
       templateId: 'STUDY_002',
-      definition: 'I read for 20 minutes',
     ),
     Habit(
       id: 'noa-teeth',
@@ -99,8 +100,13 @@ InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
       owner: PersonalOwner('noa'),
       category: BuiltInRef(BuiltInCategory.art),
       templateId: 'ART_004',
-      definition: 'Piano, 15 minutes',
-      timesPerWeek: 5,
+      days: {
+        DateTime.sunday,
+        DateTime.monday,
+        DateTime.tuesday,
+        DateTime.wednesday,
+        DateTime.thursday,
+      },
     ),
     Habit(
       id: 'itai-bed',
@@ -115,7 +121,6 @@ InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
       owner: PersonalOwner('itai'),
       category: BuiltInRef(BuiltInCategory.sleep),
       templateId: 'SLEEP_001',
-      definition: 'In bed by 20:30',
     ),
   ];
 

@@ -741,12 +741,6 @@ abstract class AppLocalizations {
   /// **'Whole family'**
   String get wholeFamily;
 
-  /// No description provided for @timesPerWeek.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{Once a week} other{{count} times a week}}'**
-  String timesPerWeek(int count);
-
   /// No description provided for @deleteHabitConfirm.
   ///
   /// In en, this message translates to:
@@ -867,18 +861,6 @@ abstract class AppLocalizations {
   /// **'Our family\'s categories'**
   String get ourCategories;
 
-  /// No description provided for @personalDefinition.
-  ///
-  /// In en, this message translates to:
-  /// **'What counts as done? (optional)'**
-  String get personalDefinition;
-
-  /// No description provided for @personalDefinitionHint.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: I drank enough water today'**
-  String get personalDefinitionHint;
-
   /// No description provided for @categoryName.
   ///
   /// In en, this message translates to:
@@ -938,6 +920,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hi, {name}!'**
   String hiName(String name);
+
+  /// No description provided for @howOften.
+  ///
+  /// In en, this message translates to:
+  /// **'How often'**
+  String get howOften;
+
+  /// No description provided for @specificDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Specific days'**
+  String get specificDays;
+
+  /// No description provided for @pickADay.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick at least one day'**
+  String get pickADay;
+
+  /// No description provided for @otherDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Other days'**
+  String get otherDays;
+
+  /// No description provided for @reminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get reminders;
+
+  /// No description provided for @remindersIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Get a daily reminder to check off your habits. Reminders are set on this phone.'**
+  String get remindersIntro;
+
+  /// No description provided for @reminderOff.
+  ///
+  /// In en, this message translates to:
+  /// **'No reminder'**
+  String get reminderOff;
+
+  /// No description provided for @reminderMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Every morning'**
+  String get reminderMorning;
+
+  /// No description provided for @reminderEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Every evening'**
+  String get reminderEvening;
+
+  /// No description provided for @reminderTwice.
+  ///
+  /// In en, this message translates to:
+  /// **'Twice a day'**
+  String get reminderTwice;
+
+  /// No description provided for @morningTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning reminder'**
+  String get morningTime;
+
+  /// No description provided for @eveningTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening reminder'**
+  String get eveningTime;
+
+  /// No description provided for @reminderSummaryMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Every morning at {time}'**
+  String reminderSummaryMorning(String time);
+
+  /// No description provided for @reminderSummaryEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Every evening at {time}'**
+  String reminderSummaryEvening(String time);
+
+  /// No description provided for @reminderSummaryTwice.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day at {morning} and {evening}'**
+  String reminderSummaryTwice(String morning, String evening);
+
+  /// No description provided for @remindersBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are off for Family Habits. Turn them on in your phone settings to get reminders.'**
+  String get remindersBlocked;
+
+  /// Text of the morning reminder notification.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning! Your habits for today are waiting.'**
+  String get reminderMorningBody;
+
+  /// Text of the evening reminder notification.
+  ///
+  /// In en, this message translates to:
+  /// **'How did today go? Check off your habits.'**
+  String get reminderEveningBody;
 }
 
 class _AppLocalizationsDelegate

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'data/account_service.dart';
+import 'data/reminders.dart';
 import 'l10n/app_localizations.dart';
 import 'ui/auth/auth_gate.dart';
 import 'ui/look.dart';
@@ -25,9 +26,13 @@ final languageNames = <Locale, String>{
 
 /// Settings for this device, independent of who is signed in.
 class AppSettings extends ChangeNotifier {
-  AppSettings({this._locale});
+  AppSettings({this._locale, ReminderSettings? reminders})
+    : reminders = reminders ?? ReminderSettings();
 
   Locale? _locale;
+
+  /// Daily reminders on this phone.
+  final ReminderSettings reminders;
 
   /// Null means "follow the phone's language".
   Locale? get locale => _locale;
@@ -65,6 +70,8 @@ class FamilyHabitsApp extends StatelessWidget {
         ],
         theme: buildTheme(Brightness.light),
         darkTheme: buildTheme(Brightness.dark),
+        builder: (context, child) =>
+            RemindersScope(reminders: settings.reminders, child: child!),
         home: AuthGate(accounts: accounts, settings: settings),
       ),
     );

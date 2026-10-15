@@ -167,13 +167,18 @@ service cloud.firestore {
         function validHabit() {
           let d = request.resource.data;
           // subcategory is only on habits saved before Habit Library V1.
-          return d.keys().hasOnly(['name', 'ownerMemberId', 'category', 'subcategory', 'templateId', 'definition', 'timesPerWeek'])
+          return d.keys().hasOnly(['name', 'ownerMemberId', 'category', 'subcategory', 'templateId', 'definition', 'days', 'timesPerWeek'])
             && isShortText(d.name, 80)
             && isShortText(d.category, 40)
             && (d.get('subcategory', null) == null || isShortText(d.subcategory, 60))
             && (d.get('templateId', null) == null || isShortText(d.templateId, 40))
             && (d.get('definition', null) == null || isShortText(d.definition, 120))
             && d.timesPerWeek is int && d.timesPerWeek >= 1 && d.timesPerWeek <= 7
+            // Chosen weekdays, 1 (Monday) to 7 (Sunday); none means every day.
+            && (d.get('days', null) == null
+                || (d.days is list && d.days.size() >= 1 && d.days.size() <= 7
+                    && d.days.toSet().size() == d.days.size()
+                    && d.days.toSet().hasOnly([1, 2, 3, 4, 5, 6, 7])))
             && (d.ownerMemberId == null
                 || exists(/databases/$(database)/documents/families/$(fid)/members/$(d.ownerMemberId)));
         }

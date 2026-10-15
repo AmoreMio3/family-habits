@@ -360,17 +360,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get wholeFamily => 'Tutta la famiglia';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count volte a settimana',
-      one: 'Una volta a settimana',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return 'Eliminare «$habit» e la sua cronologia?';
   }
@@ -436,13 +425,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get ourCategories => 'Le categorie della nostra famiglia';
 
   @override
-  String get personalDefinition => 'Cosa conta come fatto? (facoltativo)';
-
-  @override
-  String get personalDefinitionHint =>
-      'Per esempio: oggi ho bevuto abbastanza acqua';
-
-  @override
   String get categoryName => 'Nome della categoria';
 
   @override
@@ -476,4 +458,68 @@ class AppLocalizationsIt extends AppLocalizations {
   String hiName(String name) {
     return 'Ciao, $name!';
   }
+
+  @override
+  String get howOften => 'Quanto spesso';
+
+  @override
+  String get specificDays => 'Giorni specifici';
+
+  @override
+  String get pickADay => 'Scegli almeno un giorno';
+
+  @override
+  String get otherDays => 'Altri giorni';
+
+  @override
+  String get reminders => 'Promemoria';
+
+  @override
+  String get remindersIntro =>
+      'Ricevi un promemoria ogni giorno per spuntare le tue abitudini. I promemoria valgono su questo telefono.';
+
+  @override
+  String get reminderOff => 'Nessun promemoria';
+
+  @override
+  String get reminderMorning => 'Ogni mattina';
+
+  @override
+  String get reminderEvening => 'Ogni sera';
+
+  @override
+  String get reminderTwice => 'Due volte al giorno';
+
+  @override
+  String get morningTime => 'Promemoria del mattino';
+
+  @override
+  String get eveningTime => 'Promemoria della sera';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return 'Ogni mattina alle $time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return 'Ogni sera alle $time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return 'Ogni giorno alle $morning e alle $evening';
+  }
+
+  @override
+  String get remindersBlocked =>
+      'Le notifiche di Family Habits sono disattivate. Attivale nelle impostazioni del telefono per ricevere i promemoria.';
+
+  @override
+  String get reminderMorningBody =>
+      'Buongiorno! Le abitudini di oggi ti aspettano.';
+
+  @override
+  String get reminderEveningBody =>
+      'Com’è andata oggi? Spunta le tue abitudini.';
 }

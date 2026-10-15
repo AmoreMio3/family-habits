@@ -348,16 +348,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get wholeFamily => '全家';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '每周 $count 次',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return '删除“$habit”及其记录？';
   }
@@ -422,12 +412,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get ourCategories => '我们家的分类';
 
   @override
-  String get personalDefinition => '怎样算完成？（可选）';
-
-  @override
-  String get personalDefinitionHint => '例如：我今天喝了足够的水';
-
-  @override
   String get categoryName => '分类名称';
 
   @override
@@ -460,6 +444,66 @@ class AppLocalizationsZh extends AppLocalizations {
   String hiName(String name) {
     return '你好，$name！';
   }
+
+  @override
+  String get howOften => '频率';
+
+  @override
+  String get specificDays => '指定日期';
+
+  @override
+  String get pickADay => '请至少选择一天';
+
+  @override
+  String get otherDays => '其他日子';
+
+  @override
+  String get reminders => '提醒';
+
+  @override
+  String get remindersIntro => '每天提醒你打卡习惯。提醒设置在这部手机上。';
+
+  @override
+  String get reminderOff => '不提醒';
+
+  @override
+  String get reminderMorning => '每天早上';
+
+  @override
+  String get reminderEvening => '每天晚上';
+
+  @override
+  String get reminderTwice => '每天两次';
+
+  @override
+  String get morningTime => '早上提醒';
+
+  @override
+  String get eveningTime => '晚上提醒';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return '每天早上 $time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return '每天晚上 $time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return '每天 $morning 和 $evening';
+  }
+
+  @override
+  String get remindersBlocked => 'Family Habits 的通知已关闭。请在手机设置中开启以接收提醒。';
+
+  @override
+  String get reminderMorningBody => '早上好！今天的习惯在等你。';
+
+  @override
+  String get reminderEveningBody => '今天过得怎么样？来打卡你的习惯吧。';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -805,16 +849,6 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get wholeFamily => '全家';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '每週 $count 次',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return '刪除「$habit」和相關紀錄？';
   }
@@ -879,12 +913,6 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get ourCategories => '我們家的分類';
 
   @override
-  String get personalDefinition => '怎樣算完成？（選填）';
-
-  @override
-  String get personalDefinitionHint => '例如：我今天喝了足夠的水';
-
-  @override
   String get categoryName => '分類名稱';
 
   @override
@@ -917,4 +945,64 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String hiName(String name) {
     return '你好，$name！';
   }
+
+  @override
+  String get howOften => '頻率';
+
+  @override
+  String get specificDays => '指定日期';
+
+  @override
+  String get pickADay => '請至少選擇一天';
+
+  @override
+  String get otherDays => '其他日子';
+
+  @override
+  String get reminders => '提醒';
+
+  @override
+  String get remindersIntro => '每天提醒你打卡習慣。提醒設定在這支手機上。';
+
+  @override
+  String get reminderOff => '不提醒';
+
+  @override
+  String get reminderMorning => '每天早上';
+
+  @override
+  String get reminderEvening => '每天晚上';
+
+  @override
+  String get reminderTwice => '每天兩次';
+
+  @override
+  String get morningTime => '早上提醒';
+
+  @override
+  String get eveningTime => '晚上提醒';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return '每天早上 $time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return '每天晚上 $time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return '每天 $morning 和 $evening';
+  }
+
+  @override
+  String get remindersBlocked => 'Family Habits 的通知已關閉。請在手機設定中開啟以接收提醒。';
+
+  @override
+  String get reminderMorningBody => '早安！今天的習慣在等你。';
+
+  @override
+  String get reminderEveningBody => '今天過得怎麼樣？來打卡你的習慣吧。';
 }

@@ -358,18 +358,6 @@ class AppLocalizationsHe extends AppLocalizations {
   String get wholeFamily => 'כל המשפחה';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count פעמים בשבוע',
-      two: 'פעמיים בשבוע',
-      one: 'פעם בשבוע',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return 'למחוק את „$habit” ואת ההיסטוריה שלו?';
   }
@@ -434,12 +422,6 @@ class AppLocalizationsHe extends AppLocalizations {
   String get ourCategories => 'הקטגוריות של המשפחה שלנו';
 
   @override
-  String get personalDefinition => 'מה נחשב כבוצע? (לא חובה)';
-
-  @override
-  String get personalDefinitionHint => 'למשל: שתיתי מספיק מים היום';
-
-  @override
   String get categoryName => 'שם הקטגוריה';
 
   @override
@@ -473,4 +455,66 @@ class AppLocalizationsHe extends AppLocalizations {
   String hiName(String name) {
     return 'היי, $name!';
   }
+
+  @override
+  String get howOften => 'באיזו תדירות';
+
+  @override
+  String get specificDays => 'ימים מסוימים';
+
+  @override
+  String get pickADay => 'יש לבחור לפחות יום אחד';
+
+  @override
+  String get otherDays => 'בימים אחרים';
+
+  @override
+  String get reminders => 'תזכורות';
+
+  @override
+  String get remindersIntro =>
+      'קבלו תזכורת יומית לסמן את ההרגלים. התזכורות מוגדרות בטלפון הזה.';
+
+  @override
+  String get reminderOff => 'ללא תזכורת';
+
+  @override
+  String get reminderMorning => 'כל בוקר';
+
+  @override
+  String get reminderEvening => 'כל ערב';
+
+  @override
+  String get reminderTwice => 'פעמיים ביום';
+
+  @override
+  String get morningTime => 'תזכורת בוקר';
+
+  @override
+  String get eveningTime => 'תזכורת ערב';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return 'כל בוקר ב-$time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return 'כל ערב ב-$time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return 'כל יום ב-$morning וב-$evening';
+  }
+
+  @override
+  String get remindersBlocked =>
+      'ההתראות של Family Habits כבויות. כדי לקבל תזכורות יש להפעיל אותן בהגדרות הטלפון.';
+
+  @override
+  String get reminderMorningBody => 'בוקר טוב! ההרגלים של היום מחכים לך.';
+
+  @override
+  String get reminderEveningBody => 'איך היה היום? זה הזמן לסמן את ההרגלים.';
 }

@@ -22,7 +22,6 @@
   "settings": "Configuración",
   "unpairBody": "Este dispositivo saldrá de la familia. Un papá o mamá puede volver a conectarlo con un código nuevo.",
   "errCodeWrongKind": "Este código es para otro tipo de acceso. Pide el correcto.",
-  "personalDefinitionHint": "Por ejemplo: hoy tomé suficiente agua",
   "addHabitToCategory": "Agregar un hábito",
   "noMatchingHabits": "Ningún hábito predefinido coincide. Puedes crear el tuyo.",
   "catHealth": "Salud",

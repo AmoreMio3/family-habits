@@ -179,14 +179,6 @@
   "category": "Category",
   "habitFor": "For",
   "wholeFamily": "Whole family",
-  "timesPerWeek": "{count, plural, =1{Once a week} other{{count} times a week}}",
-  "@timesPerWeek": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "deleteHabitConfirm": "Delete “{habit}” and its history?",
   "@deleteHabitConfirm": {
     "placeholders": {
@@ -214,8 +206,6 @@
   "searchHabitsHint": "Search, for example “park” or “book”",
   "noMatchingHabits": "No ready-made habit matches. You can create your own.",
   "ourCategories": "Our family's categories",
-  "personalDefinition": "What counts as done? (optional)",
-  "personalDefinitionHint": "For example: I drank enough water today",
   "categoryName": "Category name",
   "categoryHabits": "Habits in this category",
   "addHabitToCategory": "Add a habit",
@@ -252,7 +242,57 @@
   "@hiName": {
     "description": "Greeting at the top of Today.",
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
+  },
+  "howOften": "How often",
+  "specificDays": "Specific days",
+  "pickADay": "Pick at least one day",
+  "otherDays": "Other days",
+  "reminders": "Reminders",
+  "remindersIntro": "Get a daily reminder to check off your habits. Reminders are set on this phone.",
+  "reminderOff": "No reminder",
+  "reminderMorning": "Every morning",
+  "reminderEvening": "Every evening",
+  "reminderTwice": "Twice a day",
+  "morningTime": "Morning reminder",
+  "eveningTime": "Evening reminder",
+  "reminderSummaryMorning": "Every morning at {time}",
+  "@reminderSummaryMorning": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderSummaryEvening": "Every evening at {time}",
+  "@reminderSummaryEvening": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderSummaryTwice": "Every day at {morning} and {evening}",
+  "@reminderSummaryTwice": {
+    "placeholders": {
+      "morning": {
+        "type": "String"
+      },
+      "evening": {
+        "type": "String"
+      }
+    }
+  },
+  "remindersBlocked": "Notifications are off for Family Habits. Turn them on in your phone settings to get reminders.",
+  "reminderMorningBody": "Good morning! Your habits for today are waiting.",
+  "@reminderMorningBody": {
+    "description": "Text of the morning reminder notification."
+  },
+  "reminderEveningBody": "How did today go? Check off your habits.",
+  "@reminderEveningBody": {
+    "description": "Text of the evening reminder notification."
   }
 }

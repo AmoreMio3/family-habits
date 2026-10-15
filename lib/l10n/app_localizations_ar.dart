@@ -362,20 +362,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get wholeFamily => 'العائلة كلها';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count مرة في الأسبوع',
-      many: '$count مرة في الأسبوع',
-      few: '$count مرات في الأسبوع',
-      two: 'مرتان في الأسبوع',
-      one: 'مرة في الأسبوع',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return 'هل تريد حذف «$habit» وسجله؟';
   }
@@ -441,12 +427,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ourCategories => 'فئات عائلتنا';
 
   @override
-  String get personalDefinition => 'ما الذي يُعدّ إنجازًا؟ (اختياري)';
-
-  @override
-  String get personalDefinitionHint => 'مثلًا: شربت ما يكفي من الماء اليوم';
-
-  @override
   String get categoryName => 'اسم الفئة';
 
   @override
@@ -480,4 +460,66 @@ class AppLocalizationsAr extends AppLocalizations {
   String hiName(String name) {
     return 'مرحبًا، $name!';
   }
+
+  @override
+  String get howOften => 'كم مرة';
+
+  @override
+  String get specificDays => 'أيام محددة';
+
+  @override
+  String get pickADay => 'اختر يومًا واحدًا على الأقل';
+
+  @override
+  String get otherDays => 'أيام أخرى';
+
+  @override
+  String get reminders => 'التذكيرات';
+
+  @override
+  String get remindersIntro =>
+      'احصل على تذكير يومي لتسجيل عاداتك. التذكيرات مضبوطة على هذا الهاتف.';
+
+  @override
+  String get reminderOff => 'بدون تذكير';
+
+  @override
+  String get reminderMorning => 'كل صباح';
+
+  @override
+  String get reminderEvening => 'كل مساء';
+
+  @override
+  String get reminderTwice => 'مرتين في اليوم';
+
+  @override
+  String get morningTime => 'تذكير الصباح';
+
+  @override
+  String get eveningTime => 'تذكير المساء';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return 'كل صباح الساعة $time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return 'كل مساء الساعة $time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return 'كل يوم الساعة $morning و$evening';
+  }
+
+  @override
+  String get remindersBlocked =>
+      'الإشعارات متوقفة لتطبيق Family Habits. فعّلها من إعدادات الهاتف لتصلك التذكيرات.';
+
+  @override
+  String get reminderMorningBody => 'صباح الخير! عادات اليوم بانتظارك.';
+
+  @override
+  String get reminderEveningBody => 'كيف كان يومك؟ سجّل عاداتك.';
 }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../data/family_store.dart';
+import '../data/reminders.dart';
 import '../l10n/app_localizations.dart';
 import '../models/category.dart';
 import '../models/family.dart';
 import 'celebration.dart';
 import 'common.dart';
+import 'look.dart';
+import 'reminders_screen.dart';
 
 /// Edits [habit], or adds a new habit starting from [name] and [category]
 /// (for example a library habit, with its [templateId]). Returns whether it
@@ -58,9 +61,6 @@ class _HabitEditorState extends State<_HabitEditor> {
   late final _name = TextEditingController(
     text: widget.habit?.name ?? widget.name,
   );
-  late final _definition = TextEditingController(
-    text: widget.habit?.definition,
-  );
   late CategoryRef _category =
       widget.habit?.category ??
       widget.category ??
@@ -69,12 +69,12 @@ class _HabitEditorState extends State<_HabitEditor> {
       widget.habit?.ownerMemberId ??
       widget.store.activeMember?.id ??
       _familyOwner;
-  late int _times = widget.habit?.timesPerWeek ?? 7;
+  late bool _everyDay = widget.habit?.isEveryDay ?? true;
+  late Set<int> _days = {...?widget.habit?.days};
 
   @override
   void dispose() {
     _name.dispose();
-    _definition.dispose();
     super.dispose();
   }
 
@@ -90,10 +90,9 @@ class _HabitEditorState extends State<_HabitEditor> {
       templateId: _name.text.trim() == (widget.habit?.name ?? widget.name)
           ? widget.habit?.templateId ?? widget.templateId
           : null,
-      definition: _definition.text.trim().isEmpty
-          ? null
-          : _definition.text.trim(),
-      timesPerWeek: _times,
+      // Kept from habits made before the field was removed.
+      definition: widget.habit?.definition,
+      days: _everyDay || _days.length == 7 ? null : {..._days},
     );
     await store.repository.saveHabit(habit);
     if (!mounted) return;
@@ -139,7 +138,13 @@ class _HabitEditorState extends State<_HabitEditor> {
     final l10n = AppLocalizations.of(context);
     InputDecoration field(String label) =>
         InputDecoration(labelText: label, border: const OutlineInputBorder());
-    final valid = _name.text.trim().isNotEmpty;
+    final valid =
+        _name.text.trim().isNotEmpty && (_everyDay || _days.isNotEmpty);
+    final look = Look.of(context);
+    final weekStart = widget.store.weekStartFor(
+      Localizations.localeOf(context),
+    );
+    final reminders = RemindersScope.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.habit == null ? l10n.addHabit : l10n.editHabit),
@@ -156,15 +161,6 @@ class _HabitEditorState extends State<_HabitEditor> {
             textCapitalization: TextCapitalization.sentences,
             decoration: field(l10n.habitName),
             onChanged: (_) => setState(() {}),
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            key: const Key('habitDefinition'),
-            controller: _definition,
-            textCapitalization: TextCapitalization.sentences,
-            maxLength: 120,
-            decoration: field(l10n.personalDefinition)
-                .copyWith(hintText: l10n.personalDefinitionHint),
           ),
           const SizedBox(height: 16),
           DropdownButtonFormField<String>(
@@ -222,15 +218,76 @@ class _HabitEditorState extends State<_HabitEditor> {
             ],
             onChanged: (c) => setState(() => _category = c ?? _category),
           ),
+          const SizedBox(height: 20),
+          Text(l10n.howOften, style: TextStyle(color: look.muted)),
+          const SizedBox(height: 8),
+          SegmentedButton<bool>(
+            key: const Key('habitSchedule'),
+            showSelectedIcon: false,
+            segments: [
+              ButtonSegment(value: true, label: Text(l10n.everyDay)),
+              ButtonSegment(value: false, label: Text(l10n.specificDays)),
+            ],
+            selected: {_everyDay},
+            onSelectionChanged: (v) => setState(() => _everyDay = v.single),
+          ),
+          if (!_everyDay) ...[
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: [
+                for (final d in weekdaysFrom(weekStart))
+                  FilterChip(
+                    key: Key('day-$d'),
+                    label: Text(weekdayName(context, d)),
+                    showCheckmark: false,
+                    selectedColor: look.primary,
+                    labelStyle: TextStyle(
+                      color: _days.contains(d) ? Colors.white : look.ink,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    side: BorderSide(
+                      color: _days.contains(d)
+                          ? look.primary
+                          : look.muted.withValues(alpha: 0.4),
+                    ),
+                    backgroundColor: look.card,
+                    selected: _days.contains(d),
+                    onSelected: (on) => setState(
+                      () => _days = on
+                          ? {..._days, d}
+                          : _days.where((x) => x != d).toSet(),
+                    ),
+                  ),
+              ],
+            ),
+            if (_days.isEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  l10n.pickADay,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+          ],
           const SizedBox(height: 16),
-          Text(_times == 7 ? l10n.everyDay : l10n.timesPerWeek(_times)),
-          Slider(
-            value: _times.toDouble(),
-            min: 1,
-            max: 7,
-            divisions: 6,
-            label: '$_times',
-            onChanged: (v) => setState(() => _times = v.round()),
+          ListTile(
+            key: const Key('habitReminders'),
+            contentPadding: EdgeInsets.zero,
+            leading: Icon(
+              reminders.plan == ReminderPlan.off
+                  ? Icons.notifications_off_outlined
+                  : Icons.notifications_active_outlined,
+              color: look.primary,
+            ),
+            title: Text(l10n.reminders),
+            subtitle: Text(reminderSummary(context, reminders)),
+            trailing: const Icon(Icons.chevron_right_rounded),
+            onTap: () => showReminders(context),
           ),
           if (widget.habit != null) ...[
             const Divider(height: 32),
