@@ -96,6 +96,38 @@ void main() {
   });
 
   testWidgets(
+    'the light/dark menu switches the look and can follow the phone',
+    (tester) async {
+      await openDemo(tester);
+      Brightness brightness() =>
+          Theme.of(tester.element(find.byType(TodayScreen))).brightness;
+      expect(settings.themeMode, ThemeMode.system);
+      expect(brightness(), Brightness.light);
+
+      await tester.tap(find.byTooltip('Light or dark'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Dark'));
+      await tester.pumpAndSettle();
+      expect(settings.themeMode, ThemeMode.dark);
+      expect(brightness(), Brightness.dark);
+
+      await tester.tap(find.byTooltip('Light or dark'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Same as phone'));
+      await tester.pumpAndSettle();
+      expect(brightness(), Brightness.light);
+    },
+  );
+
+  testWidgets('text is drawn a little smaller than the phone size', (
+    tester,
+  ) async {
+    await openDemo(tester);
+    final media = MediaQuery.of(tester.element(find.byType(TodayScreen)));
+    expect(media.textScaler.scale(20), closeTo(18, 0.001));
+  });
+
+  testWidgets(
     'a parent checks in a family habit for everyone; a child cannot',
     (tester) async {
       await openDemo(tester);

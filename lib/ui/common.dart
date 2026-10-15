@@ -67,6 +67,35 @@ class LanguageMenu extends StatelessWidget {
   }
 }
 
+class AppearanceMenu extends StatelessWidget {
+  const AppearanceMenu({super.key, required this.settings});
+
+  final AppSettings settings;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final dark = Theme.of(context).brightness == Brightness.dark;
+    return PopupMenuButton<ThemeMode>(
+      icon: Icon(dark ? Icons.dark_mode_outlined : Icons.light_mode_outlined),
+      tooltip: l10n.appearance,
+      onSelected: (mode) => settings.themeMode = mode,
+      itemBuilder: (context) => [
+        for (final (mode, label) in [
+          (ThemeMode.system, l10n.phoneAppearance),
+          (ThemeMode.light, l10n.lightMode),
+          (ThemeMode.dark, l10n.darkMode),
+        ])
+          CheckedPopupMenuItem(
+            value: mode,
+            checked: settings.themeMode == mode,
+            child: Text(label),
+          ),
+      ],
+    );
+  }
+}
+
 /// Runs [action], showing a spinner on the button and the error under it.
 mixin BusyAction<T extends StatefulWidget> on State<T> {
   bool busy = false;

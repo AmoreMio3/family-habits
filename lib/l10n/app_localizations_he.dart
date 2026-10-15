@@ -83,6 +83,18 @@ class AppLocalizationsHe extends AppLocalizations {
   String get phoneLanguage => 'שפת הטלפון';
 
   @override
+  String get appearance => 'בהיר או כהה';
+
+  @override
+  String get phoneAppearance => 'כמו בטלפון';
+
+  @override
+  String get lightMode => 'בהיר';
+
+  @override
+  String get darkMode => 'כהה';
+
+  @override
   String get parent => 'הורה';
 
   @override

@@ -74,15 +74,15 @@ class FamilyProgressCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 76,
-                  height: 76,
+                  width: 66,
+                  height: 66,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
                       SizedBox.expand(
                         child: CircularProgressIndicator(
                           value: progress.fraction,
-                          strokeWidth: 8,
+                          strokeWidth: 7,
                           strokeCap: StrokeCap.round,
                           color: look.heroInk,
                           backgroundColor: look.heroInk.withValues(alpha: 0.25),

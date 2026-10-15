@@ -43,7 +43,7 @@ class TodayScreen extends StatelessWidget {
                 style: TextStyle(color: look.muted, fontSize: 14),
               ),
               const SizedBox(height: 2),
-              Text(l10n.hiName(me.nickname), style: look.heading(30)),
+              Text(l10n.hiName(me.nickname), style: look.heading(26)),
             ],
           ),
         ),
@@ -152,7 +152,7 @@ class _ProfileButton extends StatelessWidget {
                     width: 3,
                   ),
                 ),
-                child: MemberAvatar(name: name, color: color, size: 54),
+                child: MemberAvatar(name: name, color: color, size: 46),
               ),
               const SizedBox(height: 4),
               Text(
@@ -367,8 +367,8 @@ class CheckCircle extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeOutBack,
-      width: 38,
-      height: 38,
+      width: 34,
+      height: 34,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: done ? look.done : Colors.transparent,
@@ -378,7 +378,7 @@ class CheckCircle extends StatelessWidget {
         ),
       ),
       child: done
-          ? const Icon(Icons.check_rounded, color: Colors.white, size: 24)
+          ? const Icon(Icons.check_rounded, color: Colors.white, size: 22)
           : enabled
           ? null
           : Icon(Icons.lock_outline_rounded, color: look.muted, size: 18),

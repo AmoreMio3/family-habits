@@ -85,6 +85,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get phoneLanguage => 'لغة الهاتف';
 
   @override
+  String get appearance => 'فاتح أو داكن';
+
+  @override
+  String get phoneAppearance => 'مثل الهاتف';
+
+  @override
+  String get lightMode => 'فاتح';
+
+  @override
+  String get darkMode => 'داكن';
+
+  @override
   String get parent => 'ولي الأمر';
 
   @override

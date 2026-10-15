@@ -25,15 +25,24 @@ final languageNames = <Locale, String>{
 
 /// Settings for this device, independent of who is signed in.
 class AppSettings extends ChangeNotifier {
-  AppSettings({this._locale});
+  AppSettings({this._locale, this._themeMode = ThemeMode.system});
 
   Locale? _locale;
+  ThemeMode _themeMode;
 
   /// Null means "follow the phone's language".
   Locale? get locale => _locale;
 
   set locale(Locale? value) {
     _locale = value;
+    notifyListeners();
+  }
+
+  /// Light, dark, or [ThemeMode.system] to follow the phone.
+  ThemeMode get themeMode => _themeMode;
+
+  set themeMode(ThemeMode value) {
+    _themeMode = value;
     notifyListeners();
   }
 }
@@ -65,6 +74,8 @@ class FamilyHabitsApp extends StatelessWidget {
         ],
         theme: buildTheme(Brightness.light),
         darkTheme: buildTheme(Brightness.dark),
+        themeMode: settings.themeMode,
+        builder: (context, child) => CompactText(child: child!),
         home: AuthGate(accounts: accounts, settings: settings),
       ),
     );

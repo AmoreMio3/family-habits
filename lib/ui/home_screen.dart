@@ -41,7 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
         return Scaffold(
           appBar: AppBar(
             title: Text(title),
-            actions: [LanguageMenu(settings: widget.settings)],
+            actions: [
+              AppearanceMenu(settings: widget.settings),
+              LanguageMenu(settings: widget.settings),
+            ],
           ),
           body: Column(
             children: [

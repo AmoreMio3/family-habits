@@ -82,6 +82,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get phoneLanguage => 'Phone language';
 
   @override
+  String get appearance => 'Light or dark';
+
+  @override
+  String get phoneAppearance => 'Same as phone';
+
+  @override
+  String get lightMode => 'Light';
+
+  @override
+  String get darkMode => 'Dark';
+
+  @override
   String get parent => 'Parent';
 
   @override
