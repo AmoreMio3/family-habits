@@ -151,5 +151,10 @@
   "reminderSummaryTwice": "كل يوم الساعة {morning} و{evening}",
   "remindersBlocked": "الإشعارات متوقفة لتطبيق Family Habits. فعّلها من إعدادات الهاتف لتصلك التذكيرات.",
   "reminderMorningBody": "صباح الخير! عادات اليوم بانتظارك.",
-  "reminderEveningBody": "كيف كان يومك؟ سجّل عاداتك."
+  "reminderEveningBody": "كيف كان يومك؟ سجّل عاداتك.",
+  "habitPicture": "صورة",
+  "pickAnEmoji": "اختر رمزًا تعبيريًا لهذه العادة",
+  "useCategoryIcon": "استخدم رمز الفئة",
+  "typeAnyEmoji": "أو اكتب أي رمز تعبيري",
+  "useThis": "استخدام"
 }

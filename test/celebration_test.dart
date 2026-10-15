@@ -127,6 +127,15 @@ void main() {
       category: const CustomRef('music'),
     );
     expect(sceneFor(custom('Practice violin'))!.emoji, '🎻');
+    final picked = Habit(
+      id: 'p',
+      name: 'Practice violin',
+      owner: const FamilyOwner(),
+      category: const BuiltInRef(BuiltInCategory.breakHabit),
+      emoji: '🦄',
+    );
+    expect(sceneFor(picked)!.emoji, '🦄');
+    expect(sceneFor(picked)!.motion, Motion.ban);
     expect(sceneFor(custom('לנגן בפסנתר'))!.emoji, '🎹');
     expect(sceneFor(custom('Stop smoking'))!.motion, Motion.ban);
     // "No" in front of a habit crosses its picture out.

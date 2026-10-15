@@ -151,5 +151,10 @@
   "reminderSummaryTwice": "Täglich um {morning} und {evening}",
   "remindersBlocked": "Mitteilungen für Family Habits sind aus. Schalte sie in den Handy-Einstellungen ein, um Erinnerungen zu bekommen.",
   "reminderMorningBody": "Guten Morgen! Deine Gewohnheiten für heute warten.",
-  "reminderEveningBody": "Wie war dein Tag? Hake deine Gewohnheiten ab."
+  "reminderEveningBody": "Wie war dein Tag? Hake deine Gewohnheiten ab.",
+  "habitPicture": "Bild",
+  "pickAnEmoji": "Wähle ein Emoji für diese Gewohnheit",
+  "useCategoryIcon": "Symbol der Kategorie verwenden",
+  "typeAnyEmoji": "Oder tippe ein beliebiges Emoji",
+  "useThis": "Übernehmen"
 }

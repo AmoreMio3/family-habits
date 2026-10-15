@@ -520,4 +520,19 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get reminderEveningBody => 'आज का दिन कैसा रहा? अपनी आदतें पूरी करें।';
+
+  @override
+  String get habitPicture => 'चित्र';
+
+  @override
+  String get pickAnEmoji => 'इस आदत के लिए इमोजी चुनें';
+
+  @override
+  String get useCategoryIcon => 'श्रेणी का आइकन इस्तेमाल करें';
+
+  @override
+  String get typeAnyEmoji => 'या कोई भी इमोजी लिखें';
+
+  @override
+  String get useThis => 'चुनें';
 }

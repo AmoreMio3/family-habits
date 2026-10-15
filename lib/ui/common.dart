@@ -229,3 +229,61 @@ String reminderSummary(BuildContext context, ReminderSettings reminders) {
     ),
   };
 }
+
+/// A habit's picture: the emoji its owner picked, else its category's icon.
+class HabitBubble extends StatelessWidget {
+  const HabitBubble({
+    super.key,
+    required this.habit,
+    required this.look,
+    this.size = 44,
+  });
+
+  final Habit habit;
+  final ({String label, IconData icon, Color color}) look;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => EmojiBubble(
+    emoji: habit.emoji,
+    icon: look.icon,
+    color: look.color,
+    size: size,
+  );
+}
+
+/// [emoji] in a tinted rounded square, or [icon] when there is none.
+class EmojiBubble extends StatelessWidget {
+  const EmojiBubble({
+    super.key,
+    required this.emoji,
+    required this.icon,
+    required this.color,
+    this.size = 44,
+  });
+
+  final String? emoji;
+  final IconData icon;
+  final Color color;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final emoji = this.emoji;
+    if (emoji == null) return IconBubble(icon: icon, color: color, size: size);
+    return Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: Look.of(context).tint(color),
+        borderRadius: BorderRadius.circular(size * 0.36),
+      ),
+      child: Text(
+        emoji,
+        style: TextStyle(fontSize: size * 0.5, height: 1),
+        textScaler: TextScaler.noScaling,
+      ),
+    );
+  }
+}

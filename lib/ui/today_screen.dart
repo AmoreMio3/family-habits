@@ -288,7 +288,7 @@ class HabitCard extends StatelessWidget {
       );
     }
 
-    final bubble = IconBubble(icon: cat.icon, color: cat.color);
+    final bubble = HabitBubble(habit: habit, look: cat);
     return Semantics(
       checked: done,
       enabled: enabled,

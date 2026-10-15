@@ -520,6 +520,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reminderEveningBody => 'How did today go? Check off your habits.';
+
+  @override
+  String get habitPicture => 'Picture';
+
+  @override
+  String get pickAnEmoji => 'Pick an emoji for this habit';
+
+  @override
+  String get useCategoryIcon => 'Use the category icon';
+
+  @override
+  String get typeAnyEmoji => 'Or type any emoji';
+
+  @override
+  String get useThis => 'Use';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).

@@ -520,4 +520,19 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get reminderEveningBody => 'Como foi hoje? Marque seus hábitos.';
+
+  @override
+  String get habitPicture => 'Imagem';
+
+  @override
+  String get pickAnEmoji => 'Escolha um emoji para este hábito';
+
+  @override
+  String get useCategoryIcon => 'Usar o ícone da categoria';
+
+  @override
+  String get typeAnyEmoji => 'Ou digite qualquer emoji';
+
+  @override
+  String get useThis => 'Usar';
 }

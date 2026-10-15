@@ -151,5 +151,10 @@
   "reminderSummaryTwice": "हर दिन {morning} और {evening} बजे",
   "remindersBlocked": "Family Habits की सूचनाएँ बंद हैं। रिमाइंडर पाने के लिए फ़ोन की सेटिंग में इन्हें चालू करें।",
   "reminderMorningBody": "सुप्रभात! आज की आदतें आपका इंतज़ार कर रही हैं।",
-  "reminderEveningBody": "आज का दिन कैसा रहा? अपनी आदतें पूरी करें।"
+  "reminderEveningBody": "आज का दिन कैसा रहा? अपनी आदतें पूरी करें।",
+  "habitPicture": "चित्र",
+  "pickAnEmoji": "इस आदत के लिए इमोजी चुनें",
+  "useCategoryIcon": "श्रेणी का आइकन इस्तेमाल करें",
+  "typeAnyEmoji": "या कोई भी इमोजी लिखें",
+  "useThis": "चुनें"
 }

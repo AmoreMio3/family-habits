@@ -151,5 +151,10 @@
   "reminderSummaryTwice": "כל יום ב-{morning} וב-{evening}",
   "remindersBlocked": "ההתראות של Family Habits כבויות. כדי לקבל תזכורות יש להפעיל אותן בהגדרות הטלפון.",
   "reminderMorningBody": "בוקר טוב! ההרגלים של היום מחכים לך.",
-  "reminderEveningBody": "איך היה היום? זה הזמן לסמן את ההרגלים."
+  "reminderEveningBody": "איך היה היום? זה הזמן לסמן את ההרגלים.",
+  "habitPicture": "תמונה",
+  "pickAnEmoji": "בחירת אימוג׳י להרגל",
+  "useCategoryIcon": "שימוש בסמל הקטגוריה",
+  "typeAnyEmoji": "או הקלדת אימוג׳י אחר",
+  "useThis": "בחירה"
 }

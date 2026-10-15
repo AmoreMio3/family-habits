@@ -7,6 +7,7 @@ import '../models/category.dart';
 import '../models/family.dart';
 import 'celebration.dart';
 import 'common.dart';
+import 'emoji_picker.dart';
 import 'look.dart';
 import 'reminders_screen.dart';
 
@@ -71,6 +72,7 @@ class _HabitEditorState extends State<_HabitEditor> {
       _familyOwner;
   late bool _everyDay = widget.habit?.isEveryDay ?? true;
   late Set<int> _days = {...?widget.habit?.days};
+  late String? _emoji = widget.habit?.emoji;
 
   @override
   void dispose() {
@@ -93,6 +95,7 @@ class _HabitEditorState extends State<_HabitEditor> {
       // Kept from habits made before the field was removed.
       definition: widget.habit?.definition,
       days: _everyDay || _days.length == 7 ? null : {..._days},
+      emoji: _emoji,
     );
     await store.repository.saveHabit(habit);
     if (!mounted) return;
@@ -162,7 +165,35 @@ class _HabitEditorState extends State<_HabitEditor> {
             decoration: field(l10n.habitName),
             onChanged: (_) => setState(() {}),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
+          Builder(
+            builder: (context) {
+              final cat = categoryLook(l10n, widget.store, _category);
+              return ListTile(
+                key: const Key('habitPicture'),
+                contentPadding: EdgeInsets.zero,
+                leading: EmojiBubble(
+                  emoji: _emoji,
+                  icon: cat.icon,
+                  color: cat.color,
+                ),
+                title: Text(l10n.habitPicture),
+                subtitle: Text(l10n.pickAnEmoji),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () async {
+                  final picked = await pickHabitEmoji(
+                    context,
+                    current: _emoji,
+                    categoryIcon: cat.icon,
+                    categoryColor: cat.color,
+                  );
+                  if (picked == null) return;
+                  setState(() => _emoji = picked.isEmpty ? null : picked);
+                },
+              );
+            },
+          ),
+          const SizedBox(height: 8),
           DropdownButtonFormField<String>(
             key: const Key('habitOwner'),
             initialValue: _owner,

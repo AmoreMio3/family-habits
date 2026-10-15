@@ -196,6 +196,14 @@ describe('habits and members', () => {
     await assertFails(setDoc(ref, { ...habit('Run', 'maya'), days: 'mon' }));
   });
 
+  test('a habit can have a picked emoji', async () => {
+    const ref = doc(as('owner'), 'families/f1/habits/violin');
+    await assertSucceeds(setDoc(ref, { ...habit('Violin', 'maya'), emoji: '🎻' }));
+    await assertSucceeds(setDoc(ref, { ...habit('Family', null), emoji: '👨‍👩‍👧‍👦' }));
+    await assertFails(setDoc(ref, { ...habit('Violin', 'maya'), emoji: '' }));
+    await assertFails(setDoc(ref, { ...habit('Violin', 'maya'), emoji: 'x'.repeat(65) }));
+  });
+
   test('a habit must belong to a real member', async () => {
     await assertFails(setDoc(doc(as('owner'), 'families/f1/habits/h1'), habit('Swim', 'ghost')));
   });

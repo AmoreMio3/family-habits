@@ -64,6 +64,42 @@ void main() {
     expect(row, findsOneWidget);
   });
 
+  testWidgets('pick an emoji for your own habit, or type one', (tester) async {
+    final store = await pumpHome(tester);
+    await tester.tap(find.byKey(const Key('createOwnHabit')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('habitName')), 'Violin');
+    await tester.tap(find.byKey(const Key('habitPicture')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('emoji-🎻')));
+    await tester.pumpAndSettle();
+    await save(tester);
+
+    final habit = store.habits.firstWhere((h) => h.name == 'Violin');
+    expect(habit.emoji, '🎻');
+    expect(habit.toMap()['emoji'], '🎻');
+    final row = find.text('🎻');
+    await tester.scrollUntilVisible(row, 300);
+    expect(row, findsOneWidget);
+
+    // Edit it: type another emoji, then go back to the category icon.
+    await tester.tap(row);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('habitPicture')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('typedEmoji')), '🦄 hi');
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('useTypedEmoji')));
+    await tester.pumpAndSettle();
+    expect(find.text('🦄'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('habitPicture')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('emoji-none')));
+    await tester.pumpAndSettle();
+    await save(tester);
+    expect(store.habits.firstWhere((h) => h.name == 'Violin').emoji, isNull);
+  });
+
   testWidgets('a habit for chosen days shows on Today only on those days', (
     tester,
   ) async {

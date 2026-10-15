@@ -517,4 +517,19 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get reminderEveningBody => 'איך היה היום? זה הזמן לסמן את ההרגלים.';
+
+  @override
+  String get habitPicture => 'תמונה';
+
+  @override
+  String get pickAnEmoji => 'בחירת אימוג׳י להרגל';
+
+  @override
+  String get useCategoryIcon => 'שימוש בסמל הקטגוריה';
+
+  @override
+  String get typeAnyEmoji => 'או הקלדת אימוג׳י אחר';
+
+  @override
+  String get useThis => 'בחירה';
 }

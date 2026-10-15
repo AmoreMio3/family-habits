@@ -521,6 +521,21 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reminderEveningBody => '¿Qué tal hoy? Marca tus hábitos.';
+
+  @override
+  String get habitPicture => 'Imagen';
+
+  @override
+  String get pickAnEmoji => 'Elige un emoji para este hábito';
+
+  @override
+  String get useCategoryIcon => 'Usar el icono de la categoría';
+
+  @override
+  String get typeAnyEmoji => 'O escribe cualquier emoji';
+
+  @override
+  String get useThis => 'Usar';
 }
 
 /// The translations for Spanish Castilian, as used in Latin America and the Caribbean (`es_419`).

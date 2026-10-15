@@ -151,5 +151,10 @@
   "reminderSummaryTwice": "每天 {morning} 和 {evening}",
   "remindersBlocked": "Family Habits 的通知已关闭。请在手机设置中开启以接收提醒。",
   "reminderMorningBody": "早上好！今天的习惯在等你。",
-  "reminderEveningBody": "今天过得怎么样？来打卡你的习惯吧。"
+  "reminderEveningBody": "今天过得怎么样？来打卡你的习惯吧。",
+  "habitPicture": "图标",
+  "pickAnEmoji": "为这个习惯选一个表情",
+  "useCategoryIcon": "使用类别图标",
+  "typeAnyEmoji": "或输入任意表情",
+  "useThis": "使用"
 }

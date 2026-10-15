@@ -119,6 +119,7 @@ class Habit {
     this.templateId,
     this.definition,
     this.days,
+    this.emoji,
   });
 
   final String id;
@@ -136,6 +137,10 @@ class Habit {
   /// Weekdays the habit is done on ([DateTime.monday] .. [DateTime.sunday]),
   /// or null for every day.
   final Set<int>? days;
+
+  /// A picture the owner picked for the habit, such as "🎻". Null shows the
+  /// category's icon.
+  final String? emoji;
 
   bool get isEveryDay => days == null || days!.length == 7;
 
@@ -161,6 +166,8 @@ class Habit {
     // Left out for every day, so a habit saves even where the database
     // rules don't know about chosen days yet.
     if (!isEveryDay) 'days': days!.toList()..sort(),
+    // Also left out when not picked, for the same reason.
+    if (emoji != null) 'emoji': emoji,
     // Still written so older versions of the app show the right target.
     'timesPerWeek': timesPerWeek,
   };
@@ -181,6 +188,7 @@ class Habit {
         },
         _ => null,
       },
+      emoji: map['emoji'] as String?,
     );
   }
 }

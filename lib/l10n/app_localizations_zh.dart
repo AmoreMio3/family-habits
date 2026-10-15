@@ -504,6 +504,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get reminderEveningBody => '今天过得怎么样？来打卡你的习惯吧。';
+
+  @override
+  String get habitPicture => '图标';
+
+  @override
+  String get pickAnEmoji => '为这个习惯选一个表情';
+
+  @override
+  String get useCategoryIcon => '使用类别图标';
+
+  @override
+  String get typeAnyEmoji => '或输入任意表情';
+
+  @override
+  String get useThis => '使用';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1005,4 +1020,19 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get reminderEveningBody => '今天過得怎麼樣？來打卡你的習慣吧。';
+
+  @override
+  String get habitPicture => '圖示';
+
+  @override
+  String get pickAnEmoji => '為這個習慣選一個表情';
+
+  @override
+  String get useCategoryIcon => '使用類別圖示';
+
+  @override
+  String get typeAnyEmoji => '或輸入任意表情';
+
+  @override
+  String get useThis => '使用';
 }

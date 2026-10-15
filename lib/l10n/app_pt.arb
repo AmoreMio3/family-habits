@@ -151,5 +151,10 @@
   "reminderSummaryTwice": "Todo dia às {morning} e às {evening}",
   "remindersBlocked": "As notificações do Family Habits estão desativadas. Ative nas configurações do celular para receber lembretes.",
   "reminderMorningBody": "Bom dia! Seus hábitos de hoje estão esperando.",
-  "reminderEveningBody": "Como foi hoje? Marque seus hábitos."
+  "reminderEveningBody": "Como foi hoje? Marque seus hábitos.",
+  "habitPicture": "Imagem",
+  "pickAnEmoji": "Escolha um emoji para este hábito",
+  "useCategoryIcon": "Usar o ícone da categoria",
+  "typeAnyEmoji": "Ou digite qualquer emoji",
+  "useThis": "Usar"
 }

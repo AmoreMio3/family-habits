@@ -294,5 +294,10 @@
   "reminderEveningBody": "How did today go? Check off your habits.",
   "@reminderEveningBody": {
     "description": "Text of the evening reminder notification."
-  }
+  },
+  "habitPicture": "Picture",
+  "pickAnEmoji": "Pick an emoji for this habit",
+  "useCategoryIcon": "Use the category icon",
+  "typeAnyEmoji": "Or type any emoji",
+  "useThis": "Use"
 }

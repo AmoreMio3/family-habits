@@ -355,19 +355,21 @@ const _quitWords = [
   'sin ',
 ];
 
-/// The habit's own picture: from its template when it came from the
+/// The habit's own picture: the emoji its owner picked, else from its template when it came from the
 /// library, otherwise from the words in its name. Null means the habit gets
 /// its category's animation.
 Scene? sceneFor(Habit habit) {
+  final quittingCategory = switch (habit.category) {
+    BuiltInRef(category: BuiltInCategory.breakHabit) => true,
+    _ => false,
+  };
+  if (habit.emoji case final emoji?) {
+    return Scene(emoji, quittingCategory ? Motion.ban : Motion.pop, '✨');
+  }
   final fromTemplate = habitScenes[habit.templateId];
   if (fromTemplate != null) return fromTemplate;
   final text = ' ${habit.name.toLowerCase()}';
-  final quitting =
-      _quitWords.any(text.contains) ||
-      switch (habit.category) {
-        BuiltInRef(category: BuiltInCategory.breakHabit) => true,
-        _ => false,
-      };
+  final quitting = _quitWords.any(text.contains) || quittingCategory;
   for (final (words, scene) in _wordScenes) {
     if (words.any(text.contains)) {
       return quitting && scene.motion != Motion.ban

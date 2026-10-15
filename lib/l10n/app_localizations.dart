@@ -1028,6 +1028,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'How did today go? Check off your habits.'**
   String get reminderEveningBody;
+
+  /// No description provided for @habitPicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Picture'**
+  String get habitPicture;
+
+  /// No description provided for @pickAnEmoji.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick an emoji for this habit'**
+  String get pickAnEmoji;
+
+  /// No description provided for @useCategoryIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the category icon'**
+  String get useCategoryIcon;
+
+  /// No description provided for @typeAnyEmoji.
+  ///
+  /// In en, this message translates to:
+  /// **'Or type any emoji'**
+  String get typeAnyEmoji;
+
+  /// No description provided for @useThis.
+  ///
+  /// In en, this message translates to:
+  /// **'Use'**
+  String get useThis;
 }
 
 class _AppLocalizationsDelegate

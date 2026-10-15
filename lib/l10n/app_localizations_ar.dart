@@ -522,4 +522,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reminderEveningBody => 'كيف كان يومك؟ سجّل عاداتك.';
+
+  @override
+  String get habitPicture => 'صورة';
+
+  @override
+  String get pickAnEmoji => 'اختر رمزًا تعبيريًا لهذه العادة';
+
+  @override
+  String get useCategoryIcon => 'استخدم رمز الفئة';
+
+  @override
+  String get typeAnyEmoji => 'أو اكتب أي رمز تعبيري';
+
+  @override
+  String get useThis => 'استخدام';
 }
