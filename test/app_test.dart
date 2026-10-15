@@ -124,7 +124,7 @@ void main() {
   ) async {
     await openDemo(tester);
     final media = MediaQuery.of(tester.element(find.byType(TodayScreen)));
-    expect(media.textScaler.scale(20), closeTo(18, 0.001));
+    expect(media.textScaler.scale(20), closeTo(16.4, 0.001));
   });
 
   testWidgets(

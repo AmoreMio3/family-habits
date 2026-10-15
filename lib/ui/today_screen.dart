@@ -43,7 +43,7 @@ class TodayScreen extends StatelessWidget {
                 style: TextStyle(color: look.muted, fontSize: 14),
               ),
               const SizedBox(height: 2),
-              Text(l10n.hiName(me.nickname), style: look.heading(26)),
+              Text(l10n.hiName(me.nickname), style: look.heading(22)),
             ],
           ),
         ),
@@ -144,26 +144,26 @@ class _ProfileButton extends StatelessWidget {
             children: [
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.all(3),
+                padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: selected ? look.primary : Colors.transparent,
-                    width: 3,
+                    width: 2,
                   ),
                 ),
-                child: MemberAvatar(name: name, color: color, size: 46),
+                child: MemberAvatar(name: name, color: color, size: 34),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               Text(
                 name,
                 style: TextStyle(
                   fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                   color: selected ? look.ink : look.muted,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
-              Text(role, style: TextStyle(color: look.muted, fontSize: 12)),
+              Text(role, style: TextStyle(color: look.muted, fontSize: 10)),
             ],
           ),
         ),

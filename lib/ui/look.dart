@@ -294,7 +294,7 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
       surfaceTintColor: Colors.transparent,
       scrolledUnderElevation: 0,
       elevation: 0,
-      titleTextStyle: look.heading(22),
+      titleTextStyle: look.heading(20),
     ),
     cardTheme: CardThemeData(
       color: look.card,
@@ -411,7 +411,7 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
 class CompactText extends StatelessWidget {
   const CompactText({super.key, required this.child});
 
-  static const factor = 0.9;
+  static const factor = 0.82;
 
   final Widget child;
 
@@ -563,7 +563,7 @@ class SectionTitle extends StatelessWidget {
       padding: const EdgeInsetsDirectional.fromSTEB(4, 20, 4, 6),
       child: Row(
         children: [
-          Expanded(child: Text(text, style: look.heading(20))),
+          Expanded(child: Text(text, style: look.heading(18))),
           if (trailing != null)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
