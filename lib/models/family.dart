@@ -158,7 +158,9 @@ class Habit {
     'category': category.id,
     'templateId': templateId,
     'definition': definition,
-    'days': isEveryDay ? null : (days!.toList()..sort()),
+    // Left out for every day, so a habit saves even where the database
+    // rules don't know about chosen days yet.
+    if (!isEveryDay) 'days': days!.toList()..sort(),
     // Still written so older versions of the app show the right target.
     'timesPerWeek': timesPerWeek,
   };

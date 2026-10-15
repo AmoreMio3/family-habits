@@ -91,6 +91,7 @@ void main() {
     expect(map['timesPerWeek'], 2);
     final back = Habit.fromMap('read', map);
     expect(back.days, {DateTime.monday, DateTime.wednesday});
+    expect(brush.toMap().containsKey('days'), isFalse);
     expect(Habit.fromMap('brush', brush.toMap()).isEveryDay, isTrue);
   });
 
