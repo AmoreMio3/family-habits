@@ -156,5 +156,22 @@
   "pickAnEmoji": "Scegli un’emoji per questa abitudine",
   "useCategoryIcon": "Usa l’icona della categoria",
   "typeAnyEmoji": "Oppure scrivi un’emoji qualsiasi",
-  "useThis": "Usa"
+  "useThis": "Usa",
+  "myDay": "La mia giornata",
+  "myProgress": "I miei progressi",
+  "habitIdeas": "Idee di abitudini",
+  "familyProgress": "Progressi della famiglia",
+  "familySettings": "Impostazioni della famiglia",
+  "weekTab": "Settimana",
+  "monthTab": "Mese",
+  "myWeek": "La mia settimana",
+  "myMonth": "Il mio mese",
+  "familyMonth": "Il mese in famiglia",
+  "byHabit": "Per abitudine",
+  "byPerson": "Per persona",
+  "previous": "Precedente",
+  "next": "Successivo",
+  "account": "Account",
+  "thisWeek": "Questa settimana",
+  "thisMonth": "Questo mese"
 }

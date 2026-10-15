@@ -6,7 +6,6 @@ import '../l10n/app_localizations.dart';
 import '../logic/progress.dart';
 import '../logic/week.dart';
 import '../models/family.dart';
-import 'family_progress_card.dart';
 import 'celebration.dart';
 import 'common.dart';
 import 'habit_editor.dart';
@@ -64,8 +63,7 @@ class TodayScreen extends StatelessWidget {
           const SizedBox(height: 12),
           _ChildDayHint(text: l10n.childDayHint(child.nickname)),
         ],
-        const SizedBox(height: 16),
-        FamilyProgressCard(store: store, weekStart: weekStart),
+        const SizedBox(height: 4),
         if (family.isNotEmpty) ...[
           SectionTitle(l10n.familyHabits, trailing: doneOf(family)),
           for (final habit in family)
@@ -414,4 +412,15 @@ class CheckCircle extends StatelessWidget {
           : Icon(Icons.lock_outline_rounded, color: look.muted, size: 18),
     );
   }
+}
+
+/// The row of family members at the top of a screen, to switch whose habits
+/// are shown.
+class ProfileSwitcher extends StatelessWidget {
+  const ProfileSwitcher({super.key, required this.store});
+
+  final FamilyStore store;
+
+  @override
+  Widget build(BuildContext context) => _ProfileSwitcher(store: store);
 }

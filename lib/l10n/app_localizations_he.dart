@@ -532,4 +532,55 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get useThis => 'בחירה';
+
+  @override
+  String get myDay => 'היום שלי';
+
+  @override
+  String get myProgress => 'ההתקדמות שלי';
+
+  @override
+  String get habitIdeas => 'רעיונות להרגלים';
+
+  @override
+  String get familyProgress => 'ההתקדמות של המשפחה';
+
+  @override
+  String get familySettings => 'הגדרות המשפחה';
+
+  @override
+  String get weekTab => 'שבוע';
+
+  @override
+  String get monthTab => 'חודש';
+
+  @override
+  String get myWeek => 'השבוע שלי';
+
+  @override
+  String get myMonth => 'החודש שלי';
+
+  @override
+  String get familyMonth => 'החודש של המשפחה';
+
+  @override
+  String get byHabit => 'לפי הרגל';
+
+  @override
+  String get byPerson => 'לפי בן משפחה';
+
+  @override
+  String get previous => 'הקודם';
+
+  @override
+  String get next => 'הבא';
+
+  @override
+  String get account => 'חשבון';
+
+  @override
+  String get thisWeek => 'השבוע';
+
+  @override
+  String get thisMonth => 'החודש';
 }

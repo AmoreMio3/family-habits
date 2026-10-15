@@ -535,6 +535,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get useThis => 'Use';
+
+  @override
+  String get myDay => 'My day';
+
+  @override
+  String get myProgress => 'My progress';
+
+  @override
+  String get habitIdeas => 'Habit ideas';
+
+  @override
+  String get familyProgress => 'Family progress';
+
+  @override
+  String get familySettings => 'Family settings';
+
+  @override
+  String get weekTab => 'Week';
+
+  @override
+  String get monthTab => 'Month';
+
+  @override
+  String get myWeek => 'My week';
+
+  @override
+  String get myMonth => 'My month';
+
+  @override
+  String get familyMonth => 'Family month';
+
+  @override
+  String get byHabit => 'By habit';
+
+  @override
+  String get byPerson => 'By person';
+
+  @override
+  String get previous => 'Previous';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get thisWeek => 'This week';
+
+  @override
+  String get thisMonth => 'This month';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).

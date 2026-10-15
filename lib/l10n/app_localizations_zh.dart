@@ -519,6 +519,57 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get useThis => '使用';
+
+  @override
+  String get myDay => '我的一天';
+
+  @override
+  String get myProgress => '我的进度';
+
+  @override
+  String get habitIdeas => '习惯灵感';
+
+  @override
+  String get familyProgress => '家庭进度';
+
+  @override
+  String get familySettings => '家庭设置';
+
+  @override
+  String get weekTab => '周';
+
+  @override
+  String get monthTab => '月';
+
+  @override
+  String get myWeek => '我的这一周';
+
+  @override
+  String get myMonth => '我的这个月';
+
+  @override
+  String get familyMonth => '家庭的这个月';
+
+  @override
+  String get byHabit => '按习惯';
+
+  @override
+  String get byPerson => '按成员';
+
+  @override
+  String get previous => '上一个';
+
+  @override
+  String get next => '下一个';
+
+  @override
+  String get account => '账户';
+
+  @override
+  String get thisWeek => '本周';
+
+  @override
+  String get thisMonth => '本月';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1035,4 +1086,55 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get useThis => '使用';
+
+  @override
+  String get myDay => '我的一天';
+
+  @override
+  String get myProgress => '我的進度';
+
+  @override
+  String get habitIdeas => '習慣靈感';
+
+  @override
+  String get familyProgress => '家庭進度';
+
+  @override
+  String get familySettings => '家庭設定';
+
+  @override
+  String get weekTab => '週';
+
+  @override
+  String get monthTab => '月';
+
+  @override
+  String get myWeek => '我的這一週';
+
+  @override
+  String get myMonth => '我的這個月';
+
+  @override
+  String get familyMonth => '家庭的這個月';
+
+  @override
+  String get byHabit => '依習慣';
+
+  @override
+  String get byPerson => '依成員';
+
+  @override
+  String get previous => '上一個';
+
+  @override
+  String get next => '下一個';
+
+  @override
+  String get account => '帳戶';
+
+  @override
+  String get thisWeek => '本週';
+
+  @override
+  String get thisMonth => '本月';
 }

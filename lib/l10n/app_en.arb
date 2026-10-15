@@ -299,5 +299,22 @@
   "pickAnEmoji": "Pick an emoji for this habit",
   "useCategoryIcon": "Use the category icon",
   "typeAnyEmoji": "Or type any emoji",
-  "useThis": "Use"
+  "useThis": "Use",
+  "myDay": "My day",
+  "myProgress": "My progress",
+  "habitIdeas": "Habit ideas",
+  "familyProgress": "Family progress",
+  "familySettings": "Family settings",
+  "weekTab": "Week",
+  "monthTab": "Month",
+  "myWeek": "My week",
+  "myMonth": "My month",
+  "familyMonth": "Family month",
+  "byHabit": "By habit",
+  "byPerson": "By person",
+  "previous": "Previous",
+  "next": "Next",
+  "account": "Account",
+  "thisWeek": "This week",
+  "thisMonth": "This month"
 }

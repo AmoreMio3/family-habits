@@ -535,4 +535,55 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get useThis => 'चुनें';
+
+  @override
+  String get myDay => 'मेरा दिन';
+
+  @override
+  String get myProgress => 'मेरी प्रगति';
+
+  @override
+  String get habitIdeas => 'आदतों के सुझाव';
+
+  @override
+  String get familyProgress => 'परिवार की प्रगति';
+
+  @override
+  String get familySettings => 'परिवार की सेटिंग';
+
+  @override
+  String get weekTab => 'सप्ताह';
+
+  @override
+  String get monthTab => 'महीना';
+
+  @override
+  String get myWeek => 'मेरा सप्ताह';
+
+  @override
+  String get myMonth => 'मेरा महीना';
+
+  @override
+  String get familyMonth => 'परिवार का महीना';
+
+  @override
+  String get byHabit => 'आदत के अनुसार';
+
+  @override
+  String get byPerson => 'व्यक्ति के अनुसार';
+
+  @override
+  String get previous => 'पिछला';
+
+  @override
+  String get next => 'अगला';
+
+  @override
+  String get account => 'खाता';
+
+  @override
+  String get thisWeek => 'इस सप्ताह';
+
+  @override
+  String get thisMonth => 'इस महीने';
 }

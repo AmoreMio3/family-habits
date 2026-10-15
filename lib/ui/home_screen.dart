@@ -6,11 +6,12 @@ import '../data/family_store.dart';
 import '../data/reminders.dart';
 import '../l10n/app_localizations.dart';
 import 'categories_screen.dart';
-import 'common.dart';
 import 'family_screen.dart';
 import 'habit_picker.dart';
 import 'look.dart';
-import 'reminders_screen.dart';
+import 'my_habits_screen.dart';
+import 'progress_screen.dart';
+import 'settings_screen.dart';
 import 'today_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -59,12 +60,18 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Text(title),
             actions: [
               IconButton(
-                key: const Key('remindersButton'),
-                tooltip: l10n.reminders,
-                icon: const Icon(Icons.notifications_none_rounded),
-                onPressed: () => showReminders(context),
+                key: const Key('settingsButton'),
+                tooltip: l10n.settings,
+                icon: const Icon(Icons.settings_rounded),
+                onPressed: store.hasData
+                    ? () => showSettings(
+                        context,
+                        store: store,
+                        settings: widget.settings,
+                        accounts: widget.accounts,
+                      )
+                    : null,
               ),
-              LanguageMenu(settings: widget.settings),
             ],
           ),
           body: Column(
@@ -77,16 +84,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           : _LoadError(store: store, accounts: widget.accounts)
                     : switch (_tab) {
                         0 => TodayScreen(store: store),
-                        1 => FamilyScreen(
-                          store: store,
-                          accounts: widget.accounts,
-                        ),
+                        1 => MyHabitsScreen(store: store),
+                        2 => MyProgressScreen(store: store),
+                        3 => FamilyScreen(store: store),
                         _ => CategoriesScreen(store: store),
                       },
               ),
             ],
           ),
-          floatingActionButton: _tab == 0 && store.hasData && store.canManage
+          floatingActionButton: _tab <= 1 && store.hasData && store.canManage
               ? FloatingActionButton.extended(
                   onPressed: () => showHabitPicker(context, store),
                   icon: const Icon(Icons.add_rounded),
@@ -104,7 +110,17 @@ class _HomeScreenState extends State<HomeScreen> {
               NavigationDestination(
                 icon: const Icon(Icons.wb_sunny_outlined),
                 selectedIcon: const Icon(Icons.wb_sunny_rounded),
-                label: l10n.today,
+                label: l10n.myDay,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.checklist_rounded),
+                selectedIcon: const Icon(Icons.checklist_rounded),
+                label: l10n.myHabits,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.insights_outlined),
+                selectedIcon: const Icon(Icons.insights_rounded),
+                label: l10n.myProgress,
               ),
               NavigationDestination(
                 icon: const Icon(Icons.diversity_3_outlined),
@@ -112,9 +128,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: l10n.family,
               ),
               NavigationDestination(
-                icon: const Icon(Icons.category_outlined),
-                selectedIcon: const Icon(Icons.category_rounded),
-                label: l10n.categories,
+                icon: const Icon(Icons.lightbulb_outline_rounded),
+                selectedIcon: const Icon(Icons.lightbulb_rounded),
+                label: l10n.habitIdeas,
               ),
             ],
           ),
