@@ -49,53 +49,61 @@ class FamilyProgressCard extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 10, 14),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.familyWeek,
-                        style: look.heading(22, color: look.heroInk),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        l10n.checkInsProgress(progress.done, progress.target),
-                        style: TextStyle(
-                          color: look.heroInk.withValues(alpha: 0.85),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+          CustomPaint(
+            painter: LookPatternPainter(
+              look.heroPattern,
+              look.heroInk.withValues(alpha: 0.16),
+            ),
+            child: Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 10, 14),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.familyWeek,
+                          style: look.heading(22, color: look.heroInk),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 66,
-                  height: 66,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      SizedBox.expand(
-                        child: CircularProgressIndicator(
-                          value: progress.fraction,
-                          strokeWidth: 7,
-                          strokeCap: StrokeCap.round,
-                          color: look.heroInk,
-                          backgroundColor: look.heroInk.withValues(alpha: 0.25),
+                        const SizedBox(height: 4),
+                        Text(
+                          l10n.checkInsProgress(progress.done, progress.target),
+                          style: TextStyle(
+                            color: look.heroInk.withValues(alpha: 0.85),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      Text(
-                        '$percent%',
-                        style: look.heading(20, color: look.heroInk),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    width: 66,
+                    height: 66,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        SizedBox.expand(
+                          child: CircularProgressIndicator(
+                            value: progress.fraction,
+                            strokeWidth: 7,
+                            strokeCap: StrokeCap.round,
+                            color: look.heroInk,
+                            backgroundColor: look.heroInk.withValues(
+                              alpha: 0.25,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '$percent%',
+                          style: look.heading(20, color: look.heroInk),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Container(

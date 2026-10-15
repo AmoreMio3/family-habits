@@ -89,6 +89,16 @@ flutter:
     - family: VarelaRound
       fonts:
         - asset: assets/fonts/VarelaRound-400.ttf
+    - family: PlaypenSansHebrew
+      fonts:
+        - asset: assets/fonts/PlaypenSansHebrew-700.ttf
+          weight: 700
+    - family: SecularOne
+      fonts:
+        - asset: assets/fonts/SecularOne-400.ttf
+    - family: SuezOne
+      fonts:
+        - asset: assets/fonts/SuezOne-400.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

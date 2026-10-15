@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 /// There are three looks while the family picks one. Build with
 /// `--dart-define=LOOK=garden` or `LOOK=playground` to try the others;
 /// `sunshine` is the default.
-enum LookName { sunshine, garden, playground }
+enum LookName { sunshine, garden, playground, stickers, starry, storybook }
+
+/// A light pattern drawn behind the screen or on the family week card.
+enum LookPattern { none, dots, stars, hills, lines }
 
 final selectedLook =
     LookName.values.asNameMap()[const String.fromEnvironment(
@@ -36,6 +39,9 @@ class Look extends ThemeExtension<Look> {
     required this.familyColor,
     required this.streak,
     required this.nav,
+    this.backdrop = LookPattern.none,
+    this.heroPattern = LookPattern.none,
+    this.checkRadius,
   });
 
   final Brightness brightness;
@@ -62,6 +68,15 @@ class Look extends ThemeExtension<Look> {
   final Color familyColor;
   final Color streak;
   final Color nav;
+
+  /// Drawn faintly behind the main screens.
+  final LookPattern backdrop;
+
+  /// Drawn on the family week card.
+  final LookPattern heroPattern;
+
+  /// Corner rounding of the check button; null makes it a circle.
+  final double? checkRadius;
 
   static const bodyFont = 'Rubik';
 
@@ -212,6 +227,129 @@ class Look extends ThemeExtension<Look> {
         familyColor: const Color(0xFF0FB5A6),
         streak: const Color(0xFFFF6B3D),
         nav: dark ? const Color(0xFF231D40) : Colors.white,
+      ),
+      LookName.stickers => Look(
+        brightness: brightness,
+        background: dark ? const Color(0xFF1C1915) : const Color(0xFFFBF3E4),
+        card: dark ? const Color(0xFF29241E) : Colors.white,
+        ink: dark ? const Color(0xFFF6ECDD) : const Color(0xFF2B2118),
+        muted: dark ? const Color(0xFFBDAE9B) : const Color(0xFF7D6B58),
+        primary: dark ? const Color(0xFFFF7A59) : const Color(0xFFD9471F),
+        onPrimary: dark ? const Color(0xFF2B0E04) : Colors.white,
+        done: const Color(0xFF2BA84A),
+        hero: dark
+            ? const LinearGradient(
+                colors: [Color(0xFFE0A526), Color(0xFFD9822B)],
+              )
+            : const LinearGradient(
+                colors: [Color(0xFFFFD25A), Color(0xFFFFB238)],
+              ),
+        heroInk: const Color(0xFF2B2118),
+        radius: 18,
+        borderWidth: 2,
+        border: dark ? const Color(0xFF51473B) : const Color(0xFF2B2118),
+        shadows: [
+          BoxShadow(
+            color: dark ? const Color(0xFF0A0806) : const Color(0xFF2B2118),
+            offset: const Offset(3, 3),
+          ),
+        ],
+        headingFont: 'PlaypenSansHebrew',
+        headingWeight: FontWeight.w700,
+        memberColors: const [
+          Color(0xFFFF6B4A),
+          Color(0xFF3FA7F5),
+          Color(0xFFF25C9A),
+          Color(0xFF2BB673),
+          Color(0xFF9B6BFF),
+          Color(0xFFF2A516),
+        ],
+        familyColor: const Color(0xFF2BB673),
+        streak: const Color(0xFFFF6B4A),
+        nav: dark ? const Color(0xFF29241E) : Colors.white,
+        backdrop: LookPattern.dots,
+        heroPattern: LookPattern.stars,
+        checkRadius: 10,
+      ),
+      LookName.starry => Look(
+        brightness: brightness,
+        background: dark ? const Color(0xFF0D1026) : const Color(0xFFEEF0FA),
+        card: dark ? const Color(0xFF181C3A) : Colors.white,
+        ink: dark ? const Color(0xFFEDEEFF) : const Color(0xFF1B1F3B),
+        muted: dark ? const Color(0xFFA6AAD0) : const Color(0xFF5E6488),
+        primary: dark ? const Color(0xFF9EA2FF) : const Color(0xFF4A4ED6),
+        onPrimary: dark ? const Color(0xFF12145A) : Colors.white,
+        done: const Color(0xFF14B8A6),
+        hero: const LinearGradient(
+          begin: AlignmentDirectional.topStart,
+          end: AlignmentDirectional.bottomEnd,
+          colors: [Color(0xFF1B1F4B), Color(0xFF4B2F8A)],
+        ),
+        heroInk: Colors.white,
+        radius: 26,
+        borderWidth: 0,
+        border: Colors.transparent,
+        shadows: dark
+            ? const []
+            : const [
+                BoxShadow(
+                  color: Color(0x1F4A4ED6),
+                  blurRadius: 20,
+                  offset: Offset(0, 8),
+                ),
+              ],
+        headingFont: 'SecularOne',
+        headingWeight: FontWeight.w400,
+        memberColors: const [
+          Color(0xFF6C70F0),
+          Color(0xFFF26A8D),
+          Color(0xFF14B8A6),
+          Color(0xFFF5A524),
+          Color(0xFF3DA5F5),
+          Color(0xFFB86BF0),
+        ],
+        familyColor: const Color(0xFFF5B83D),
+        streak: const Color(0xFFF5A524),
+        nav: dark ? const Color(0xFF181C3A) : Colors.white,
+        backdrop: dark ? LookPattern.stars : LookPattern.none,
+        heroPattern: LookPattern.stars,
+      ),
+      LookName.storybook => Look(
+        brightness: brightness,
+        background: dark ? const Color(0xFF141A15) : const Color(0xFFF5EEDF),
+        card: dark ? const Color(0xFF1E2620) : const Color(0xFFFFFBF2),
+        ink: dark ? const Color(0xFFEFE7D3) : const Color(0xFF2A2A1F),
+        muted: dark ? const Color(0xFFADB29E) : const Color(0xFF706852),
+        primary: dark ? const Color(0xFF86C79C) : const Color(0xFF2F6B4F),
+        onPrimary: dark ? const Color(0xFF0F2619) : const Color(0xFFFFF8E7),
+        done: dark ? const Color(0xFF5FB27F) : const Color(0xFF2F8F5B),
+        hero: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: dark
+              ? const [Color(0xFF223A2C), Color(0xFF2F5A40)]
+              : const [Color(0xFF3B7A5A), Color(0xFF2F6B4F)],
+        ),
+        heroInk: const Color(0xFFFFF8E7),
+        radius: 14,
+        borderWidth: 1,
+        border: dark ? const Color(0xFF2E3A30) : const Color(0xFFE2D6BC),
+        shadows: const [],
+        headingFont: 'SuezOne',
+        headingWeight: FontWeight.w400,
+        memberColors: const [
+          Color(0xFFD2693C),
+          Color(0xFF3E7CB1),
+          Color(0xFFC2527A),
+          Color(0xFF6A9A3A),
+          Color(0xFFD9A021),
+          Color(0xFF7B5EA7),
+        ],
+        familyColor: const Color(0xFFD9A021),
+        streak: const Color(0xFFD2693C),
+        nav: dark ? const Color(0xFF1E2620) : const Color(0xFFFFFBF2),
+        backdrop: LookPattern.lines,
+        heroPattern: LookPattern.hills,
       ),
     };
   }
@@ -444,6 +582,110 @@ class _ScaledText extends TextScaler {
 
   @override
   int get hashCode => Object.hash(base, factor);
+}
+
+/// Paints a [LookPattern] in one color; the caller picks a faint color.
+class LookPatternPainter extends CustomPainter {
+  const LookPatternPainter(this.pattern, this.color);
+
+  final LookPattern pattern;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = color;
+    switch (pattern) {
+      case LookPattern.none:
+        return;
+      case LookPattern.dots:
+        const gap = 22.0;
+        for (var y = gap / 2; y < size.height; y += gap) {
+          for (var x = gap / 2; x < size.width; x += gap) {
+            canvas.drawCircle(Offset(x, y), 1.5, paint);
+          }
+        }
+      case LookPattern.lines:
+        const gap = 30.0;
+        paint.strokeWidth = 1;
+        for (var y = gap; y < size.height; y += gap) {
+          canvas.drawLine(Offset(0, y), Offset(size.width, y), paint);
+        }
+      case LookPattern.stars:
+        // Fixed positions, so the stars don't jump between frames.
+        var seed = 7;
+        double next() {
+          seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+          return seed / 0x7fffffff;
+        }
+
+        final count = (size.width * size.height / 2600).clamp(8, 400).round();
+        for (var i = 0; i < count; i++) {
+          final c = Offset(next() * size.width, next() * size.height);
+          final r = 1 + next() * 2.5;
+          if (r > 2.8) {
+            _sparkle(canvas, c, r * 1.6, paint);
+          } else {
+            canvas.drawCircle(c, r * 0.5, paint);
+          }
+        }
+      case LookPattern.hills:
+        final h = size.height;
+        final w = size.width;
+        for (final (top, alpha) in [(0.84, 0.5), (0.93, 1.0)]) {
+          final path = Path()
+            ..moveTo(0, h * top)
+            ..quadraticBezierTo(w * 0.25, h * (top - 0.08), w * 0.5, h * top)
+            ..quadraticBezierTo(w * 0.75, h * (top + 0.06), w, h * (top - 0.03))
+            ..lineTo(w, h)
+            ..lineTo(0, h)
+            ..close();
+          canvas.drawPath(
+            path,
+            Paint()..color = color.withValues(alpha: color.a * alpha),
+          );
+        }
+    }
+  }
+
+  static void _sparkle(Canvas canvas, Offset c, double r, Paint paint) {
+    final t = r * 0.28;
+    canvas.drawPath(
+      Path()
+        ..moveTo(c.dx, c.dy - r)
+        ..quadraticBezierTo(c.dx + t, c.dy - t, c.dx + r, c.dy)
+        ..quadraticBezierTo(c.dx + t, c.dy + t, c.dx, c.dy + r)
+        ..quadraticBezierTo(c.dx - t, c.dy + t, c.dx - r, c.dy)
+        ..quadraticBezierTo(c.dx - t, c.dy - t, c.dx, c.dy - r)
+        ..close(),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(LookPatternPainter old) =>
+      old.pattern != pattern || old.color != color;
+}
+
+/// The look's faint background pattern behind [child].
+class LookBackdrop extends StatelessWidget {
+  const LookBackdrop({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final look = Look.of(context);
+    if (look.backdrop == LookPattern.none) return child;
+    return CustomPaint(
+      painter: LookPatternPainter(
+        look.backdrop,
+        look.ink.withValues(
+          alpha: look.backdrop == LookPattern.lines ? 0.05 : 0.09,
+        ),
+      ),
+      child: child,
+    );
+  }
 }
 
 /// A card in the current look that can be tapped.

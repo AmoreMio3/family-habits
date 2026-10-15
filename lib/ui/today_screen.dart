@@ -370,7 +370,10 @@ class CheckCircle extends StatelessWidget {
       width: 34,
       height: 34,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
+        shape: look.checkRadius == null ? BoxShape.circle : BoxShape.rectangle,
+        borderRadius: look.checkRadius == null
+            ? null
+            : BorderRadius.circular(look.checkRadius!),
         color: done ? look.done : Colors.transparent,
         border: Border.all(
           color: done ? look.done : look.muted.withValues(alpha: 0.45),

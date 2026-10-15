@@ -46,24 +46,29 @@ class _HomeScreenState extends State<HomeScreen> {
               LanguageMenu(settings: widget.settings),
             ],
           ),
-          body: Column(
-            children: [
-              if (store.isDemo) _DemoBanner(text: l10n.demoBanner),
-              Expanded(
-                child: !store.hasData
-                    ? store.error == null
-                          ? const Center(child: CircularProgressIndicator())
-                          : _LoadError(store: store, accounts: widget.accounts)
-                    : switch (_tab) {
-                        0 => TodayScreen(store: store),
-                        1 => FamilyScreen(
-                          store: store,
-                          accounts: widget.accounts,
-                        ),
-                        _ => CategoriesScreen(store: store),
-                      },
-              ),
-            ],
+          body: LookBackdrop(
+            child: Column(
+              children: [
+                if (store.isDemo) _DemoBanner(text: l10n.demoBanner),
+                Expanded(
+                  child: !store.hasData
+                      ? store.error == null
+                            ? const Center(child: CircularProgressIndicator())
+                            : _LoadError(
+                                store: store,
+                                accounts: widget.accounts,
+                              )
+                      : switch (_tab) {
+                          0 => TodayScreen(store: store),
+                          1 => FamilyScreen(
+                            store: store,
+                            accounts: widget.accounts,
+                          ),
+                          _ => CategoriesScreen(store: store),
+                        },
+                ),
+              ],
+            ),
           ),
           floatingActionButton: _tab == 0 && store.hasData && store.canManage
               ? FloatingActionButton.extended(
