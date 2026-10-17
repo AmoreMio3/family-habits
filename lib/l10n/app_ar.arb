@@ -177,5 +177,8 @@
   "next": "التالي",
   "account": "الحساب",
   "thisWeek": "هذا الأسبوع",
-  "thisMonth": "هذا الشهر"
+  "thisMonth": "هذا الشهر",
+  "menuPlace": "القائمة",
+  "menuTop": "في الأعلى",
+  "menuBottom": "في الأسفل"
 }

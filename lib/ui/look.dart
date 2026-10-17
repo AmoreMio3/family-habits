@@ -2,17 +2,11 @@ import 'package:flutter/material.dart';
 
 /// The app's visual style: colors, fonts, corner rounding and shadows.
 ///
-/// There are three looks while the family picks one. Build with
-/// `--dart-define=LOOK=garden` or `LOOK=playground` to try the others;
-/// `sunshine` is the default.
-enum LookName { sunshine, garden, playground, clear, sky, ocean }
+/// The family picked Clear Blue: navy and royal blue, Frank Ruhl Libre
+/// headings and IBM Plex Sans Hebrew text.
+enum LookName { clear }
 
-final selectedLook =
-    LookName.values.asNameMap()[const String.fromEnvironment(
-      'LOOK',
-      defaultValue: 'sunshine',
-    )] ??
-    LookName.sunshine;
+const selectedLook = LookName.clear;
 
 class Look extends ThemeExtension<Look> {
   const Look({
@@ -104,120 +98,6 @@ class Look extends ThemeExtension<Look> {
   static Look resolve(LookName name, Brightness brightness) {
     final dark = brightness == Brightness.dark;
     return switch (name) {
-      LookName.sunshine => Look(
-        brightness: brightness,
-        background: dark ? const Color(0xFF1E1813) : const Color(0xFFFFF6EA),
-        card: dark ? const Color(0xFF2B231C) : Colors.white,
-        ink: dark ? const Color(0xFFF8EEE4) : const Color(0xFF2E2118),
-        muted: dark ? const Color(0xFFC3B2A2) : const Color(0xFF7A6656),
-        primary: dark ? const Color(0xFFFF8A4C) : const Color(0xFFC9501A),
-        onPrimary: dark ? const Color(0xFF2E1405) : Colors.white,
-        done: const Color(0xFF1FA463),
-        hero: const LinearGradient(
-          begin: AlignmentDirectional.topStart,
-          end: AlignmentDirectional.bottomEnd,
-          colors: [Color(0xFFFF9B42), Color(0xFFFF5F6D)],
-        ),
-        heroInk: Colors.white,
-        radius: 24,
-        borderWidth: 0,
-        border: Colors.transparent,
-        shadows: dark
-            ? const []
-            : const [
-                BoxShadow(
-                  color: Color(0x1FE07B2E),
-                  blurRadius: 18,
-                  offset: Offset(0, 6),
-                ),
-              ],
-        headingFont: 'Fredoka',
-        headingWeight: FontWeight.w600,
-        memberColors: const [
-          Color(0xFFFF8A3D),
-          Color(0xFFF2547D),
-          Color(0xFF7C5CFF),
-          Color(0xFF14A8A0),
-          Color(0xFFF2B01E),
-          Color(0xFF3D9BFF),
-        ],
-        familyColor: const Color(0xFF1FA463),
-        streak: const Color(0xFFFF7A1A),
-        nav: dark ? const Color(0xFF2B231C) : Colors.white,
-      ),
-      LookName.garden => Look(
-        brightness: brightness,
-        background: dark ? const Color(0xFF151C17) : const Color(0xFFF2F5EC),
-        card: dark ? const Color(0xFF1F2922) : Colors.white,
-        ink: dark ? const Color(0xFFE9F0E7) : const Color(0xFF1F2D24),
-        muted: dark ? const Color(0xFFA7B6AA) : const Color(0xFF627266),
-        primary: dark ? const Color(0xFF8FCBA6) : const Color(0xFF3B7655),
-        onPrimary: dark ? const Color(0xFF0E2618) : Colors.white,
-        done: dark ? const Color(0xFF6DBB8C) : const Color(0xFF3B7655),
-        hero: LinearGradient(
-          begin: AlignmentDirectional.topStart,
-          end: AlignmentDirectional.bottomEnd,
-          colors: dark
-              ? const [Color(0xFF2D5A40), Color(0xFF6B4A33)]
-              : const [Color(0xFFB9DEC5), Color(0xFFF7D9B5)],
-        ),
-        heroInk: dark ? const Color(0xFFF1F5EF) : const Color(0xFF1F2D24),
-        radius: 18,
-        borderWidth: 1,
-        border: dark ? const Color(0xFF2E3B32) : const Color(0xFFDDE6D5),
-        shadows: const [],
-        headingFont: 'VarelaRound',
-        headingWeight: FontWeight.w400,
-        memberColors: const [
-          Color(0xFF4F9A6E),
-          Color(0xFFE08A5F),
-          Color(0xFF7484D2),
-          Color(0xFFC07BB0),
-          Color(0xFFD0A73C),
-          Color(0xFF4FA1B3),
-        ],
-        familyColor: const Color(0xFFE9A23B),
-        streak: const Color(0xFFE08A5F),
-        nav: dark ? const Color(0xFF1F2922) : Colors.white,
-      ),
-      LookName.playground => Look(
-        brightness: brightness,
-        background: dark ? const Color(0xFF17132B) : const Color(0xFFF3EFFF),
-        card: dark ? const Color(0xFF231D40) : Colors.white,
-        ink: dark ? const Color(0xFFF2EEFF) : const Color(0xFF231A4A),
-        muted: dark ? const Color(0xFFB6ADDB) : const Color(0xFF625A86),
-        primary: dark ? const Color(0xFFA48BFF) : const Color(0xFF5F3DF0),
-        onPrimary: dark ? const Color(0xFF1A0F4A) : Colors.white,
-        done: const Color(0xFF16A34A),
-        hero: const LinearGradient(
-          begin: AlignmentDirectional.topStart,
-          end: AlignmentDirectional.bottomEnd,
-          colors: [Color(0xFF5F3DF0), Color(0xFFC03FE0)],
-        ),
-        heroInk: Colors.white,
-        radius: 20,
-        borderWidth: 2.5,
-        border: dark ? const Color(0xFF4A3F80) : const Color(0xFF231A4A),
-        shadows: [
-          BoxShadow(
-            color: dark ? const Color(0xFF0B0818) : const Color(0xFF231A4A),
-            offset: const Offset(0, 4),
-          ),
-        ],
-        headingFont: 'Fredoka',
-        headingWeight: FontWeight.w700,
-        memberColors: const [
-          Color(0xFFFF4F86),
-          Color(0xFFFFA41B),
-          Color(0xFF22B455),
-          Color(0xFF2E9BFF),
-          Color(0xFFA855F7),
-          Color(0xFFFF6B3D),
-        ],
-        familyColor: const Color(0xFF0FB5A6),
-        streak: const Color(0xFFFF6B3D),
-        nav: dark ? const Color(0xFF231D40) : Colors.white,
-      ),
       LookName.clear => Look(
         brightness: brightness,
         background: dark ? const Color(0xFF0B1424) : const Color(0xFFF5F7FB),
@@ -253,84 +133,6 @@ class Look extends ThemeExtension<Look> {
         familyColor: const Color(0xFFE89A24),
         streak: const Color(0xFFF07A30),
         nav: dark ? const Color(0xFF132036) : Colors.white,
-      ),
-      LookName.sky => Look(
-        brightness: brightness,
-        background: dark ? const Color(0xFF0C1730) : const Color(0xFFEEF5FF),
-        card: dark ? const Color(0xFF15244A) : Colors.white,
-        ink: dark ? const Color(0xFFEAF2FF) : const Color(0xFF13294B),
-        muted: dark ? const Color(0xFF9FB3D9) : const Color(0xFF5A6F92),
-        primary: dark ? const Color(0xFF7DB2FF) : const Color(0xFF2F7BF5),
-        onPrimary: dark ? const Color(0xFF08204A) : Colors.white,
-        done: const Color(0xFF20B486),
-        hero: const LinearGradient(
-          begin: AlignmentDirectional.topStart,
-          end: AlignmentDirectional.bottomEnd,
-          colors: [Color(0xFF4FB3FF), Color(0xFF2F6BF5)],
-        ),
-        heroInk: Colors.white,
-        radius: 22,
-        borderWidth: 0,
-        border: Colors.transparent,
-        shadows: dark
-            ? const []
-            : const [
-                BoxShadow(
-                  color: Color(0x1A2F7BF5),
-                  blurRadius: 18,
-                  offset: Offset(0, 6),
-                ),
-              ],
-        headingFont: 'MPLUSRounded1c',
-        headingWeight: FontWeight.w800,
-        bodyFont: 'MPLUSRounded1c',
-        memberColors: const [
-          Color(0xFF2F7BF5),
-          Color(0xFFFF6B8B),
-          Color(0xFF20B486),
-          Color(0xFFFFB020),
-          Color(0xFF8C6BFF),
-          Color(0xFF14B8C8),
-        ],
-        familyColor: const Color(0xFFFFB020),
-        streak: const Color(0xFFFF8A3D),
-        nav: dark ? const Color(0xFF15244A) : Colors.white,
-      ),
-      LookName.ocean => Look(
-        brightness: brightness,
-        background: dark ? const Color(0xFF06111D) : const Color(0xFFF1F5F8),
-        card: dark ? const Color(0xFF0E1C2C) : Colors.white,
-        ink: dark ? const Color(0xFFE6EEF6) : const Color(0xFF0A1A2A),
-        muted: dark ? const Color(0xFF93A6BA) : const Color(0xFF586A7C),
-        primary: dark ? const Color(0xFF4C9BFF) : const Color(0xFF0B63E5),
-        onPrimary: dark ? const Color(0xFF021A3D) : Colors.white,
-        done: const Color(0xFF13B07A),
-        hero: LinearGradient(
-          begin: AlignmentDirectional.topStart,
-          end: AlignmentDirectional.bottomEnd,
-          colors: dark
-              ? const [Color(0xFF08345E), Color(0xFF0B6E8C)]
-              : const [Color(0xFF062A4D), Color(0xFF0B6E8C)],
-        ),
-        heroInk: Colors.white,
-        radius: 12,
-        borderWidth: 1,
-        border: dark ? const Color(0xFF1A2B3E) : const Color(0xFFDCE4EC),
-        shadows: const [],
-        headingFont: 'SecularOne',
-        headingWeight: FontWeight.w400,
-        bodyFont: 'Assistant',
-        memberColors: const [
-          Color(0xFF0B63E5),
-          Color(0xFFFF5D5D),
-          Color(0xFF13B07A),
-          Color(0xFFF2B705),
-          Color(0xFF7A5CFA),
-          Color(0xFF0BB3C4),
-        ],
-        familyColor: const Color(0xFFA3D930),
-        streak: const Color(0xFFFF7A1A),
-        nav: dark ? const Color(0xFF0E1C2C) : Colors.white,
       ),
     };
   }

@@ -177,5 +177,8 @@
   "next": "下一个",
   "account": "账户",
   "thisWeek": "本周",
-  "thisMonth": "本月"
+  "thisMonth": "本月",
+  "menuPlace": "菜单",
+  "menuTop": "顶部",
+  "menuBottom": "底部"
 }

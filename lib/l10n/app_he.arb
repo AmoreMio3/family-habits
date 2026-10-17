@@ -177,5 +177,8 @@
   "next": "הבא",
   "account": "חשבון",
   "thisWeek": "השבוע",
-  "thisMonth": "החודש"
+  "thisMonth": "החודש",
+  "menuPlace": "תפריט",
+  "menuTop": "למעלה",
+  "menuBottom": "למטה"
 }

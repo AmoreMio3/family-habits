@@ -601,4 +601,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get thisMonth => 'Dieser Monat';
+
+  @override
+  String get menuPlace => 'Menü';
+
+  @override
+  String get menuTop => 'Oben';
+
+  @override
+  String get menuBottom => 'Unten';
 }

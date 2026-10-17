@@ -320,5 +320,8 @@
   "next": "Next",
   "account": "Account",
   "thisWeek": "This week",
-  "thisMonth": "This month"
+  "thisMonth": "This month",
+  "menuPlace": "Menu",
+  "menuTop": "Top",
+  "menuBottom": "Bottom"
 }

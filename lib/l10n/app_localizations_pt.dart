@@ -598,4 +598,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get thisMonth => 'Este mês';
+
+  @override
+  String get menuPlace => 'Menu';
+
+  @override
+  String get menuTop => 'Em cima';
+
+  @override
+  String get menuBottom => 'Embaixo';
 }

@@ -7,6 +7,7 @@ import '../data/reminders.dart';
 import '../l10n/app_localizations.dart';
 import 'common.dart';
 import 'look.dart';
+import 'main_menu.dart';
 import 'reminders_screen.dart';
 
 Future<void> showSettings(
@@ -86,6 +87,26 @@ class SettingsScreen extends StatelessWidget {
                 subtitle: Text(_modeName(l10n, settings.themeMode)),
                 trailing: const Icon(Icons.chevron_right_rounded),
                 onTap: () => _pickAppearance(context),
+              ),
+              ListTile(
+                leading: Icon(Icons.view_day_outlined, color: look.primary),
+                title: Text(l10n.menuPlace),
+                trailing: SegmentedButton<MenuPlace>(
+                  key: const Key('menuPlace'),
+                  showSelectedIcon: false,
+                  segments: [
+                    ButtonSegment(
+                      value: MenuPlace.top,
+                      label: Text(l10n.menuTop),
+                    ),
+                    ButtonSegment(
+                      value: MenuPlace.bottom,
+                      label: Text(l10n.menuBottom),
+                    ),
+                  ],
+                  selected: {settings.menuPlace},
+                  onSelectionChanged: (s) => settings.menuPlace = s.first,
+                ),
               ),
             ]),
             SectionTitle(l10n.account),

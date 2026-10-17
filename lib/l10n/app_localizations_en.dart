@@ -598,6 +598,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get thisMonth => 'This month';
+
+  @override
+  String get menuPlace => 'Menu';
+
+  @override
+  String get menuTop => 'Top';
+
+  @override
+  String get menuBottom => 'Bottom';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).

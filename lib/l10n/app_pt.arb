@@ -177,5 +177,8 @@
   "next": "Próximo",
   "account": "Conta",
   "thisWeek": "Esta semana",
-  "thisMonth": "Este mês"
+  "thisMonth": "Este mês",
+  "menuPlace": "Menu",
+  "menuTop": "Em cima",
+  "menuBottom": "Embaixo"
 }

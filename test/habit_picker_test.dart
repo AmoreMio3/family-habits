@@ -8,6 +8,13 @@ import 'package:family_habits/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+/// The page's own vertical list, not the sideways menu at the top.
+final mainList = find
+    .byWidgetPredicate(
+      (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+    )
+    .last;
+
 void main() {
   Future<dynamic> pumpHome(WidgetTester tester, {Locale? locale}) async {
     tester.view.physicalSize = const Size(1080, 2400);
@@ -60,7 +67,7 @@ void main() {
     expect(habit.category, const BuiltInRef(BuiltInCategory.outdoor));
     expect(habit.isEveryDay, isTrue);
     final row = find.text('Visit a park');
-    await tester.scrollUntilVisible(row, 300);
+    await tester.scrollUntilVisible(row, 300, scrollable: mainList);
     expect(row, findsOneWidget);
   });
 
@@ -79,7 +86,7 @@ void main() {
     expect(habit.emoji, '🎻');
     expect(habit.toMap()['emoji'], '🎻');
     final row = find.text('🎻');
-    await tester.scrollUntilVisible(row, 300);
+    await tester.scrollUntilVisible(row, 300, scrollable: mainList);
     expect(row, findsOneWidget);
 
     // Edit it: type another emoji, then go back to the category icon.
@@ -122,7 +129,7 @@ void main() {
     expect(habit.timesPerWeek, 1);
     expect(store.canCheckIn(habit), isFalse);
     final title = find.text('Other days');
-    await tester.scrollUntilVisible(title, 300);
+    await tester.scrollUntilVisible(title, 300, scrollable: mainList);
     expect(title, findsOneWidget);
   });
 
@@ -155,6 +162,7 @@ void main() {
     await tester.scrollUntilVisible(
       find.byKey(const Key('createOwnInCategory')),
       300,
+      scrollable: mainList,
     );
     expect(find.byKey(const Key('createOwnInCategory')), findsOneWidget);
   });
@@ -185,7 +193,7 @@ void main() {
     final habit = store.habits.firstWhere((h) => h.name == 'Practice violin');
     expect(habit.category, isA<CustomRef>());
     final row = find.textContaining('Music school');
-    await tester.scrollUntilVisible(row, 300);
+    await tester.scrollUntilVisible(row, 300, scrollable: mainList);
     expect(row, findsOneWidget);
   });
 

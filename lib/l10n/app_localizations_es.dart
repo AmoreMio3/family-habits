@@ -599,6 +599,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get thisMonth => 'Este mes';
+
+  @override
+  String get menuPlace => 'Menú';
+
+  @override
+  String get menuTop => 'Arriba';
+
+  @override
+  String get menuBottom => 'Abajo';
 }
 
 /// The translations for Spanish Castilian, as used in Latin America and the Caribbean (`es_419`).
