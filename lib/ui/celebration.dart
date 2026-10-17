@@ -108,7 +108,9 @@ void celebrateHabit(BuildContext context, Habit habit, String caption) {
     context,
     kind,
     caption,
-    scene: kind == Celebration.water ? null : sceneFor(habit),
+    scene: kind == Celebration.water && habit.emoji == null
+        ? null
+        : sceneFor(habit),
   );
 }
 

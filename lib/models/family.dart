@@ -118,7 +118,8 @@ class Habit {
     required this.category,
     this.templateId,
     this.definition,
-    this.timesPerWeek = 7,
+    this.days,
+    this.emoji,
   });
 
   final String id;
@@ -130,11 +131,23 @@ class Habit {
   final String? templateId;
 
   /// The owner's own meaning of done, such as "I drank enough water today".
-  /// The daily check-in is still just yes or no.
+  /// No longer asked for when adding a habit; kept for older habits.
   final String? definition;
 
-  /// Weekly target, e.g. 7 for daily or 4 for "4 family dinners a week".
-  final int timesPerWeek;
+  /// Weekdays the habit is done on ([DateTime.monday] .. [DateTime.sunday]),
+  /// or null for every day.
+  final Set<int>? days;
+
+  /// A picture the owner picked for the habit, such as "🎻". Null shows the
+  /// category's icon.
+  final String? emoji;
+
+  bool get isEveryDay => days == null || days!.length == 7;
+
+  bool isScheduledOn(DateTime day) => isEveryDay || days!.contains(day.weekday);
+
+  /// Weekly target: one check-in per scheduled day.
+  int get timesPerWeek => isEveryDay ? 7 : days!.length;
 
   bool get isFamily => owner is FamilyOwner;
 
@@ -150,6 +163,12 @@ class Habit {
     'category': category.id,
     'templateId': templateId,
     'definition': definition,
+    // Left out for every day, so a habit saves even where the database
+    // rules don't know about chosen days yet.
+    if (!isEveryDay) 'days': days!.toList()..sort(),
+    // Also left out when not picked, for the same reason.
+    if (emoji != null) 'emoji': emoji,
+    // Still written so older versions of the app show the right target.
     'timesPerWeek': timesPerWeek,
   };
 
@@ -162,7 +181,14 @@ class Habit {
       category: CategoryRef.parse(map['category'] as String?),
       templateId: map['templateId'] as String?,
       definition: map['definition'] as String?,
-      timesPerWeek: (map['timesPerWeek'] as num?)?.toInt() ?? 7,
+      // Habits from before days could be chosen count as every day.
+      days: switch (map['days']) {
+        final List<Object?> list when list.isNotEmpty => {
+          for (final d in list) (d as num).toInt(),
+        },
+        _ => null,
+      },
+      emoji: map['emoji'] as String?,
     );
   }
 }

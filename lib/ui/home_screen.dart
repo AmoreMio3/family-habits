@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import '../app.dart';
 import '../data/account_service.dart';
 import '../data/family_store.dart';
+import '../data/reminders.dart';
 import '../l10n/app_localizations.dart';
 import 'categories_screen.dart';
 import 'common.dart';
 import 'family_screen.dart';
 import 'habit_picker.dart';
 import 'look.dart';
+import 'reminders_screen.dart';
 import 'today_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,6 +31,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _tab = 0;
+  Locale? _reminderLocale;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Set the reminders again so their text follows the app's language.
+    final locale = Localizations.localeOf(context);
+    if (locale != _reminderLocale) {
+      _reminderLocale = locale;
+      widget.settings.reminders.refresh(
+        ReminderTexts.of(AppLocalizations.of(context)),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +57,15 @@ class _HomeScreenState extends State<HomeScreen> {
         return Scaffold(
           appBar: AppBar(
             title: Text(title),
-            actions: [LanguageMenu(settings: widget.settings)],
+            actions: [
+              IconButton(
+                key: const Key('remindersButton'),
+                tooltip: l10n.reminders,
+                icon: const Icon(Icons.notifications_none_rounded),
+                onPressed: () => showReminders(context),
+              ),
+              LanguageMenu(settings: widget.settings),
+            ],
           ),
           body: Column(
             children: [

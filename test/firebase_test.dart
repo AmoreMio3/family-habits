@@ -36,7 +36,7 @@ void main() {
       name: 'Read',
       owner: PersonalOwner('maya'),
       category: BuiltInRef(BuiltInCategory.study),
-      timesPerWeek: 5,
+      days: {1, 2, 3, 4, 5},
     );
 
     test('round-trips members, habits and check-ins', () async {
@@ -66,6 +66,7 @@ void main() {
       expect(maya.consentAt, consent);
       expect(snap.habits.single.ownerMemberId, 'maya');
       expect(snap.habits.single.timesPerWeek, 5);
+      expect(snap.habits.single.days, {1, 2, 3, 4, 5});
       expect(snap.checkIns.single.day, DateTime(2026, 9, 30));
       expect(snap.checkIns.single.checkedInBy, 'maya');
     });

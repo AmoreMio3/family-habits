@@ -26,7 +26,19 @@ class TodayScreen extends StatelessWidget {
     final weekStart = startOfWeek(store.today, store.weekStartFor(locale));
     final me = store.activeMember;
     if (me == null) return Center(child: Text(l10n.noHabitsYet));
-    final mine = store.habitsOf(me.id);
+    final today = store.today;
+    final family = [
+      for (final h in store.familyHabits)
+        if (h.isScheduledOn(today)) h,
+    ];
+    final mine = [
+      for (final h in store.habitsOf(me.id))
+        if (h.isScheduledOn(today)) h,
+    ];
+    final otherDays = [
+      for (final h in [...store.familyHabits, ...store.habitsOf(me.id)])
+        if (!h.isScheduledOn(today) && !store.isDoneToday(h)) h,
+    ];
     String doneOf(List<Habit> habits) =>
         '${habits.where(store.isDoneToday).length}/${habits.length}';
 
@@ -54,9 +66,9 @@ class TodayScreen extends StatelessWidget {
         ],
         const SizedBox(height: 16),
         FamilyProgressCard(store: store, weekStart: weekStart),
-        if (store.familyHabits.isNotEmpty) ...[
-          SectionTitle(l10n.familyHabits, trailing: doneOf(store.familyHabits)),
-          for (final habit in store.familyHabits)
+        if (family.isNotEmpty) ...[
+          SectionTitle(l10n.familyHabits, trailing: doneOf(family)),
+          for (final habit in family)
             HabitCard(store: store, habit: habit, weekStart: weekStart),
         ],
         if (mine.isNotEmpty) ...[
@@ -64,7 +76,12 @@ class TodayScreen extends StatelessWidget {
           for (final habit in mine)
             HabitCard(store: store, habit: habit, weekStart: weekStart),
         ],
-        if (mine.isEmpty && store.familyHabits.isEmpty)
+        if (otherDays.isNotEmpty) ...[
+          SectionTitle(l10n.otherDays),
+          for (final habit in otherDays)
+            HabitCard(store: store, habit: habit, weekStart: weekStart),
+        ],
+        if (mine.isEmpty && family.isEmpty && otherDays.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32),
             child: Center(
@@ -230,9 +247,17 @@ class HabitCard extends StatelessWidget {
     final done = store.isDoneToday(habit);
     final cat = categoryLook(l10n, store, habit.category);
     final enabled = store.canCheckIn(habit);
+    final offDay = !habit.isScheduledOn(store.today) && !done;
+    final firstWeekday = store.weekStartFor(Localizations.localeOf(context));
 
     final Widget subtitle;
-    if (habit.isFamily) {
+    if (offDay) {
+      subtitle = _Meta(
+        icon: Icons.event_repeat_rounded,
+        iconColor: look.muted,
+        text: scheduleLabel(context, habit, firstWeekday),
+      );
+    } else if (habit.isFamily) {
       subtitle = _Meta(
         icon: Icons.groups_rounded,
         iconColor: look.familyColor,
@@ -247,10 +272,13 @@ class HabitCard extends StatelessWidget {
         spacing: 10,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          Text(
-            habit.definition ?? cat.label,
-            style: TextStyle(color: look.muted, fontSize: 13),
-          ),
+          Text(cat.label, style: TextStyle(color: look.muted, fontSize: 13)),
+          if (!habit.isEveryDay)
+            _Meta(
+              icon: Icons.event_repeat_rounded,
+              iconColor: look.muted,
+              text: scheduleLabel(context, habit, firstWeekday),
+            ),
           _Meta(
             icon: Icons.local_fire_department_rounded,
             iconColor: days > 0 ? look.streak : look.muted,
@@ -260,7 +288,7 @@ class HabitCard extends StatelessWidget {
       );
     }
 
-    final bubble = IconBubble(icon: cat.icon, color: cat.color);
+    final bubble = HabitBubble(habit: habit, look: cat);
     return Semantics(
       checked: done,
       enabled: enabled,
@@ -302,8 +330,10 @@ class HabitCard extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 8),
-            CheckCircle(done: done, enabled: enabled),
+            if (!offDay) ...[
+              const SizedBox(width: 8),
+              CheckCircle(done: done, enabled: enabled),
+            ],
           ],
         ),
       ),

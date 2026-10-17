@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../app.dart';
 import '../data/account_service.dart';
 import '../l10n/app_localizations.dart';
 import '../data/family_store.dart';
+import '../data/reminders.dart';
 import '../models/category.dart';
 import '../models/family.dart';
 import 'look.dart';
@@ -183,4 +185,105 @@ Color memberColor(BuildContext context, FamilyStore store, String memberId) {
   final colors = Look.of(context).memberColors;
   final i = store.members.indexWhere((m) => m.id == memberId);
   return colors[(i < 0 ? 0 : i) % colors.length];
+}
+
+/// The seven weekdays ([DateTime.monday] .. [DateTime.sunday]) in the order
+/// of a week that starts on [firstWeekday].
+List<int> weekdaysFrom(int firstWeekday) => [
+  for (var i = 0; i < 7; i++) (firstWeekday - 1 + i) % 7 + 1,
+];
+
+/// Short weekday name, such as "Tue" or "יום ג׳".
+String weekdayName(BuildContext context, int weekday) =>
+    // 2026-10-12 is a Monday.
+    DateFormat.E(Localizations.localeOf(context).toString())
+        .format(DateTime(2026, 10, 11 + weekday));
+
+/// "Every day", or the chosen days in week order, such as "Sun, Tue, Thu".
+String scheduleLabel(BuildContext context, Habit habit, int firstWeekday) {
+  if (habit.isEveryDay) return AppLocalizations.of(context).everyDay;
+  return [
+    for (final d in weekdaysFrom(firstWeekday))
+      if (habit.days!.contains(d)) weekdayName(context, d),
+  ].join(', ');
+}
+
+/// One line describing the reminders, such as "Every morning at 08:00".
+String reminderSummary(BuildContext context, ReminderSettings reminders) {
+  final l10n = AppLocalizations.of(context);
+  String time(TimeOfDay t) => MaterialLocalizations.of(context).formatTimeOfDay(
+    t,
+    alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
+  );
+  return switch (reminders.plan) {
+    ReminderPlan.off => l10n.reminderOff,
+    ReminderPlan.morning => l10n.reminderSummaryMorning(
+      time(reminders.morning),
+    ),
+    ReminderPlan.evening => l10n.reminderSummaryEvening(
+      time(reminders.evening),
+    ),
+    ReminderPlan.twice => l10n.reminderSummaryTwice(
+      time(reminders.morning),
+      time(reminders.evening),
+    ),
+  };
+}
+
+/// A habit's picture: the emoji its owner picked, else its category's icon.
+class HabitBubble extends StatelessWidget {
+  const HabitBubble({
+    super.key,
+    required this.habit,
+    required this.look,
+    this.size = 44,
+  });
+
+  final Habit habit;
+  final ({String label, IconData icon, Color color}) look;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) => EmojiBubble(
+    emoji: habit.emoji,
+    icon: look.icon,
+    color: look.color,
+    size: size,
+  );
+}
+
+/// [emoji] in a tinted rounded square, or [icon] when there is none.
+class EmojiBubble extends StatelessWidget {
+  const EmojiBubble({
+    super.key,
+    required this.emoji,
+    required this.icon,
+    required this.color,
+    this.size = 44,
+  });
+
+  final String? emoji;
+  final IconData icon;
+  final Color color;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final emoji = this.emoji;
+    if (emoji == null) return IconBubble(icon: icon, color: color, size: size);
+    return Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: Look.of(context).tint(color),
+        borderRadius: BorderRadius.circular(size * 0.36),
+      ),
+      child: Text(
+        emoji,
+        style: TextStyle(fontSize: size * 0.5, height: 1),
+        textScaler: TextScaler.noScaling,
+      ),
+    );
+  }
 }
