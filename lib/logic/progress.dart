@@ -86,3 +86,39 @@ int streak(Habit habit, Iterable<CheckIn> checkIns, DateTime today) {
   }
   return count;
 }
+
+/// Done and planned check-ins over some days.
+class PeriodProgress {
+  const PeriodProgress({required this.done, required this.target});
+
+  final int done;
+  final int target;
+
+  double get fraction => target == 0 ? 0 : done / target;
+}
+
+/// How many of [habits]' planned days from [from] to [to] (both included)
+/// were checked in. Check-ins on days a habit isn't planned don't count.
+PeriodProgress periodProgress(
+  Iterable<Habit> habits,
+  Iterable<CheckIn> checkIns,
+  DateTime from,
+  DateTime to,
+) {
+  final checked = {for (final c in checkIns) checkInId(c.habitId, c.day)};
+  var done = 0;
+  var target = 0;
+  final last = dateOnly(to);
+  for (final habit in habits) {
+    for (
+      var day = dateOnly(from);
+      !day.isAfter(last);
+      day = DateTime(day.year, day.month, day.day + 1)
+    ) {
+      if (!habit.isScheduledOn(day)) continue;
+      target++;
+      if (checked.contains(checkInId(habit.id, day))) done++;
+    }
+  }
+  return PeriodProgress(done: done, target: target);
+}

@@ -537,4 +537,64 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get useThis => 'Usa';
+
+  @override
+  String get myDay => 'La mia giornata';
+
+  @override
+  String get myProgress => 'I miei progressi';
+
+  @override
+  String get habitIdeas => 'Idee di abitudini';
+
+  @override
+  String get familyProgress => 'Progressi della famiglia';
+
+  @override
+  String get familySettings => 'Impostazioni della famiglia';
+
+  @override
+  String get weekTab => 'Settimana';
+
+  @override
+  String get monthTab => 'Mese';
+
+  @override
+  String get myWeek => 'La mia settimana';
+
+  @override
+  String get myMonth => 'Il mio mese';
+
+  @override
+  String get familyMonth => 'Il mese in famiglia';
+
+  @override
+  String get byHabit => 'Per abitudine';
+
+  @override
+  String get byPerson => 'Per persona';
+
+  @override
+  String get previous => 'Precedente';
+
+  @override
+  String get next => 'Successivo';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get thisWeek => 'Questa settimana';
+
+  @override
+  String get thisMonth => 'Questo mese';
+
+  @override
+  String get menuPlace => 'Menu';
+
+  @override
+  String get menuTop => 'In alto';
+
+  @override
+  String get menuBottom => 'In basso';
 }

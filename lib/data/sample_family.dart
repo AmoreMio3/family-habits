@@ -42,13 +42,8 @@ InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
       name: 'Have a phone-free meal',
       owner: FamilyOwner(),
       category: BuiltInRef(BuiltInCategory.familyMeals),
+      // Every day, so the demo always has a family habit to check in today.
       templateId: 'FAMILY_MEALS_005',
-      days: {
-        DateTime.sunday,
-        DateTime.tuesday,
-        DateTime.thursday,
-        DateTime.friday,
-      },
     ),
     Habit(
       id: 'hike',
@@ -141,6 +136,11 @@ InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
       CheckIn(habitId: 'noa-piano', day: daysAgo(n), checkedInBy: 'noa'),
     for (var n = 0; n <= 2; n++)
       CheckIn(habitId: 'itai-bed', day: daysAgo(n), checkedInBy: 'dad'),
+    // Older days, so the month view has something to show.
+    for (var n = 8; n <= 45; n++)
+      for (final id in ['dinner', 'dad-run', 'dad-phone', 'mom-meditate'])
+        if ((n + id.length) % 4 != 0)
+          CheckIn(habitId: id, day: daysAgo(n), checkedInBy: 'dad'),
   ];
 
   return InMemoryFamilyRepository(

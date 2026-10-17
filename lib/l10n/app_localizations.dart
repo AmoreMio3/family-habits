@@ -1058,6 +1058,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use'**
   String get useThis;
+
+  /// No description provided for @myDay.
+  ///
+  /// In en, this message translates to:
+  /// **'My day'**
+  String get myDay;
+
+  /// No description provided for @myProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'My progress'**
+  String get myProgress;
+
+  /// No description provided for @habitIdeas.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit ideas'**
+  String get habitIdeas;
+
+  /// No description provided for @familyProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Family progress'**
+  String get familyProgress;
+
+  /// No description provided for @familySettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Family settings'**
+  String get familySettings;
+
+  /// No description provided for @weekTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get weekTab;
+
+  /// No description provided for @monthTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get monthTab;
+
+  /// No description provided for @myWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'My week'**
+  String get myWeek;
+
+  /// No description provided for @myMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'My month'**
+  String get myMonth;
+
+  /// No description provided for @familyMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Family month'**
+  String get familyMonth;
+
+  /// No description provided for @byHabit.
+  ///
+  /// In en, this message translates to:
+  /// **'By habit'**
+  String get byHabit;
+
+  /// No description provided for @byPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'By person'**
+  String get byPerson;
+
+  /// No description provided for @previous.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previous;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get thisWeek;
+
+  /// No description provided for @thisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get thisMonth;
+
+  /// No description provided for @menuPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get menuPlace;
+
+  /// No description provided for @menuTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Top'**
+  String get menuTop;
+
+  /// No description provided for @menuBottom.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom'**
+  String get menuBottom;
 }
 
 class _AppLocalizationsDelegate

@@ -199,6 +199,11 @@ String weekdayName(BuildContext context, int weekday) =>
     DateFormat.E(Localizations.localeOf(context).toString())
         .format(DateTime(2026, 10, 11 + weekday));
 
+/// One-letter weekday name, such as "T" or "ג".
+String weekdayLetter(BuildContext context, int weekday) =>
+    DateFormat.EEEEE(Localizations.localeOf(context).toString())
+        .format(DateTime(2026, 10, 11 + weekday));
+
 /// "Every day", or the chosen days in week order, such as "Sun, Tue, Thu".
 String scheduleLabel(BuildContext context, Habit habit, int firstWeekday) {
   if (habit.isEveryDay) return AppLocalizations.of(context).everyDay;

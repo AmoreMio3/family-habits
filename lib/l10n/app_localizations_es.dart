@@ -536,6 +536,66 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get useThis => 'Usar';
+
+  @override
+  String get myDay => 'Mi día';
+
+  @override
+  String get myProgress => 'Mi progreso';
+
+  @override
+  String get habitIdeas => 'Ideas de hábitos';
+
+  @override
+  String get familyProgress => 'Progreso familiar';
+
+  @override
+  String get familySettings => 'Ajustes de la familia';
+
+  @override
+  String get weekTab => 'Semana';
+
+  @override
+  String get monthTab => 'Mes';
+
+  @override
+  String get myWeek => 'Mi semana';
+
+  @override
+  String get myMonth => 'Mi mes';
+
+  @override
+  String get familyMonth => 'El mes en familia';
+
+  @override
+  String get byHabit => 'Por hábito';
+
+  @override
+  String get byPerson => 'Por persona';
+
+  @override
+  String get previous => 'Anterior';
+
+  @override
+  String get next => 'Siguiente';
+
+  @override
+  String get account => 'Cuenta';
+
+  @override
+  String get thisWeek => 'Esta semana';
+
+  @override
+  String get thisMonth => 'Este mes';
+
+  @override
+  String get menuPlace => 'Menú';
+
+  @override
+  String get menuTop => 'Arriba';
+
+  @override
+  String get menuBottom => 'Abajo';
 }
 
 /// The translations for Spanish Castilian, as used in Latin America and the Caribbean (`es_419`).
@@ -695,4 +755,7 @@ class AppLocalizationsEs419 extends AppLocalizationsEs {
   String hiName(String name) {
     return '¡Hola, $name!';
   }
+
+  @override
+  String get familySettings => 'Configuración de la familia';
 }

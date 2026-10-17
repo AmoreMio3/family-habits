@@ -537,4 +537,64 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get useThis => 'استخدام';
+
+  @override
+  String get myDay => 'يومي';
+
+  @override
+  String get myProgress => 'تقدّمي';
+
+  @override
+  String get habitIdeas => 'أفكار للعادات';
+
+  @override
+  String get familyProgress => 'تقدّم العائلة';
+
+  @override
+  String get familySettings => 'إعدادات العائلة';
+
+  @override
+  String get weekTab => 'أسبوع';
+
+  @override
+  String get monthTab => 'شهر';
+
+  @override
+  String get myWeek => 'أسبوعي';
+
+  @override
+  String get myMonth => 'شهري';
+
+  @override
+  String get familyMonth => 'شهر العائلة';
+
+  @override
+  String get byHabit => 'حسب العادة';
+
+  @override
+  String get byPerson => 'حسب الشخص';
+
+  @override
+  String get previous => 'السابق';
+
+  @override
+  String get next => 'التالي';
+
+  @override
+  String get account => 'الحساب';
+
+  @override
+  String get thisWeek => 'هذا الأسبوع';
+
+  @override
+  String get thisMonth => 'هذا الشهر';
+
+  @override
+  String get menuPlace => 'القائمة';
+
+  @override
+  String get menuTop => 'في الأعلى';
+
+  @override
+  String get menuBottom => 'في الأسفل';
 }

@@ -126,4 +126,20 @@ void main() {
       expect(streak(read, [c('read', -4), c('read', 3)], day(3)), 1);
     });
   });
+
+  test('period progress counts planned days only', () {
+    final checks = [
+      // Monday and Wednesday are planned; Friday isn't, so it doesn't count.
+      CheckIn(habitId: 'read', day: day(1), checkedInBy: 'noa'),
+      CheckIn(habitId: 'read', day: day(3), checkedInBy: 'noa'),
+      CheckIn(habitId: 'read', day: day(5), checkedInBy: 'noa'),
+      CheckIn(habitId: 'dinner', day: day(0), checkedInBy: 'dad'),
+    ];
+    final week = periodProgress([read, dinner], checks, day(0), day(6));
+    expect(week.done, 3);
+    expect(week.target, 6);
+    final monday = periodProgress([read, dinner], checks, day(1), day(1));
+    expect(monday.done, 1);
+    expect(monday.target, 2);
+  });
 }
