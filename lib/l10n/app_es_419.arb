@@ -1,6 +1,7 @@
 {
   "@@locale": "es_419",
   "familyCheckedIn": "{name} registró «{habit}» para toda la familia",
+  "habitAdded": "Nuevo hábito: {habit}",
   "phoneLanguage": "Idioma del celular",
   "catHomeTasks": "Tareas del hogar",
   "forgotPassword": "¿Olvidaste la contraseña?",

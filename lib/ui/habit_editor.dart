@@ -4,6 +4,7 @@ import '../data/family_store.dart';
 import '../l10n/app_localizations.dart';
 import '../models/category.dart';
 import '../models/family.dart';
+import 'celebration.dart';
 import 'common.dart';
 
 /// Edits [habit], or adds a new habit starting from [name] and [category]
@@ -79,24 +80,31 @@ class _HabitEditorState extends State<_HabitEditor> {
 
   Future<void> _save() async {
     final store = widget.store;
-    await store.repository.saveHabit(
-      Habit(
-        id: widget.habit?.id ?? store.repository.newId(),
-        name: _name.text.trim(),
-        owner: _owner == _familyOwner
-            ? const FamilyOwner()
-            : PersonalOwner(_owner),
-        category: _category,
-        templateId: _name.text.trim() == (widget.habit?.name ?? widget.name)
-            ? widget.habit?.templateId ?? widget.templateId
-            : null,
-        definition: _definition.text.trim().isEmpty
-            ? null
-            : _definition.text.trim(),
-        timesPerWeek: _times,
-      ),
+    final habit = Habit(
+      id: widget.habit?.id ?? store.repository.newId(),
+      name: _name.text.trim(),
+      owner: _owner == _familyOwner
+          ? const FamilyOwner()
+          : PersonalOwner(_owner),
+      category: _category,
+      templateId: _name.text.trim() == (widget.habit?.name ?? widget.name)
+          ? widget.habit?.templateId ?? widget.templateId
+          : null,
+      definition: _definition.text.trim().isEmpty
+          ? null
+          : _definition.text.trim(),
+      timesPerWeek: _times,
     );
-    if (mounted) Navigator.pop(context, true);
+    await store.repository.saveHabit(habit);
+    if (!mounted) return;
+    if (widget.habit == null) {
+      celebrateHabit(
+        context,
+        habit,
+        AppLocalizations.of(context).habitAdded(habit.name),
+      );
+    }
+    Navigator.pop(context, true);
   }
 
   Future<void> _delete() async {

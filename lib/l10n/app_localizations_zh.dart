@@ -41,6 +41,11 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String habitAdded(String habit) {
+    return '新习惯：$habit';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -480,6 +485,11 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   @override
   String familyCheckedIn(String name, String habit) {
     return '$name 已為全家完成「$habit」打卡';
+  }
+
+  @override
+  String habitAdded(String habit) {
+    return '新習慣：$habit';
   }
 
   @override

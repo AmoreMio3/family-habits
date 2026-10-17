@@ -9,6 +9,7 @@
   "familyHabitTag": "Abitudine di famiglia",
   "checkInForFamily": "Segna per tutta la famiglia",
   "familyCheckedIn": "{name} ha segnato «{habit}» per tutta la famiglia",
+  "habitAdded": "Nuova abitudine: {habit}",
   "streakDays": "{count, plural, =0{Ancora nessuna serie} =1{1 giorno} other{{count} giorni}}",
   "weekTarget": "{done}/{target} questa settimana",
   "categories": "Categorie",
