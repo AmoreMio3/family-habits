@@ -10,6 +10,8 @@
   "checkInForFamily": "Valider pour toute la famille",
   "familyCheckedIn": "{name} a validé « {habit} » pour toute la famille",
   "habitAdded": "Nouvelle habitude : {habit}",
+  "addHabitFor": "Ajouter une habitude pour {name}",
+  "childDayHint": "Vous voyez la journée de {name}. Les habitudes ajoutées ici sont seulement pour {name}.",
   "streakDays": "{count, plural, =0{Pas encore de série} =1{1 jour} other{{count} jours}}",
   "weekTarget": "{done}/{target} cette semaine",
   "categories": "Catégories",

@@ -121,8 +121,43 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.widget<CheckCircle>(dinner).enabled, isFalse);
       expect(find.text('Add habit'), findsNothing);
+      expect(find.text('Add a habit for Noa'), findsOneWidget);
     },
   );
+
+  testWidgets('a parent opens a child\'s day and adds a habit for them only', (
+    tester,
+  ) async {
+    await openDemo(tester);
+    expect(find.byKey(const Key('childDayHint')), findsNothing);
+
+    await tester.tap(find.byKey(const Key('profile-noa')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text(
+        "You're looking at Noa's day. Habits you add here are for Noa only.",
+      ),
+      findsOneWidget,
+    );
+
+    await tapText(tester, 'Add a habit for Noa');
+    await enter(tester, 'habitSearch', 'Feed the fish');
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('createFromSearch')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    final fish = find.widgetWithText(HabitCard, 'Feed the fish');
+    await tester.scrollUntilVisible(fish, 300);
+    expect(fish, findsOneWidget);
+
+    final dad = find.byKey(const Key('profile-dad'));
+    await tester.scrollUntilVisible(dad, -300);
+    await tester.tap(dad);
+    await tester.pumpAndSettle();
+    expect(find.text('Feed the fish'), findsNothing);
+  });
 
   testWidgets('sign up, create a family, add a child and pair their device', (
     tester,

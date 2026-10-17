@@ -142,7 +142,15 @@ class FamilyStore extends ChangeNotifier {
     };
   }
 
-  bool get canManage => access.isParent && (activeMember?.isParent ?? false);
+  /// Parents manage everything, also while looking at a child's day.
+  bool get canManage => access.isParent;
+
+  /// The child whose day a parent is looking at, so habits the parent adds
+  /// there belong to that child only.
+  Member? get childInView {
+    final me = activeMember;
+    return access.isParent && me != null && !me.isParent ? me : null;
+  }
 
   /// Toggles today's check-in. Returns true when a family habit was just
   /// checked in, so the caller can tell the family.

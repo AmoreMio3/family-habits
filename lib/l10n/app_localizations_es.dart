@@ -46,6 +46,16 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String addHabitFor(String name) {
+    return 'Añadir un hábito para $name';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return 'Estás viendo el día de $name. Los hábitos que añadas aquí son solo de $name.';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -480,6 +490,16 @@ class AppLocalizationsEs419 extends AppLocalizationsEs {
   @override
   String habitAdded(String habit) {
     return 'Nuevo hábito: $habit';
+  }
+
+  @override
+  String addHabitFor(String name) {
+    return 'Agregar un hábito para $name';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return 'Estás viendo el día de $name. Los hábitos que agregues aquí son solo de $name.';
   }
 
   @override

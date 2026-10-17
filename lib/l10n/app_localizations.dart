@@ -177,6 +177,18 @@ abstract class AppLocalizations {
   /// **'New habit: {habit}'**
   String habitAdded(String habit);
 
+  /// No description provided for @addHabitFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a habit for {name}'**
+  String addHabitFor(String name);
+
+  /// No description provided for @childDayHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re looking at {name}\'s day. Habits you add here are for {name} only.'**
+  String childDayHint(String name);
+
   /// No description provided for @streakDays.
   ///
   /// In en, this message translates to:

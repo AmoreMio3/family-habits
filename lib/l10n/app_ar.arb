@@ -10,6 +10,8 @@
   "checkInForFamily": "تسجيل للعائلة كلها",
   "familyCheckedIn": "تم تسجيل «{habit}» للعائلة كلها بواسطة {name}",
   "habitAdded": "عادة جديدة: {habit}",
+  "addHabitFor": "إضافة عادة من أجل {name}",
+  "childDayHint": "هذا يوم {name}. العادات التي تضيفها هنا خاصة بـ{name} فقط.",
   "streakDays": "{count, plural, =0{لا توجد سلسلة بعد} =1{يوم واحد} =2{يومان} few{{count} أيام} many{{count} يومًا} other{{count} يوم}}",
   "weekTarget": "{done}/{target} هذا الأسبوع",
   "categories": "الفئات",

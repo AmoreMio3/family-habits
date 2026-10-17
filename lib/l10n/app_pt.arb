@@ -10,6 +10,8 @@
   "checkInForFamily": "Registrar para a família toda",
   "familyCheckedIn": "{name} registrou “{habit}” para a família toda",
   "habitAdded": "Novo hábito: {habit}",
+  "addHabitFor": "Adicionar hábito para {name}",
+  "childDayHint": "Você está vendo o dia de {name}. Os hábitos que você adicionar aqui são só de {name}.",
   "streakDays": "{count, plural, =0{Nenhuma sequência ainda} =1{1 dia} other{{count} dias}}",
   "weekTarget": "{done}/{target} nesta semana",
   "categories": "Categorias",

@@ -10,6 +10,8 @@
   "checkInForFamily": "סימון לכל המשפחה",
   "familyCheckedIn": "„{habit}” סומן לכל המשפחה על ידי {name}",
   "habitAdded": "הרגל חדש: {habit}",
+  "addHabitFor": "הוספת הרגל עבור {name}",
+  "childDayHint": "זה היום של {name}. הרגלים שתוסיפו כאן יהיו רק של {name}.",
   "streakDays": "{count, plural, =0{עדיין אין רצף} =1{יום אחד} =2{יומיים} other{{count} ימים}}",
   "weekTarget": "{done}/{target} השבוע",
   "categories": "קטגוריות",
