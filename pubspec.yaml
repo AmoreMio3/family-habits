@@ -93,6 +93,40 @@ flutter:
     - family: VarelaRound
       fonts:
         - asset: assets/fonts/VarelaRound-400.ttf
+    - family: FrankRuhlLibre
+      fonts:
+        - asset: assets/fonts/FrankRuhlLibre-700.ttf
+          weight: 700
+    - family: IBMPlexSansHebrew
+      fonts:
+        - asset: assets/fonts/IBMPlexSansHebrew-400.ttf
+        - asset: assets/fonts/IBMPlexSansHebrew-500.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexSansHebrew-600.ttf
+          weight: 600
+        - asset: assets/fonts/IBMPlexSansHebrew-700.ttf
+          weight: 700
+    - family: MPLUSRounded1c
+      fonts:
+        - asset: assets/fonts/MPLUSRounded1c-400.ttf
+        - asset: assets/fonts/MPLUSRounded1c-500.ttf
+          weight: 500
+        - asset: assets/fonts/MPLUSRounded1c-700.ttf
+          weight: 700
+        - asset: assets/fonts/MPLUSRounded1c-800.ttf
+          weight: 800
+    - family: Assistant
+      fonts:
+        - asset: assets/fonts/Assistant-400.ttf
+        - asset: assets/fonts/Assistant-500.ttf
+          weight: 500
+        - asset: assets/fonts/Assistant-600.ttf
+          weight: 600
+        - asset: assets/fonts/Assistant-700.ttf
+          weight: 700
+    - family: SecularOne
+      fonts:
+        - asset: assets/fonts/SecularOne-400.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:

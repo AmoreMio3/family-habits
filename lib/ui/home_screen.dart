@@ -152,12 +152,12 @@ class _DemoBanner extends StatelessWidget {
       margin: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: look.tint(look.streak),
+        color: look.tint(look.primary),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
         children: [
-          Icon(Icons.auto_awesome_rounded, size: 18, color: look.streak),
+          Icon(Icons.auto_awesome_rounded, size: 18, color: look.primary),
           const SizedBox(width: 8),
           Expanded(
             child: Text(text, style: TextStyle(color: look.ink, fontSize: 13)),

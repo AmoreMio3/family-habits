@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 /// There are three looks while the family picks one. Build with
 /// `--dart-define=LOOK=garden` or `LOOK=playground` to try the others;
 /// `sunshine` is the default.
-enum LookName { sunshine, garden, playground }
+enum LookName { sunshine, garden, playground, clear, sky, ocean }
 
 final selectedLook =
     LookName.values.asNameMap()[const String.fromEnvironment(
@@ -36,6 +36,7 @@ class Look extends ThemeExtension<Look> {
     required this.familyColor,
     required this.streak,
     required this.nav,
+    this.bodyFont = fallbackFont,
   });
 
   final Brightness brightness;
@@ -63,7 +64,11 @@ class Look extends ThemeExtension<Look> {
   final Color streak;
   final Color nav;
 
-  static const bodyFont = 'Rubik';
+  /// Font for everything but headings.
+  final String bodyFont;
+
+  /// Covers Hebrew and Arabic; used for any letter a look's fonts lack.
+  static const fallbackFont = 'Rubik';
 
   bool get isDark => brightness == Brightness.dark;
 
@@ -89,7 +94,7 @@ class Look extends ThemeExtension<Look> {
 
   TextStyle heading(double size, {Color? color}) => TextStyle(
     fontFamily: headingFont,
-    fontFamilyFallback: const [bodyFont],
+    fontFamilyFallback: [bodyFont, fallbackFont],
     fontSize: size,
     fontWeight: headingWeight,
     color: color ?? ink,
@@ -213,6 +218,120 @@ class Look extends ThemeExtension<Look> {
         streak: const Color(0xFFFF6B3D),
         nav: dark ? const Color(0xFF231D40) : Colors.white,
       ),
+      LookName.clear => Look(
+        brightness: brightness,
+        background: dark ? const Color(0xFF0B1424) : const Color(0xFFF5F7FB),
+        card: dark ? const Color(0xFF132036) : Colors.white,
+        ink: dark ? const Color(0xFFE8EEF8) : const Color(0xFF0F1E36),
+        muted: dark ? const Color(0xFF9AA9C2) : const Color(0xFF5B6B84),
+        primary: dark ? const Color(0xFF6EA2FF) : const Color(0xFF1D5FD1),
+        onPrimary: dark ? const Color(0xFF071A3D) : Colors.white,
+        done: const Color(0xFF0F9D7A),
+        hero: LinearGradient(
+          begin: AlignmentDirectional.topStart,
+          end: AlignmentDirectional.bottomEnd,
+          colors: dark
+              ? const [Color(0xFF16305C), Color(0xFF1D4E9E)]
+              : const [Color(0xFF10264A), Color(0xFF1D4E9E)],
+        ),
+        heroInk: Colors.white,
+        radius: 16,
+        borderWidth: 1,
+        border: dark ? const Color(0xFF1F2E48) : const Color(0xFFE2E8F2),
+        shadows: const [],
+        headingFont: 'FrankRuhlLibre',
+        headingWeight: FontWeight.w700,
+        bodyFont: 'IBMPlexSansHebrew',
+        memberColors: const [
+          Color(0xFF1D5FD1),
+          Color(0xFFE2557A),
+          Color(0xFF0F9D7A),
+          Color(0xFFE89A24),
+          Color(0xFF7B61FF),
+          Color(0xFF2BB3D9),
+        ],
+        familyColor: const Color(0xFFE89A24),
+        streak: const Color(0xFFF07A30),
+        nav: dark ? const Color(0xFF132036) : Colors.white,
+      ),
+      LookName.sky => Look(
+        brightness: brightness,
+        background: dark ? const Color(0xFF0C1730) : const Color(0xFFEEF5FF),
+        card: dark ? const Color(0xFF15244A) : Colors.white,
+        ink: dark ? const Color(0xFFEAF2FF) : const Color(0xFF13294B),
+        muted: dark ? const Color(0xFF9FB3D9) : const Color(0xFF5A6F92),
+        primary: dark ? const Color(0xFF7DB2FF) : const Color(0xFF2F7BF5),
+        onPrimary: dark ? const Color(0xFF08204A) : Colors.white,
+        done: const Color(0xFF20B486),
+        hero: const LinearGradient(
+          begin: AlignmentDirectional.topStart,
+          end: AlignmentDirectional.bottomEnd,
+          colors: [Color(0xFF4FB3FF), Color(0xFF2F6BF5)],
+        ),
+        heroInk: Colors.white,
+        radius: 22,
+        borderWidth: 0,
+        border: Colors.transparent,
+        shadows: dark
+            ? const []
+            : const [
+                BoxShadow(
+                  color: Color(0x1A2F7BF5),
+                  blurRadius: 18,
+                  offset: Offset(0, 6),
+                ),
+              ],
+        headingFont: 'MPLUSRounded1c',
+        headingWeight: FontWeight.w800,
+        bodyFont: 'MPLUSRounded1c',
+        memberColors: const [
+          Color(0xFF2F7BF5),
+          Color(0xFFFF6B8B),
+          Color(0xFF20B486),
+          Color(0xFFFFB020),
+          Color(0xFF8C6BFF),
+          Color(0xFF14B8C8),
+        ],
+        familyColor: const Color(0xFFFFB020),
+        streak: const Color(0xFFFF8A3D),
+        nav: dark ? const Color(0xFF15244A) : Colors.white,
+      ),
+      LookName.ocean => Look(
+        brightness: brightness,
+        background: dark ? const Color(0xFF06111D) : const Color(0xFFF1F5F8),
+        card: dark ? const Color(0xFF0E1C2C) : Colors.white,
+        ink: dark ? const Color(0xFFE6EEF6) : const Color(0xFF0A1A2A),
+        muted: dark ? const Color(0xFF93A6BA) : const Color(0xFF586A7C),
+        primary: dark ? const Color(0xFF4C9BFF) : const Color(0xFF0B63E5),
+        onPrimary: dark ? const Color(0xFF021A3D) : Colors.white,
+        done: const Color(0xFF13B07A),
+        hero: LinearGradient(
+          begin: AlignmentDirectional.topStart,
+          end: AlignmentDirectional.bottomEnd,
+          colors: dark
+              ? const [Color(0xFF08345E), Color(0xFF0B6E8C)]
+              : const [Color(0xFF062A4D), Color(0xFF0B6E8C)],
+        ),
+        heroInk: Colors.white,
+        radius: 12,
+        borderWidth: 1,
+        border: dark ? const Color(0xFF1A2B3E) : const Color(0xFFDCE4EC),
+        shadows: const [],
+        headingFont: 'SecularOne',
+        headingWeight: FontWeight.w400,
+        bodyFont: 'Assistant',
+        memberColors: const [
+          Color(0xFF0B63E5),
+          Color(0xFFFF5D5D),
+          Color(0xFF13B07A),
+          Color(0xFFF2B705),
+          Color(0xFF7A5CFA),
+          Color(0xFF0BB3C4),
+        ],
+        familyColor: const Color(0xFFA3D930),
+        streak: const Color(0xFFFF7A1A),
+        nav: dark ? const Color(0xFF0E1C2C) : Colors.white,
+      ),
     };
   }
 
@@ -254,7 +373,8 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
   final base = ThemeData(
     colorScheme: scheme,
     useMaterial3: true,
-    fontFamily: Look.bodyFont,
+    fontFamily: look.bodyFont,
+    fontFamilyFallback: const [Look.fallbackFont],
   );
   final shape = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(look.radius),
@@ -264,15 +384,16 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
   );
   TextStyle? headed(TextStyle? style) => style?.copyWith(
     fontFamily: look.headingFont,
-    fontFamilyFallback: const [Look.bodyFont],
+    fontFamilyFallback: [look.bodyFont, Look.fallbackFont],
     fontWeight: look.headingWeight,
   );
   final text = base.textTheme.apply(
     bodyColor: look.ink,
     displayColor: look.ink,
   );
-  const buttonText = TextStyle(
-    fontFamily: Look.bodyFont,
+  final buttonText = TextStyle(
+    fontFamily: look.bodyFont,
+    fontFamilyFallback: const [Look.fallbackFont],
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
