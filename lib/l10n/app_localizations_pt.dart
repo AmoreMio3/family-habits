@@ -82,6 +82,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get phoneLanguage => 'Idioma do celular';
 
   @override
+  String get appearance => 'Claro ou escuro';
+
+  @override
+  String get phoneAppearance => 'Igual ao celular';
+
+  @override
+  String get lightMode => 'Claro';
+
+  @override
+  String get darkMode => 'Escuro';
+
+  @override
   String get parent => 'Pai ou mãe';
 
   @override

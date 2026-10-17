@@ -82,6 +82,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get phoneLanguage => 'Idioma del teléfono';
 
   @override
+  String get appearance => 'Claro u oscuro';
+
+  @override
+  String get phoneAppearance => 'Como el teléfono';
+
+  @override
+  String get lightMode => 'Claro';
+
+  @override
+  String get darkMode => 'Oscuro';
+
+  @override
   String get parent => 'Padre o madre';
 
   @override

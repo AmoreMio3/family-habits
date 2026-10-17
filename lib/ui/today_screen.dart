@@ -54,7 +54,7 @@ class TodayScreen extends StatelessWidget {
                 style: TextStyle(color: look.muted, fontSize: 14),
               ),
               const SizedBox(height: 2),
-              Text(l10n.hiName(me.nickname), style: look.heading(30)),
+              Text(l10n.hiName(me.nickname), style: look.heading(22)),
             ],
           ),
         ),
@@ -159,26 +159,26 @@ class _ProfileButton extends StatelessWidget {
             children: [
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.all(3),
+                padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: selected ? look.primary : Colors.transparent,
-                    width: 3,
+                    width: 2,
                   ),
                 ),
-                child: MemberAvatar(name: name, color: color, size: 54),
+                child: MemberAvatar(name: name, color: color, size: 34),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               Text(
                 name,
                 style: TextStyle(
                   fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                   color: selected ? look.ink : look.muted,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
-              Text(role, style: TextStyle(color: look.muted, fontSize: 12)),
+              Text(role, style: TextStyle(color: look.muted, fontSize: 10)),
             ],
           ),
         ),
@@ -395,8 +395,8 @@ class CheckCircle extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeOutBack,
-      width: 38,
-      height: 38,
+      width: 34,
+      height: 34,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: done ? look.done : Colors.transparent,
@@ -406,7 +406,7 @@ class CheckCircle extends StatelessWidget {
         ),
       ),
       child: done
-          ? const Icon(Icons.check_rounded, color: Colors.white, size: 24)
+          ? const Icon(Icons.check_rounded, color: Colors.white, size: 22)
           : enabled
           ? null
           : Icon(Icons.lock_outline_rounded, color: look.muted, size: 18),

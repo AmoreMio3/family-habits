@@ -276,7 +276,7 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
-  const buttonSize = Size(64, 52);
+  const buttonSize = Size(64, 46);
 
   return base.copyWith(
     extensions: [look],
@@ -294,7 +294,7 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
       surfaceTintColor: Colors.transparent,
       scrolledUnderElevation: 0,
       elevation: 0,
-      titleTextStyle: look.heading(24),
+      titleTextStyle: look.heading(20),
     ),
     cardTheme: CardThemeData(
       color: look.card,
@@ -356,7 +356,7 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
       surfaceTintColor: Colors.transparent,
       indicatorColor: look.tint(look.primary),
       elevation: 0,
-      height: 72,
+      height: 64,
       iconTheme: WidgetStateProperty.resolveWith(
         (states) => IconThemeData(
           color: states.contains(WidgetState.selected)
@@ -406,6 +406,46 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
   );
 }
 
+/// Draws all text a little smaller than Flutter's default, on top of the
+/// size the person picked in the phone's settings.
+class CompactText extends StatelessWidget {
+  const CompactText({super.key, required this.child});
+
+  static const factor = 0.82;
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    return MediaQuery(
+      data: media.copyWith(textScaler: _ScaledText(media.textScaler, factor)),
+      child: child,
+    );
+  }
+}
+
+class _ScaledText extends TextScaler {
+  const _ScaledText(this.base, this.factor);
+
+  final TextScaler base;
+  final double factor;
+
+  @override
+  double scale(double fontSize) => base.scale(fontSize) * factor;
+
+  @override
+  // ignore: deprecated_member_use
+  double get textScaleFactor => base.textScaleFactor * factor;
+
+  @override
+  bool operator ==(Object other) =>
+      other is _ScaledText && other.base == base && other.factor == factor;
+
+  @override
+  int get hashCode => Object.hash(base, factor);
+}
+
 /// A card in the current look that can be tapped.
 class SoftCard extends StatelessWidget {
   const SoftCard({
@@ -413,7 +453,7 @@ class SoftCard extends StatelessWidget {
     required this.child,
     this.onTap,
     this.color,
-    this.padding = const EdgeInsets.all(16),
+    this.padding = const EdgeInsets.all(14),
     this.margin = const EdgeInsets.symmetric(vertical: 6),
   });
 
@@ -452,7 +492,7 @@ class IconBubble extends StatelessWidget {
     super.key,
     required this.icon,
     required this.color,
-    this.size = 44,
+    this.size = 40,
   });
 
   final IconData icon;
@@ -523,7 +563,7 @@ class SectionTitle extends StatelessWidget {
       padding: const EdgeInsetsDirectional.fromSTEB(4, 20, 4, 6),
       child: Row(
         children: [
-          Expanded(child: Text(text, style: look.heading(20))),
+          Expanded(child: Text(text, style: look.heading(18))),
           if (trailing != null)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),

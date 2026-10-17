@@ -81,6 +81,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get phoneLanguage => '跟随手机语言';
 
   @override
+  String get appearance => '浅色或深色';
+
+  @override
+  String get phoneAppearance => '跟随手机';
+
+  @override
+  String get lightMode => '浅色';
+
+  @override
+  String get darkMode => '深色';
+
+  @override
   String get parent => '家长';
 
   @override
@@ -646,6 +658,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get phoneLanguage => '跟隨手機語言';
+
+  @override
+  String get appearance => '淺色或深色';
+
+  @override
+  String get phoneAppearance => '跟隨手機';
+
+  @override
+  String get lightMode => '淺色';
+
+  @override
+  String get darkMode => '深色';
 
   @override
   String get parent => '家長';
