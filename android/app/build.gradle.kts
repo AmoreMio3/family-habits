@@ -41,13 +41,26 @@ android {
             keyAlias = "androiddebugkey"
             keyPassword = "android"
         }
+        // The private upload key for Google Play. It is never stored in the
+        // repository: CI writes it from the UPLOAD_KEYSTORE_BASE64 secret and
+        // passes its location and passwords in these environment variables.
+        val uploadKeystore = System.getenv("UPLOAD_KEYSTORE_PATH")
+        if (!uploadKeystore.isNullOrEmpty()) {
+            create("upload") {
+                storeFile = file(uploadKeystore)
+                storePassword = System.getenv("UPLOAD_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("UPLOAD_KEY_ALIAS")
+                keyPassword = System.getenv("UPLOAD_KEY_PASSWORD")
+            }
+        }
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // Signed with the upload key when it is available (Google Play builds),
+            // otherwise with the shared test key so `flutter run --release` works.
+            signingConfig = signingConfigs.findByName("upload")
+                ?: signingConfigs.getByName("debug")
         }
     }
 }

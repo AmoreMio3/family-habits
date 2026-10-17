@@ -64,6 +64,50 @@ jobs:
             --release-notes "$NOTES"
           rm -f "$RUNNER_TEMP/firebase-key.json"
 
+  # Builds the file Google Play accepts (an .aab), signed with the private
+  # upload key. Runs only on main, and only once the upload key secrets exist
+  # (see docs/google-play-release.md).
+  play-release:
+    runs-on: ubuntu-latest
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    env:
+      HAS_UPLOAD_KEY: ${{ secrets.UPLOAD_KEYSTORE_BASE64 != '' }}
+    steps:
+      - name: Check for the upload key
+        if: env.HAS_UPLOAD_KEY != 'true'
+        run: echo "::notice::No Google Play upload key yet, skipping the release build."
+      - uses: actions/checkout@v4
+        if: env.HAS_UPLOAD_KEY == 'true'
+      - uses: actions/setup-java@v4
+        if: env.HAS_UPLOAD_KEY == 'true'
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        if: env.HAS_UPLOAD_KEY == 'true'
+        with:
+          flutter-version: 3.47.5
+          channel: stable
+          cache: true
+      - name: Build the Google Play bundle
+        if: env.HAS_UPLOAD_KEY == 'true'
+        env:
+          UPLOAD_KEYSTORE_BASE64: ${{ secrets.UPLOAD_KEYSTORE_BASE64 }}
+          UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSWORD }}
+          UPLOAD_KEY_ALIAS: ${{ secrets.UPLOAD_KEY_ALIAS }}
+          UPLOAD_KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
+        run: |
+          export UPLOAD_KEYSTORE_PATH="$RUNNER_TEMP/upload.jks"
+          echo "$UPLOAD_KEYSTORE_BASE64" | base64 --decode > "$UPLOAD_KEYSTORE_PATH"
+          flutter build appbundle --release --build-number=${{ github.run_number }}
+          rm -f "$UPLOAD_KEYSTORE_PATH"
+      - uses: actions/upload-artifact@v4
+        if: env.HAS_UPLOAD_KEY == 'true'
+        with:
+          name: family-habits-play-bundle
+          path: build/app/outputs/bundle/release/app-release.aab
+
   rules:
     runs-on: ubuntu-latest
     steps:
