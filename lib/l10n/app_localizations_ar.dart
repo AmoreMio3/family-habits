@@ -588,4 +588,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get thisMonth => 'هذا الشهر';
+
+  @override
+  String get menuPlace => 'القائمة';
+
+  @override
+  String get menuTop => 'في الأعلى';
+
+  @override
+  String get menuBottom => 'في الأسفل';
 }

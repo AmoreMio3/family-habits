@@ -42,13 +42,8 @@ InMemoryFamilyRepository sampleRepository({DateTime Function()? clock}) {
       name: 'Have a phone-free meal',
       owner: FamilyOwner(),
       category: BuiltInRef(BuiltInCategory.familyMeals),
+      // Every day, so the demo always has a family habit to check in today.
       templateId: 'FAMILY_MEALS_005',
-      days: {
-        DateTime.sunday,
-        DateTime.tuesday,
-        DateTime.thursday,
-        DateTime.friday,
-      },
     ),
     Habit(
       id: 'hike',

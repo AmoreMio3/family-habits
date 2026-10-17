@@ -588,4 +588,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get thisMonth => 'Questo mese';
+
+  @override
+  String get menuPlace => 'Menu';
+
+  @override
+  String get menuTop => 'In alto';
+
+  @override
+  String get menuBottom => 'In basso';
 }

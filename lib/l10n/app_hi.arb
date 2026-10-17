@@ -173,5 +173,8 @@
   "next": "अगला",
   "account": "खाता",
   "thisWeek": "इस सप्ताह",
-  "thisMonth": "इस महीने"
+  "thisMonth": "इस महीने",
+  "menuPlace": "मेन्यू",
+  "menuTop": "ऊपर",
+  "menuBottom": "नीचे"
 }

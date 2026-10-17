@@ -570,6 +570,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get thisMonth => '本月';
+
+  @override
+  String get menuPlace => '菜单';
+
+  @override
+  String get menuTop => '顶部';
+
+  @override
+  String get menuBottom => '底部';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1137,4 +1146,13 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get thisMonth => '本月';
+
+  @override
+  String get menuPlace => '選單';
+
+  @override
+  String get menuTop => '頂部';
+
+  @override
+  String get menuBottom => '底部';
 }

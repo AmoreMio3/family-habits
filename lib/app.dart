@@ -6,6 +6,7 @@ import 'data/reminders.dart';
 import 'l10n/app_localizations.dart';
 import 'ui/auth/auth_gate.dart';
 import 'ui/look.dart';
+import 'ui/main_menu.dart';
 
 /// Locales offered in the language picker, with their names in that language.
 final languageNames = <Locale, String>{
@@ -39,6 +40,16 @@ class AppSettings extends ChangeNotifier {
 
   set locale(Locale? value) {
     _locale = value;
+    notifyListeners();
+  }
+
+  MenuPlace _menuPlace = MenuPlace.top;
+
+  /// Where the main tabs sit on this phone.
+  MenuPlace get menuPlace => _menuPlace;
+
+  set menuPlace(MenuPlace value) {
+    _menuPlace = value;
     notifyListeners();
   }
 }

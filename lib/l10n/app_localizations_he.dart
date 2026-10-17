@@ -583,4 +583,13 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get thisMonth => 'החודש';
+
+  @override
+  String get menuPlace => 'תפריט';
+
+  @override
+  String get menuTop => 'למעלה';
+
+  @override
+  String get menuBottom => 'למטה';
 }

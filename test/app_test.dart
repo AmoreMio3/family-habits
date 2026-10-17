@@ -1,6 +1,7 @@
 import 'package:family_habits/app.dart';
 import 'package:family_habits/data/in_memory_accounts.dart';
 import 'package:family_habits/l10n/app_localizations.dart';
+import 'package:family_habits/ui/main_menu.dart';
 import 'package:family_habits/ui/today_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,6 +15,13 @@ Finder profileButton(String name) => find.ancestor(
         (w.key! as ValueKey<String>).value.startsWith('profile-'),
   ),
 );
+
+/// The page's own vertical list, not the sideways menu at the top.
+final mainList = find
+    .byWidgetPredicate(
+      (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+    )
+    .last;
 
 void main() {
   late InMemoryAccountService accounts;
@@ -79,7 +87,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull, reason: '$locale');
       for (final tab in [1, 2, 3, 4, 0]) {
-        await tester.tap(find.byType(NavigationDestination).at(tab));
+        await tester.tap(find.byKey(Key('menu-$tab')));
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull, reason: '$locale tab $tab');
       }
@@ -159,11 +167,11 @@ void main() {
     await tester.pumpAndSettle();
 
     final fish = find.widgetWithText(HabitCard, 'Feed the fish');
-    await tester.scrollUntilVisible(fish, 300);
+    await tester.scrollUntilVisible(fish, 300, scrollable: mainList);
     expect(fish, findsOneWidget);
 
     final dad = find.byKey(const Key('profile-dad'));
-    await tester.scrollUntilVisible(dad, -300);
+    await tester.scrollUntilVisible(dad, -300, scrollable: mainList);
     await tester.tap(dad);
     await tester.pumpAndSettle();
     expect(find.text('Feed the fish'), findsNothing);
@@ -298,30 +306,35 @@ void main() {
 
   testWidgets('the five tabs and the settings gear', (tester) async {
     await openDemo(tester);
-    for (final label in [
+    final labels = [
       'My day',
       'My habits',
       'My progress',
       'Family',
       'Habit ideas',
-    ]) {
+    ];
+    for (var i = 0; i < labels.length; i++) {
       expect(
         find.descendant(
-          of: find.byType(NavigationBar),
-          matching: find.text(label),
+          of: find.byKey(Key('menu-$i')),
+          matching: find.text(labels[i]),
         ),
         findsOneWidget,
-        reason: label,
+        reason: labels[i],
       );
+    }
+    Future<void> tapMenu(int i) async {
+      await tester.tap(find.byKey(Key('menu-$i')));
+      await tester.pumpAndSettle();
     }
 
     // My habits: one line per habit with the week's days.
-    await tapText(tester, 'My habits');
+    await tapMenu(1);
     expect(find.text('This week'), findsOneWidget);
     expect(find.text('Run'), findsOneWidget);
 
     // My progress: week, then month, and back a month.
-    await tapText(tester, 'My progress');
+    await tapMenu(2);
     expect(find.text('My week'), findsOneWidget);
     await tapText(tester, 'Month');
     expect(find.text('My month'), findsOneWidget);
@@ -337,7 +350,7 @@ void main() {
     );
 
     // Family: progress first, then the family's settings.
-    await tapText(tester, 'Family');
+    await tapMenu(3);
     expect(find.text('Family progress'), findsOneWidget);
     expect(find.text('Family settings'), findsOneWidget);
     await tapText(tester, 'Month');
@@ -351,5 +364,14 @@ void main() {
     await tapText(tester, 'עברית');
     expect(find.text('הגדרות'), findsWidgets);
     expect(settings.locale, const Locale('he'));
+
+    // The menu can move to the bottom of the screen.
+    await tester.tap(find.text('למטה'));
+    await tester.pumpAndSettle();
+    expect(settings.menuPlace, MenuPlace.bottom);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.byType(BottomMenu), findsOneWidget);
+    expect(find.byType(TopMenu), findsNothing);
   });
 }

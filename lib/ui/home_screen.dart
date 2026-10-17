@@ -9,6 +9,7 @@ import 'categories_screen.dart';
 import 'family_screen.dart';
 import 'habit_picker.dart';
 import 'look.dart';
+import 'main_menu.dart';
 import 'my_habits_screen.dart';
 import 'progress_screen.dart';
 import 'settings_screen.dart';
@@ -47,14 +48,44 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _select(int tab) => setState(() => _tab = tab);
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final store = widget.store;
     return ListenableBuilder(
-      listenable: store,
+      listenable: Listenable.merge([store, widget.settings]),
       builder: (context, _) {
         final title = store.hasData ? store.info.name : l10n.appTitle;
+        final top = widget.settings.menuPlace == MenuPlace.top;
+        final items = [
+          MenuItem(
+            icon: Icons.wb_sunny_outlined,
+            selectedIcon: Icons.wb_sunny_rounded,
+            label: l10n.myDay,
+          ),
+          MenuItem(
+            icon: Icons.checklist_rounded,
+            selectedIcon: Icons.checklist_rounded,
+            label: l10n.myHabits,
+          ),
+          MenuItem(
+            icon: Icons.insights_outlined,
+            selectedIcon: Icons.insights_rounded,
+            label: l10n.myProgress,
+          ),
+          MenuItem(
+            icon: Icons.diversity_3_outlined,
+            selectedIcon: Icons.diversity_3_rounded,
+            label: l10n.family,
+          ),
+          MenuItem(
+            icon: Icons.lightbulb_outline_rounded,
+            selectedIcon: Icons.lightbulb_rounded,
+            label: l10n.habitIdeas,
+          ),
+        ];
         return Scaffold(
           appBar: AppBar(
             title: Text(title),
@@ -76,6 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           body: Column(
             children: [
+              if (top)
+                TopMenu(items: items, selected: _tab, onSelected: _select),
               if (store.isDemo) _DemoBanner(text: l10n.demoBanner),
               Expanded(
                 child: !store.hasData
@@ -103,37 +136,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 )
               : null,
-          bottomNavigationBar: NavigationBar(
-            selectedIndex: _tab,
-            onDestinationSelected: (i) => setState(() => _tab = i),
-            destinations: [
-              NavigationDestination(
-                icon: const Icon(Icons.wb_sunny_outlined),
-                selectedIcon: const Icon(Icons.wb_sunny_rounded),
-                label: l10n.myDay,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.checklist_rounded),
-                selectedIcon: const Icon(Icons.checklist_rounded),
-                label: l10n.myHabits,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.insights_outlined),
-                selectedIcon: const Icon(Icons.insights_rounded),
-                label: l10n.myProgress,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.diversity_3_outlined),
-                selectedIcon: const Icon(Icons.diversity_3_rounded),
-                label: l10n.family,
-              ),
-              NavigationDestination(
-                icon: const Icon(Icons.lightbulb_outline_rounded),
-                selectedIcon: const Icon(Icons.lightbulb_rounded),
-                label: l10n.habitIdeas,
-              ),
-            ],
-          ),
+          bottomNavigationBar: top
+              ? null
+              : BottomMenu(items: items, selected: _tab, onSelected: _select),
         );
       },
     );

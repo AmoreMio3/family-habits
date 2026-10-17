@@ -586,4 +586,13 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get thisMonth => 'इस महीने';
+
+  @override
+  String get menuPlace => 'मेन्यू';
+
+  @override
+  String get menuTop => 'ऊपर';
+
+  @override
+  String get menuBottom => 'नीचे';
 }

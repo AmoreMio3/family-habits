@@ -1160,6 +1160,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This month'**
   String get thisMonth;
+
+  /// No description provided for @menuPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get menuPlace;
+
+  /// No description provided for @menuTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Top'**
+  String get menuTop;
+
+  /// No description provided for @menuBottom.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom'**
+  String get menuBottom;
 }
 
 class _AppLocalizationsDelegate
