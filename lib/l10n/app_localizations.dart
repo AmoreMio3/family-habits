@@ -219,6 +219,30 @@ abstract class AppLocalizations {
   /// **'Phone language'**
   String get phoneLanguage;
 
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Light or dark'**
+  String get appearance;
+
+  /// No description provided for @phoneAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as phone'**
+  String get phoneAppearance;
+
+  /// No description provided for @lightMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get lightMode;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get darkMode;
+
   /// No description provided for @parent.
   ///
   /// In en, this message translates to:

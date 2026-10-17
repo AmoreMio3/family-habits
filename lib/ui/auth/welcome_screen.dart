@@ -24,7 +24,12 @@ class WelcomeScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final accounts = this.accounts;
     return Scaffold(
-      appBar: AppBar(actions: [LanguageMenu(settings: settings)]),
+      appBar: AppBar(
+        actions: [
+          AppearanceMenu(settings: settings),
+          LanguageMenu(settings: settings),
+        ],
+      ),
       body: FormPage(
         children: [
           Icon(Icons.diversity_3, size: 64, color: theme.colorScheme.primary),

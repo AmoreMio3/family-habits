@@ -27,10 +27,14 @@ final languageNames = <Locale, String>{
 
 /// Settings for this device, independent of who is signed in.
 class AppSettings extends ChangeNotifier {
-  AppSettings({this._locale, ReminderSettings? reminders})
-    : reminders = reminders ?? ReminderSettings();
+  AppSettings({
+    this._locale,
+    ReminderSettings? reminders,
+    this._themeMode = ThemeMode.system,
+  }) : reminders = reminders ?? ReminderSettings();
 
   Locale? _locale;
+  ThemeMode _themeMode;
 
   /// Daily reminders on this phone.
   final ReminderSettings reminders;
@@ -40,6 +44,14 @@ class AppSettings extends ChangeNotifier {
 
   set locale(Locale? value) {
     _locale = value;
+    notifyListeners();
+  }
+
+  /// Light, dark, or [ThemeMode.system] to follow the phone.
+  ThemeMode get themeMode => _themeMode;
+
+  set themeMode(ThemeMode value) {
+    _themeMode = value;
     notifyListeners();
   }
 
@@ -81,8 +93,10 @@ class FamilyHabitsApp extends StatelessWidget {
         ],
         theme: buildTheme(Brightness.light),
         darkTheme: buildTheme(Brightness.dark),
-        builder: (context, child) =>
-            RemindersScope(reminders: settings.reminders, child: child!),
+        themeMode: settings.themeMode,
+        builder: (context, child) => CompactText(
+          child: RemindersScope(reminders: settings.reminders, child: child!),
+        ),
         home: AuthGate(accounts: accounts, settings: settings),
       ),
     );

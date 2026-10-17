@@ -90,9 +90,19 @@ flutter:
           weight: 600
         - asset: assets/fonts/Fredoka-700.ttf
           weight: 700
-    - family: VarelaRound
+    - family: FrankRuhlLibre
       fonts:
-        - asset: assets/fonts/VarelaRound-400.ttf
+        - asset: assets/fonts/FrankRuhlLibre-700.ttf
+          weight: 700
+    - family: IBMPlexSansHebrew
+      fonts:
+        - asset: assets/fonts/IBMPlexSansHebrew-400.ttf
+        - asset: assets/fonts/IBMPlexSansHebrew-500.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexSansHebrew-600.ttf
+          weight: 600
+        - asset: assets/fonts/IBMPlexSansHebrew-700.ttf
+          weight: 700
 
   # To add assets to your application, add an assets section, like this:
   # assets:

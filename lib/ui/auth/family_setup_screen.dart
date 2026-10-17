@@ -61,6 +61,7 @@ class _FamilySetupScreenState extends State<FamilySetupScreen> with BusyAction {
       appBar: AppBar(
         title: Text(l10n.setUpFamily),
         actions: [
+          AppearanceMenu(settings: widget.settings),
           LanguageMenu(settings: widget.settings),
           IconButton(
             icon: const Icon(Icons.logout),

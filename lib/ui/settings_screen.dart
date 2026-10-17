@@ -81,6 +81,14 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () => _pickLanguage(context),
               ),
               ListTile(
+                key: const Key('appearanceButton'),
+                leading: Icon(Icons.dark_mode_outlined, color: look.primary),
+                title: Text(l10n.appearance),
+                subtitle: Text(_modeName(l10n, settings.themeMode)),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () => _pickAppearance(context),
+              ),
+              ListTile(
                 leading: Icon(Icons.view_day_outlined, color: look.primary),
                 title: Text(l10n.menuPlace),
                 trailing: SegmentedButton<MenuPlace>(
@@ -179,6 +187,34 @@ class SettingsScreen extends StatelessWidget {
       ),
     );
     if (picked != null) settings.locale = picked == phone ? null : picked;
+  }
+
+  static String _modeName(AppLocalizations l10n, ThemeMode mode) =>
+      switch (mode) {
+        ThemeMode.system => l10n.phoneAppearance,
+        ThemeMode.light => l10n.lightMode,
+        ThemeMode.dark => l10n.darkMode,
+      };
+
+  Future<void> _pickAppearance(BuildContext context) async {
+    final l10n = AppLocalizations.of(context);
+    final picked = await showDialog<ThemeMode>(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Text(l10n.appearance),
+        children: [
+          for (final mode in ThemeMode.values)
+            ListTile(
+              title: Text(_modeName(l10n, mode)),
+              trailing: settings.themeMode == mode
+                  ? const Icon(Icons.check_rounded)
+                  : null,
+              onTap: () => Navigator.pop(context, mode),
+            ),
+        ],
+      ),
+    );
+    if (picked != null) settings.themeMode = picked;
   }
 
   Future<void> _signOut(BuildContext context) async {

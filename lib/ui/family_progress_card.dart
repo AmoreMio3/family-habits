@@ -46,11 +46,11 @@ class FamilyProgressCard extends StatelessWidget {
             : null,
         boxShadow: look.shadows,
       ),
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(6),
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(12, 10, 10, 14),
+            padding: const EdgeInsetsDirectional.fromSTEB(10, 4, 6, 8),
             child: Row(
               children: [
                 Expanded(
@@ -59,14 +59,14 @@ class FamilyProgressCard extends StatelessWidget {
                     children: [
                       Text(
                         l10n.familyWeek,
-                        style: look.heading(22, color: look.heroInk),
+                        style: look.heading(18, color: look.heroInk),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 2),
                       Text(
                         l10n.checkInsProgress(progress.done, progress.target),
                         style: TextStyle(
                           color: look.heroInk.withValues(alpha: 0.85),
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -74,15 +74,15 @@ class FamilyProgressCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 76,
-                  height: 76,
+                  width: 50,
+                  height: 50,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
                       SizedBox.expand(
                         child: CircularProgressIndicator(
                           value: progress.fraction,
-                          strokeWidth: 8,
+                          strokeWidth: 5,
                           strokeCap: StrokeCap.round,
                           color: look.heroInk,
                           backgroundColor: look.heroInk.withValues(alpha: 0.25),
@@ -90,7 +90,7 @@ class FamilyProgressCard extends StatelessWidget {
                       ),
                       Text(
                         '$percent%',
-                        style: look.heading(20, color: look.heroInk),
+                        style: look.heading(14, color: look.heroInk),
                       ),
                     ],
                   ),
@@ -99,7 +99,7 @@ class FamilyProgressCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(14, 14, 14, 12),
+            padding: const EdgeInsets.fromLTRB(12, 10, 12, 8),
             decoration: BoxDecoration(
               color: look.card,
               borderRadius: BorderRadius.circular(look.radius - 4),
@@ -110,7 +110,7 @@ class FamilyProgressCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(99),
                   child: SizedBox(
-                    height: 14,
+                    height: 10,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -131,7 +131,7 @@ class FamilyProgressCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 8),
                 Wrap(
                   spacing: 14,
                   runSpacing: 6,
@@ -153,7 +153,7 @@ class FamilyProgressCard extends StatelessWidget {
                             '$name $value',
                             style: TextStyle(
                               color: look.ink,
-                              fontSize: 13,
+                              fontSize: 12,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
