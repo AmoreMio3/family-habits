@@ -10,7 +10,9 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(FamilyHabitsApp(accounts: await _accounts(), settings: AppSettings()));
+  final settings = AppSettings();
+  await settings.reminders.load();
+  runApp(FamilyHabitsApp(accounts: await _accounts(), settings: settings));
 }
 
 /// Firebase when the project is connected, otherwise in-memory accounts.

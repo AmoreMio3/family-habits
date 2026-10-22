@@ -32,6 +32,30 @@
       }
     }
   },
+  "habitAdded": "New habit: {habit}",
+  "@habitAdded": {
+    "placeholders": {
+      "habit": {
+        "type": "String"
+      }
+    }
+  },
+  "addHabitFor": "Add a habit for {name}",
+  "@addHabitFor": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "childDayHint": "You're looking at {name}'s day. Habits you add here are for {name} only.",
+  "@childDayHint": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "streakDays": "{count, plural, =0{No streak yet} =1{1 day} other{{count} days}}",
   "@streakDays": {
     "placeholders": {
@@ -54,6 +78,10 @@
   "categories": "Categories",
   "language": "Language",
   "phoneLanguage": "Phone language",
+  "appearance": "Light or dark",
+  "phoneAppearance": "Same as phone",
+  "lightMode": "Light",
+  "darkMode": "Dark",
   "parent": "Parent",
   "child": "Child",
   "switchProfile": "Switch profile",
@@ -155,14 +183,6 @@
   "category": "Category",
   "habitFor": "For",
   "wholeFamily": "Whole family",
-  "timesPerWeek": "{count, plural, =1{Once a week} other{{count} times a week}}",
-  "@timesPerWeek": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "deleteHabitConfirm": "Delete “{habit}” and its history?",
   "@deleteHabitConfirm": {
     "placeholders": {
@@ -190,8 +210,6 @@
   "searchHabitsHint": "Search, for example “park” or “book”",
   "noMatchingHabits": "No ready-made habit matches. You can create your own.",
   "ourCategories": "Our family's categories",
-  "personalDefinition": "What counts as done? (optional)",
-  "personalDefinitionHint": "For example: I drank enough water today",
   "categoryName": "Category name",
   "categoryHabits": "Habits in this category",
   "addHabitToCategory": "Add a habit",
@@ -228,7 +246,82 @@
   "@hiName": {
     "description": "Greeting at the top of Today.",
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
-  }
+  },
+  "howOften": "How often",
+  "specificDays": "Specific days",
+  "pickADay": "Pick at least one day",
+  "otherDays": "Other days",
+  "reminders": "Reminders",
+  "remindersIntro": "Get a daily reminder to check off your habits. Reminders are set on this phone.",
+  "reminderOff": "No reminder",
+  "reminderMorning": "Every morning",
+  "reminderEvening": "Every evening",
+  "reminderTwice": "Twice a day",
+  "morningTime": "Morning reminder",
+  "eveningTime": "Evening reminder",
+  "reminderSummaryMorning": "Every morning at {time}",
+  "@reminderSummaryMorning": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderSummaryEvening": "Every evening at {time}",
+  "@reminderSummaryEvening": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderSummaryTwice": "Every day at {morning} and {evening}",
+  "@reminderSummaryTwice": {
+    "placeholders": {
+      "morning": {
+        "type": "String"
+      },
+      "evening": {
+        "type": "String"
+      }
+    }
+  },
+  "remindersBlocked": "Notifications are off for Family Habits. Turn them on in your phone settings to get reminders.",
+  "reminderMorningBody": "Good morning! Your habits for today are waiting.",
+  "@reminderMorningBody": {
+    "description": "Text of the morning reminder notification."
+  },
+  "reminderEveningBody": "How did today go? Check off your habits.",
+  "@reminderEveningBody": {
+    "description": "Text of the evening reminder notification."
+  },
+  "habitPicture": "Picture",
+  "pickAnEmoji": "Pick an emoji for this habit",
+  "useCategoryIcon": "Use the category icon",
+  "typeAnyEmoji": "Or type any emoji",
+  "useThis": "Use",
+  "myDay": "My day",
+  "myProgress": "My progress",
+  "habitIdeas": "Habit ideas",
+  "familyProgress": "Family progress",
+  "familySettings": "Family settings",
+  "weekTab": "Week",
+  "monthTab": "Month",
+  "myWeek": "My week",
+  "myMonth": "My month",
+  "familyMonth": "Family month",
+  "byHabit": "By habit",
+  "byPerson": "By person",
+  "previous": "Previous",
+  "next": "Next",
+  "account": "Account",
+  "thisWeek": "This week",
+  "thisMonth": "This month",
+  "menuPlace": "Menu",
+  "menuTop": "Top",
+  "menuBottom": "Bottom"
 }

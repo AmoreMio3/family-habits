@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'data/account_service.dart';
+import 'data/reminders.dart';
 import 'l10n/app_localizations.dart';
 import 'ui/auth/auth_gate.dart';
 import 'ui/look.dart';
+import 'ui/main_menu.dart';
 
 /// Locales offered in the language picker, with their names in that language.
 final languageNames = <Locale, String>{
@@ -25,15 +27,41 @@ final languageNames = <Locale, String>{
 
 /// Settings for this device, independent of who is signed in.
 class AppSettings extends ChangeNotifier {
-  AppSettings({this._locale});
+  AppSettings({
+    this._locale,
+    ReminderSettings? reminders,
+    this._themeMode = ThemeMode.system,
+  }) : reminders = reminders ?? ReminderSettings();
 
   Locale? _locale;
+  ThemeMode _themeMode;
+
+  /// Daily reminders on this phone.
+  final ReminderSettings reminders;
 
   /// Null means "follow the phone's language".
   Locale? get locale => _locale;
 
   set locale(Locale? value) {
     _locale = value;
+    notifyListeners();
+  }
+
+  /// Light, dark, or [ThemeMode.system] to follow the phone.
+  ThemeMode get themeMode => _themeMode;
+
+  set themeMode(ThemeMode value) {
+    _themeMode = value;
+    notifyListeners();
+  }
+
+  MenuPlace _menuPlace = MenuPlace.top;
+
+  /// Where the main tabs sit on this phone.
+  MenuPlace get menuPlace => _menuPlace;
+
+  set menuPlace(MenuPlace value) {
+    _menuPlace = value;
     notifyListeners();
   }
 }
@@ -65,6 +93,10 @@ class FamilyHabitsApp extends StatelessWidget {
         ],
         theme: buildTheme(Brightness.light),
         darkTheme: buildTheme(Brightness.dark),
+        themeMode: settings.themeMode,
+        builder: (context, child) => CompactText(
+          child: RemindersScope(reminders: settings.reminders, child: child!),
+        ),
         home: AuthGate(accounts: accounts, settings: settings),
       ),
     );

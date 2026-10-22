@@ -171,6 +171,24 @@ abstract class AppLocalizations {
   /// **'{name} checked in “{habit}” for the whole family'**
   String familyCheckedIn(String name, String habit);
 
+  /// No description provided for @habitAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'New habit: {habit}'**
+  String habitAdded(String habit);
+
+  /// No description provided for @addHabitFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a habit for {name}'**
+  String addHabitFor(String name);
+
+  /// No description provided for @childDayHint.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re looking at {name}\'s day. Habits you add here are for {name} only.'**
+  String childDayHint(String name);
+
   /// No description provided for @streakDays.
   ///
   /// In en, this message translates to:
@@ -200,6 +218,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phone language'**
   String get phoneLanguage;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Light or dark'**
+  String get appearance;
+
+  /// No description provided for @phoneAppearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Same as phone'**
+  String get phoneAppearance;
+
+  /// No description provided for @lightMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get lightMode;
+
+  /// No description provided for @darkMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get darkMode;
 
   /// No description provided for @parent.
   ///
@@ -723,12 +765,6 @@ abstract class AppLocalizations {
   /// **'Whole family'**
   String get wholeFamily;
 
-  /// No description provided for @timesPerWeek.
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, =1{Once a week} other{{count} times a week}}'**
-  String timesPerWeek(int count);
-
   /// No description provided for @deleteHabitConfirm.
   ///
   /// In en, this message translates to:
@@ -849,18 +885,6 @@ abstract class AppLocalizations {
   /// **'Our family\'s categories'**
   String get ourCategories;
 
-  /// No description provided for @personalDefinition.
-  ///
-  /// In en, this message translates to:
-  /// **'What counts as done? (optional)'**
-  String get personalDefinition;
-
-  /// No description provided for @personalDefinitionHint.
-  ///
-  /// In en, this message translates to:
-  /// **'For example: I drank enough water today'**
-  String get personalDefinitionHint;
-
   /// No description provided for @categoryName.
   ///
   /// In en, this message translates to:
@@ -920,6 +944,264 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hi, {name}!'**
   String hiName(String name);
+
+  /// No description provided for @howOften.
+  ///
+  /// In en, this message translates to:
+  /// **'How often'**
+  String get howOften;
+
+  /// No description provided for @specificDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Specific days'**
+  String get specificDays;
+
+  /// No description provided for @pickADay.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick at least one day'**
+  String get pickADay;
+
+  /// No description provided for @otherDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Other days'**
+  String get otherDays;
+
+  /// No description provided for @reminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get reminders;
+
+  /// No description provided for @remindersIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Get a daily reminder to check off your habits. Reminders are set on this phone.'**
+  String get remindersIntro;
+
+  /// No description provided for @reminderOff.
+  ///
+  /// In en, this message translates to:
+  /// **'No reminder'**
+  String get reminderOff;
+
+  /// No description provided for @reminderMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Every morning'**
+  String get reminderMorning;
+
+  /// No description provided for @reminderEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Every evening'**
+  String get reminderEvening;
+
+  /// No description provided for @reminderTwice.
+  ///
+  /// In en, this message translates to:
+  /// **'Twice a day'**
+  String get reminderTwice;
+
+  /// No description provided for @morningTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning reminder'**
+  String get morningTime;
+
+  /// No description provided for @eveningTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening reminder'**
+  String get eveningTime;
+
+  /// No description provided for @reminderSummaryMorning.
+  ///
+  /// In en, this message translates to:
+  /// **'Every morning at {time}'**
+  String reminderSummaryMorning(String time);
+
+  /// No description provided for @reminderSummaryEvening.
+  ///
+  /// In en, this message translates to:
+  /// **'Every evening at {time}'**
+  String reminderSummaryEvening(String time);
+
+  /// No description provided for @reminderSummaryTwice.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day at {morning} and {evening}'**
+  String reminderSummaryTwice(String morning, String evening);
+
+  /// No description provided for @remindersBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are off for Family Habits. Turn them on in your phone settings to get reminders.'**
+  String get remindersBlocked;
+
+  /// Text of the morning reminder notification.
+  ///
+  /// In en, this message translates to:
+  /// **'Good morning! Your habits for today are waiting.'**
+  String get reminderMorningBody;
+
+  /// Text of the evening reminder notification.
+  ///
+  /// In en, this message translates to:
+  /// **'How did today go? Check off your habits.'**
+  String get reminderEveningBody;
+
+  /// No description provided for @habitPicture.
+  ///
+  /// In en, this message translates to:
+  /// **'Picture'**
+  String get habitPicture;
+
+  /// No description provided for @pickAnEmoji.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick an emoji for this habit'**
+  String get pickAnEmoji;
+
+  /// No description provided for @useCategoryIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the category icon'**
+  String get useCategoryIcon;
+
+  /// No description provided for @typeAnyEmoji.
+  ///
+  /// In en, this message translates to:
+  /// **'Or type any emoji'**
+  String get typeAnyEmoji;
+
+  /// No description provided for @useThis.
+  ///
+  /// In en, this message translates to:
+  /// **'Use'**
+  String get useThis;
+
+  /// No description provided for @myDay.
+  ///
+  /// In en, this message translates to:
+  /// **'My day'**
+  String get myDay;
+
+  /// No description provided for @myProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'My progress'**
+  String get myProgress;
+
+  /// No description provided for @habitIdeas.
+  ///
+  /// In en, this message translates to:
+  /// **'Habit ideas'**
+  String get habitIdeas;
+
+  /// No description provided for @familyProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Family progress'**
+  String get familyProgress;
+
+  /// No description provided for @familySettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Family settings'**
+  String get familySettings;
+
+  /// No description provided for @weekTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get weekTab;
+
+  /// No description provided for @monthTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get monthTab;
+
+  /// No description provided for @myWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'My week'**
+  String get myWeek;
+
+  /// No description provided for @myMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'My month'**
+  String get myMonth;
+
+  /// No description provided for @familyMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Family month'**
+  String get familyMonth;
+
+  /// No description provided for @byHabit.
+  ///
+  /// In en, this message translates to:
+  /// **'By habit'**
+  String get byHabit;
+
+  /// No description provided for @byPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'By person'**
+  String get byPerson;
+
+  /// No description provided for @previous.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previous;
+
+  /// No description provided for @next.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// No description provided for @account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This week'**
+  String get thisWeek;
+
+  /// No description provided for @thisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get thisMonth;
+
+  /// No description provided for @menuPlace.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu'**
+  String get menuPlace;
+
+  /// No description provided for @menuTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Top'**
+  String get menuTop;
+
+  /// No description provided for @menuBottom.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom'**
+  String get menuBottom;
 }
 
 class _AppLocalizationsDelegate

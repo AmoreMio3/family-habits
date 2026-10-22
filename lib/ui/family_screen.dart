@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
-import '../data/account_service.dart';
 import '../data/family_repository.dart';
 import '../data/family_store.dart';
 import '../l10n/app_localizations.dart';
@@ -9,18 +8,18 @@ import '../models/family.dart';
 import 'common.dart';
 import 'look.dart';
 import 'member_editor.dart';
+import 'progress_screen.dart';
 
-/// Members, device codes and account settings.
+/// Family progress, then the family's settings: members, device codes and
+/// the first day of the week.
 class FamilyScreen extends StatelessWidget {
-  const FamilyScreen({super.key, required this.store, required this.accounts});
+  const FamilyScreen({super.key, required this.store});
 
   final FamilyStore store;
-  final AccountService accounts;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final manage = store.canManage;
     final children = store.members
         .where((m) => !m.isParent)
@@ -37,7 +36,10 @@ class FamilyScreen extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 0, 16, 32),
       children: [
-        SectionTitle(l10n.members),
+        SectionTitle(l10n.familyProgress),
+        FamilyProgressSection(store: store),
+        const SizedBox(height: 12),
+        SectionTitle(l10n.familySettings),
         group([
           for (final m in store.sortedMembers)
             ListTile(
@@ -86,7 +88,6 @@ class FamilyScreen extends StatelessWidget {
                 memberIds: children,
               ),
             ),
-          SectionTitle(l10n.settings),
           group([
             ListTile(
               leading: const Icon(Icons.calendar_view_week_rounded),
@@ -95,91 +96,8 @@ class FamilyScreen extends StatelessWidget {
             ),
           ]),
         ],
-        const SizedBox(height: 12),
-        if (store.access.isParent)
-          group([
-            ListTile(
-              leading: const Icon(Icons.logout_rounded),
-              title: Text(l10n.signOut),
-              onTap: accounts.signOut,
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.delete_forever_rounded,
-                color: theme.colorScheme.error,
-              ),
-              title: Text(
-                l10n.deleteAccount,
-                style: TextStyle(color: theme.colorScheme.error),
-              ),
-              onTap: () => _confirmDelete(
-                context,
-                title: l10n.deleteAccount,
-                body: _isOwner ? l10n.deleteOwnerBody : l10n.deleteParentBody,
-              ),
-            ),
-          ])
-        else
-          group([
-            ListTile(
-              leading: Icon(Icons.link_off, color: theme.colorScheme.error),
-              title: Text(
-                l10n.unpairDevice,
-                style: TextStyle(color: theme.colorScheme.error),
-              ),
-              onTap: () => _confirmDelete(
-                context,
-                title: l10n.unpairDevice,
-                body: l10n.unpairBody,
-              ),
-            ),
-          ]),
       ],
     );
-  }
-
-  bool get _isOwner {
-    final me = store.access.myMemberId == null
-        ? null
-        : store.member(store.access.myMemberId!);
-    return me != null && me.uid != null && me.uid == store.info.ownerUid;
-  }
-
-  Future<void> _confirmDelete(
-    BuildContext context, {
-    required String title,
-    required String body,
-  }) async {
-    final l10n = AppLocalizations.of(context);
-    final messenger = ScaffoldMessenger.of(context);
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(body),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n.cancel),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.error,
-            ),
-            onPressed: () => Navigator.pop(context, true),
-            child: Text(l10n.delete),
-          ),
-        ],
-      ),
-    );
-    if (ok != true) return;
-    try {
-      await accounts.deleteAccount();
-    } catch (e) {
-      messenger.showSnackBar(
-        SnackBar(content: Text(accountErrorText(l10n, e))),
-      );
-    }
   }
 }
 

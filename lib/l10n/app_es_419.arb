@@ -1,6 +1,9 @@
 {
   "@@locale": "es_419",
   "familyCheckedIn": "{name} registró «{habit}» para toda la familia",
+  "habitAdded": "Nuevo hábito: {habit}",
+  "addHabitFor": "Agregar un hábito para {name}",
+  "childDayHint": "Estás viendo el día de {name}. Los hábitos que agregues aquí son solo de {name}.",
   "phoneLanguage": "Idioma del celular",
   "catHomeTasks": "Tareas del hogar",
   "forgotPassword": "¿Olvidaste la contraseña?",
@@ -19,7 +22,6 @@
   "settings": "Configuración",
   "unpairBody": "Este dispositivo saldrá de la familia. Un papá o mamá puede volver a conectarlo con un código nuevo.",
   "errCodeWrongKind": "Este código es para otro tipo de acceso. Pide el correcto.",
-  "personalDefinitionHint": "Por ejemplo: hoy tomé suficiente agua",
   "addHabitToCategory": "Agregar un hábito",
   "noMatchingHabits": "Ningún hábito predefinido coincide. Puedes crear el tuyo.",
   "catHealth": "Salud",
@@ -42,5 +44,6 @@
   "groupFamily": "Cuidar de mi familia",
   "groupDaily": "Mis responsabilidades",
   "groupLeisure": "Disfrutar de la vida",
-  "hiName": "¡Hola, {name}!"
+  "hiName": "¡Hola, {name}!",
+  "familySettings": "Configuración de la familia"
 }

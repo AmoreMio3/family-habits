@@ -131,18 +131,28 @@ class FamilyStore extends ChangeNotifier {
   bool isDoneToday(Habit habit) =>
       checkIns.any((c) => c.habitId == habit.id && dateOnly(c.day) == today);
 
-  /// Only parents check in family habits. Anyone can check their own habits,
+  /// Only parents check in family habits, and only on the habit's days. Anyone can check their own habits,
   /// and parents can check habits for a child without a device.
   bool canCheckIn(Habit habit) {
     final me = activeMember;
     if (me == null) return false;
+    // Not a day for this habit (a check-in already made can still be undone).
+    if (!habit.isScheduledOn(today) && !isDoneToday(habit)) return false;
     return switch (habit.owner) {
       FamilyOwner() => me.isParent,
       PersonalOwner(:final memberId) => memberId == me.id || me.isParent,
     };
   }
 
-  bool get canManage => access.isParent && (activeMember?.isParent ?? false);
+  /// Parents manage everything, also while looking at a child's day.
+  bool get canManage => access.isParent;
+
+  /// The child whose day a parent is looking at, so habits the parent adds
+  /// there belong to that child only.
+  Member? get childInView {
+    final me = activeMember;
+    return access.isParent && me != null && !me.isParent ? me : null;
+  }
 
   /// Toggles today's check-in. Returns true when a family habit was just
   /// checked in, so the caller can tell the family.

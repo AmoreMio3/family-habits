@@ -41,6 +41,21 @@ class AppLocalizationsHe extends AppLocalizations {
   }
 
   @override
+  String habitAdded(String habit) {
+    return 'הרגל חדש: $habit';
+  }
+
+  @override
+  String addHabitFor(String name) {
+    return 'הוספת הרגל עבור $name';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return 'זה היום של $name. הרגלים שתוסיפו כאן יהיו רק של $name.';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -66,6 +81,18 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get phoneLanguage => 'שפת הטלפון';
+
+  @override
+  String get appearance => 'בהיר או כהה';
+
+  @override
+  String get phoneAppearance => 'כמו בטלפון';
+
+  @override
+  String get lightMode => 'בהיר';
+
+  @override
+  String get darkMode => 'כהה';
 
   @override
   String get parent => 'הורה';
@@ -343,18 +370,6 @@ class AppLocalizationsHe extends AppLocalizations {
   String get wholeFamily => 'כל המשפחה';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count פעמים בשבוע',
-      two: 'פעמיים בשבוע',
-      one: 'פעם בשבוע',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return 'למחוק את „$habit” ואת ההיסטוריה שלו?';
   }
@@ -419,12 +434,6 @@ class AppLocalizationsHe extends AppLocalizations {
   String get ourCategories => 'הקטגוריות של המשפחה שלנו';
 
   @override
-  String get personalDefinition => 'מה נחשב כבוצע? (לא חובה)';
-
-  @override
-  String get personalDefinitionHint => 'למשל: שתיתי מספיק מים היום';
-
-  @override
   String get categoryName => 'שם הקטגוריה';
 
   @override
@@ -458,4 +467,141 @@ class AppLocalizationsHe extends AppLocalizations {
   String hiName(String name) {
     return 'היי, $name!';
   }
+
+  @override
+  String get howOften => 'באיזו תדירות';
+
+  @override
+  String get specificDays => 'ימים מסוימים';
+
+  @override
+  String get pickADay => 'יש לבחור לפחות יום אחד';
+
+  @override
+  String get otherDays => 'בימים אחרים';
+
+  @override
+  String get reminders => 'תזכורות';
+
+  @override
+  String get remindersIntro =>
+      'קבלו תזכורת יומית לסמן את ההרגלים. התזכורות מוגדרות בטלפון הזה.';
+
+  @override
+  String get reminderOff => 'ללא תזכורת';
+
+  @override
+  String get reminderMorning => 'כל בוקר';
+
+  @override
+  String get reminderEvening => 'כל ערב';
+
+  @override
+  String get reminderTwice => 'פעמיים ביום';
+
+  @override
+  String get morningTime => 'תזכורת בוקר';
+
+  @override
+  String get eveningTime => 'תזכורת ערב';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return 'כל בוקר ב-$time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return 'כל ערב ב-$time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return 'כל יום ב-$morning וב-$evening';
+  }
+
+  @override
+  String get remindersBlocked =>
+      'ההתראות של Family Habits כבויות. כדי לקבל תזכורות יש להפעיל אותן בהגדרות הטלפון.';
+
+  @override
+  String get reminderMorningBody => 'בוקר טוב! ההרגלים של היום מחכים לך.';
+
+  @override
+  String get reminderEveningBody => 'איך היה היום? זה הזמן לסמן את ההרגלים.';
+
+  @override
+  String get habitPicture => 'תמונה';
+
+  @override
+  String get pickAnEmoji => 'בחירת אימוג׳י להרגל';
+
+  @override
+  String get useCategoryIcon => 'שימוש בסמל הקטגוריה';
+
+  @override
+  String get typeAnyEmoji => 'או הקלדת אימוג׳י אחר';
+
+  @override
+  String get useThis => 'בחירה';
+
+  @override
+  String get myDay => 'היום שלי';
+
+  @override
+  String get myProgress => 'ההתקדמות שלי';
+
+  @override
+  String get habitIdeas => 'רעיונות להרגלים';
+
+  @override
+  String get familyProgress => 'ההתקדמות של המשפחה';
+
+  @override
+  String get familySettings => 'הגדרות המשפחה';
+
+  @override
+  String get weekTab => 'שבוע';
+
+  @override
+  String get monthTab => 'חודש';
+
+  @override
+  String get myWeek => 'השבוע שלי';
+
+  @override
+  String get myMonth => 'החודש שלי';
+
+  @override
+  String get familyMonth => 'החודש של המשפחה';
+
+  @override
+  String get byHabit => 'לפי הרגל';
+
+  @override
+  String get byPerson => 'לפי בן משפחה';
+
+  @override
+  String get previous => 'הקודם';
+
+  @override
+  String get next => 'הבא';
+
+  @override
+  String get account => 'חשבון';
+
+  @override
+  String get thisWeek => 'השבוע';
+
+  @override
+  String get thisMonth => 'החודש';
+
+  @override
+  String get menuPlace => 'תפריט';
+
+  @override
+  String get menuTop => 'למעלה';
+
+  @override
+  String get menuBottom => 'למטה';
 }

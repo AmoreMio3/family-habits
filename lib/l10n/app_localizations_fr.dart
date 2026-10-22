@@ -41,6 +41,21 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String habitAdded(String habit) {
+    return 'Nouvelle habitude : $habit';
+  }
+
+  @override
+  String addHabitFor(String name) {
+    return 'Ajouter une habitude pour $name';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return 'Vous voyez la journée de $name. Les habitudes ajoutées ici sont seulement pour $name.';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -65,6 +80,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get phoneLanguage => 'Langue du téléphone';
+
+  @override
+  String get appearance => 'Clair ou sombre';
+
+  @override
+  String get phoneAppearance => 'Comme le téléphone';
+
+  @override
+  String get lightMode => 'Clair';
+
+  @override
+  String get darkMode => 'Sombre';
 
   @override
   String get parent => 'Parent';
@@ -347,17 +374,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get wholeFamily => 'Toute la famille';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count fois par semaine',
-      one: 'Une fois par semaine',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return 'Supprimer « $habit » et son historique ?';
   }
@@ -424,14 +440,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get ourCategories => 'Les catégories de notre famille';
 
   @override
-  String get personalDefinition =>
-      'Qu\'est-ce qui compte comme fait ? (facultatif)';
-
-  @override
-  String get personalDefinitionHint =>
-      'Par exemple : j\'ai bu assez d\'eau aujourd\'hui';
-
-  @override
   String get categoryName => 'Nom de la catégorie';
 
   @override
@@ -465,4 +473,143 @@ class AppLocalizationsFr extends AppLocalizations {
   String hiName(String name) {
     return 'Salut, $name !';
   }
+
+  @override
+  String get howOften => 'À quelle fréquence';
+
+  @override
+  String get specificDays => 'Certains jours';
+
+  @override
+  String get pickADay => 'Choisissez au moins un jour';
+
+  @override
+  String get otherDays => 'Autres jours';
+
+  @override
+  String get reminders => 'Rappels';
+
+  @override
+  String get remindersIntro =>
+      'Recevez un rappel quotidien pour cocher vos habitudes. Les rappels sont réglés sur ce téléphone.';
+
+  @override
+  String get reminderOff => 'Pas de rappel';
+
+  @override
+  String get reminderMorning => 'Chaque matin';
+
+  @override
+  String get reminderEvening => 'Chaque soir';
+
+  @override
+  String get reminderTwice => 'Deux fois par jour';
+
+  @override
+  String get morningTime => 'Rappel du matin';
+
+  @override
+  String get eveningTime => 'Rappel du soir';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return 'Chaque matin à $time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return 'Chaque soir à $time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return 'Chaque jour à $morning et à $evening';
+  }
+
+  @override
+  String get remindersBlocked =>
+      'Les notifications de Family Habits sont désactivées. Activez-les dans les réglages du téléphone pour recevoir les rappels.';
+
+  @override
+  String get reminderMorningBody =>
+      'Bonjour ! Vos habitudes du jour vous attendent.';
+
+  @override
+  String get reminderEveningBody =>
+      'Comment s’est passée la journée ? Cochez vos habitudes.';
+
+  @override
+  String get habitPicture => 'Image';
+
+  @override
+  String get pickAnEmoji => 'Choisissez un emoji pour cette habitude';
+
+  @override
+  String get useCategoryIcon => 'Utiliser l’icône de la catégorie';
+
+  @override
+  String get typeAnyEmoji => 'Ou tapez n’importe quel emoji';
+
+  @override
+  String get useThis => 'Utiliser';
+
+  @override
+  String get myDay => 'Ma journée';
+
+  @override
+  String get myProgress => 'Mes progrès';
+
+  @override
+  String get habitIdeas => 'Idées d\'habitudes';
+
+  @override
+  String get familyProgress => 'Progrès de la famille';
+
+  @override
+  String get familySettings => 'Réglages de la famille';
+
+  @override
+  String get weekTab => 'Semaine';
+
+  @override
+  String get monthTab => 'Mois';
+
+  @override
+  String get myWeek => 'Ma semaine';
+
+  @override
+  String get myMonth => 'Mon mois';
+
+  @override
+  String get familyMonth => 'Le mois en famille';
+
+  @override
+  String get byHabit => 'Par habitude';
+
+  @override
+  String get byPerson => 'Par personne';
+
+  @override
+  String get previous => 'Précédent';
+
+  @override
+  String get next => 'Suivant';
+
+  @override
+  String get account => 'Compte';
+
+  @override
+  String get thisWeek => 'Cette semaine';
+
+  @override
+  String get thisMonth => 'Ce mois-ci';
+
+  @override
+  String get menuPlace => 'Menu';
+
+  @override
+  String get menuTop => 'En haut';
+
+  @override
+  String get menuBottom => 'En bas';
 }

@@ -1,6 +1,7 @@
 import 'package:family_habits/app.dart';
 import 'package:family_habits/data/in_memory_accounts.dart';
 import 'package:family_habits/l10n/app_localizations.dart';
+import 'package:family_habits/ui/main_menu.dart';
 import 'package:family_habits/ui/today_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,6 +15,13 @@ Finder profileButton(String name) => find.ancestor(
         (w.key! as ValueKey<String>).value.startsWith('profile-'),
   ),
 );
+
+/// The page's own vertical list, not the sideways menu at the top.
+final mainList = find
+    .byWidgetPredicate(
+      (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+    )
+    .last;
 
 void main() {
   late InMemoryAccountService accounts;
@@ -45,9 +53,19 @@ void main() {
     await tester.pump();
   }
 
+  Future<void> openSettings(WidgetTester tester) async {
+    await tester.tap(find.byKey(const Key('settingsButton')));
+    await tester.pumpAndSettle();
+  }
+
   Future<void> tapText(WidgetTester tester, String text) async {
-    await tester.ensureVisible(find.text(text).last);
-    await tester.tap(find.text(text).last);
+    final target = find.text(text).last;
+    // Centred, so it isn't left under the bottom bar.
+    if (Scrollable.maybeOf(tester.element(target)) != null) {
+      await Scrollable.ensureVisible(tester.element(target), alignment: 0.5);
+      await tester.pumpAndSettle();
+    }
+    await tester.tap(target);
     await tester.pumpAndSettle();
   }
 
@@ -68,8 +86,8 @@ void main() {
       settings.locale = locale;
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull, reason: '$locale');
-      for (final tab in [1, 2, 0]) {
-        await tester.tap(find.byType(NavigationDestination).at(tab));
+      for (final tab in [1, 2, 3, 4, 0]) {
+        await tester.tap(find.byKey(Key('menu-$tab')));
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull, reason: '$locale tab $tab');
       }
@@ -93,6 +111,41 @@ void main() {
       Directionality.of(tester.element(find.byType(Scaffold).first)),
       TextDirection.ltr,
     );
+  });
+
+  testWidgets(
+    'the light/dark choice in settings switches the look and can follow the phone',
+    (tester) async {
+      await openDemo(tester);
+      Brightness brightness() =>
+          Theme.of(tester.element(find.byType(Scaffold).last)).brightness;
+      expect(settings.themeMode, ThemeMode.system);
+      expect(brightness(), Brightness.light);
+
+      await tester.tap(find.byKey(const Key('settingsButton')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const Key('appearanceButton')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Dark'));
+      await tester.pumpAndSettle();
+      expect(settings.themeMode, ThemeMode.dark);
+      expect(brightness(), Brightness.dark);
+
+      await tester.tap(find.byKey(const Key('appearanceButton')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Same as phone').last);
+      await tester.pumpAndSettle();
+      expect(settings.themeMode, ThemeMode.system);
+      expect(brightness(), Brightness.light);
+    },
+  );
+
+  testWidgets('text is drawn a little smaller than the phone size', (
+    tester,
+  ) async {
+    await openDemo(tester);
+    final media = MediaQuery.of(tester.element(find.byType(TodayScreen)));
+    expect(media.textScaler.scale(20), closeTo(16.4, 0.001));
   });
 
   testWidgets(
@@ -121,8 +174,43 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.widget<CheckCircle>(dinner).enabled, isFalse);
       expect(find.text('Add habit'), findsNothing);
+      expect(find.text('Add a habit for Noa'), findsOneWidget);
     },
   );
+
+  testWidgets('a parent opens a child\'s day and adds a habit for them only', (
+    tester,
+  ) async {
+    await openDemo(tester);
+    expect(find.byKey(const Key('childDayHint')), findsNothing);
+
+    await tester.tap(find.byKey(const Key('profile-noa')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text(
+        "You're looking at Noa's day. Habits you add here are for Noa only.",
+      ),
+      findsOneWidget,
+    );
+
+    await tapText(tester, 'Add a habit for Noa');
+    await enter(tester, 'habitSearch', 'Feed the fish');
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('createFromSearch')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    final fish = find.widgetWithText(HabitCard, 'Feed the fish');
+    await tester.scrollUntilVisible(fish, 300, scrollable: mainList);
+    expect(fish, findsOneWidget);
+
+    final dad = find.byKey(const Key('profile-dad'));
+    await tester.scrollUntilVisible(dad, -300, scrollable: mainList);
+    await tester.tap(dad);
+    await tester.pumpAndSettle();
+    expect(find.text('Feed the fish'), findsNothing);
+  });
 
   testWidgets('sign up, create a family, add a child and pair their device', (
     tester,
@@ -153,7 +241,7 @@ void main() {
     expect(find.text('Maya'), findsOneWidget);
 
     // Give Maya a habit.
-    await tapText(tester, 'Today');
+    await tapText(tester, 'My day');
     await tapText(tester, 'Add habit');
     await tester.tap(find.byKey(const Key('createOwnHabit')));
     await tester.pumpAndSettle();
@@ -174,6 +262,7 @@ void main() {
     await tapText(tester, 'Continue');
     await tester.tap(find.byType(CloseButton));
     await tester.pumpAndSettle();
+    await openSettings(tester);
     await tapText(tester, 'Sign out');
 
     // The tablet joins with the code and only sees Maya.
@@ -186,6 +275,7 @@ void main() {
 
     // A code works once.
     await tapText(tester, 'Family');
+    await openSettings(tester);
     await tapText(tester, 'Disconnect this device');
     await tapText(tester, 'Delete');
     await tapText(tester, 'Join with a code');
@@ -229,6 +319,7 @@ void main() {
         .widget<SelectableText>(find.byKey(const Key('pairingCode')))
         .data!;
     await tapText(tester, 'Continue');
+    await openSettings(tester);
     await tapText(tester, 'Sign out');
     await tapText(tester, 'Join with a code');
     await enter(tester, 'code', code);
@@ -246,5 +337,76 @@ void main() {
     await enter(tester, 'pin', '4321');
     await tester.pumpAndSettle();
     expect(find.text('Make the bed'), findsOneWidget);
+  });
+
+  testWidgets('the five tabs and the settings gear', (tester) async {
+    await openDemo(tester);
+    final labels = [
+      'My day',
+      'My habits',
+      'My progress',
+      'Family',
+      'Habit ideas',
+    ];
+    for (var i = 0; i < labels.length; i++) {
+      expect(
+        find.descendant(
+          of: find.byKey(Key('menu-$i')),
+          matching: find.text(labels[i]),
+        ),
+        findsOneWidget,
+        reason: labels[i],
+      );
+    }
+    Future<void> tapMenu(int i) async {
+      await tester.tap(find.byKey(Key('menu-$i')));
+      await tester.pumpAndSettle();
+    }
+
+    // My habits: one line per habit with the week's days.
+    await tapMenu(1);
+    expect(find.text('This week'), findsOneWidget);
+    expect(find.text('Run'), findsOneWidget);
+
+    // My progress: week, then month, and back a month.
+    await tapMenu(2);
+    expect(find.text('My week'), findsOneWidget);
+    await tapText(tester, 'Month');
+    expect(find.text('My month'), findsOneWidget);
+    expect(find.text('By habit'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('previousPeriod')));
+    await tester.pumpAndSettle();
+    expect(find.text('This month'), findsNothing);
+    expect(
+      tester
+          .widget<IconButton>(find.byKey(const Key('previousPeriod')))
+          .onPressed,
+      isNull,
+    );
+
+    // Family: progress first, then the family's settings.
+    await tapMenu(3);
+    expect(find.text('Family progress'), findsOneWidget);
+    expect(find.text('Family settings'), findsOneWidget);
+    await tapText(tester, 'Month');
+    expect(find.text('Family month'), findsOneWidget);
+    expect(find.text('By person'), findsOneWidget);
+
+    // The gear opens reminders, language and the account.
+    await openSettings(tester);
+    expect(find.text('Reminders'), findsOneWidget);
+    await tapText(tester, 'Language');
+    await tapText(tester, 'עברית');
+    expect(find.text('הגדרות'), findsWidgets);
+    expect(settings.locale, const Locale('he'));
+
+    // The menu can move to the bottom of the screen.
+    await tester.tap(find.text('למטה'));
+    await tester.pumpAndSettle();
+    expect(settings.menuPlace, MenuPlace.bottom);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    expect(find.byType(BottomMenu), findsOneWidget);
+    expect(find.byType(TopMenu), findsNothing);
   });
 }

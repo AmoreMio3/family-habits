@@ -41,6 +41,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String habitAdded(String habit) {
+    return 'New habit: $habit';
+  }
+
+  @override
+  String addHabitFor(String name) {
+    return 'Add a habit for $name';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return 'You\'re looking at $name\'s day. Habits you add here are for $name only.';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -65,6 +80,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get phoneLanguage => 'Phone language';
+
+  @override
+  String get appearance => 'Light or dark';
+
+  @override
+  String get phoneAppearance => 'Same as phone';
+
+  @override
+  String get lightMode => 'Light';
+
+  @override
+  String get darkMode => 'Dark';
 
   @override
   String get parent => 'Parent';
@@ -344,17 +371,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get wholeFamily => 'Whole family';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count times a week',
-      one: 'Once a week',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return 'Delete “$habit” and its history?';
   }
@@ -420,13 +436,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ourCategories => 'Our family\'s categories';
 
   @override
-  String get personalDefinition => 'What counts as done? (optional)';
-
-  @override
-  String get personalDefinitionHint =>
-      'For example: I drank enough water today';
-
-  @override
   String get categoryName => 'Category name';
 
   @override
@@ -460,6 +469,144 @@ class AppLocalizationsEn extends AppLocalizations {
   String hiName(String name) {
     return 'Hi, $name!';
   }
+
+  @override
+  String get howOften => 'How often';
+
+  @override
+  String get specificDays => 'Specific days';
+
+  @override
+  String get pickADay => 'Pick at least one day';
+
+  @override
+  String get otherDays => 'Other days';
+
+  @override
+  String get reminders => 'Reminders';
+
+  @override
+  String get remindersIntro =>
+      'Get a daily reminder to check off your habits. Reminders are set on this phone.';
+
+  @override
+  String get reminderOff => 'No reminder';
+
+  @override
+  String get reminderMorning => 'Every morning';
+
+  @override
+  String get reminderEvening => 'Every evening';
+
+  @override
+  String get reminderTwice => 'Twice a day';
+
+  @override
+  String get morningTime => 'Morning reminder';
+
+  @override
+  String get eveningTime => 'Evening reminder';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return 'Every morning at $time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return 'Every evening at $time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return 'Every day at $morning and $evening';
+  }
+
+  @override
+  String get remindersBlocked =>
+      'Notifications are off for Family Habits. Turn them on in your phone settings to get reminders.';
+
+  @override
+  String get reminderMorningBody =>
+      'Good morning! Your habits for today are waiting.';
+
+  @override
+  String get reminderEveningBody => 'How did today go? Check off your habits.';
+
+  @override
+  String get habitPicture => 'Picture';
+
+  @override
+  String get pickAnEmoji => 'Pick an emoji for this habit';
+
+  @override
+  String get useCategoryIcon => 'Use the category icon';
+
+  @override
+  String get typeAnyEmoji => 'Or type any emoji';
+
+  @override
+  String get useThis => 'Use';
+
+  @override
+  String get myDay => 'My day';
+
+  @override
+  String get myProgress => 'My progress';
+
+  @override
+  String get habitIdeas => 'Habit ideas';
+
+  @override
+  String get familyProgress => 'Family progress';
+
+  @override
+  String get familySettings => 'Family settings';
+
+  @override
+  String get weekTab => 'Week';
+
+  @override
+  String get monthTab => 'Month';
+
+  @override
+  String get myWeek => 'My week';
+
+  @override
+  String get myMonth => 'My month';
+
+  @override
+  String get familyMonth => 'Family month';
+
+  @override
+  String get byHabit => 'By habit';
+
+  @override
+  String get byPerson => 'By person';
+
+  @override
+  String get previous => 'Previous';
+
+  @override
+  String get next => 'Next';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get thisWeek => 'This week';
+
+  @override
+  String get thisMonth => 'This month';
+
+  @override
+  String get menuPlace => 'Menu';
+
+  @override
+  String get menuTop => 'Top';
+
+  @override
+  String get menuBottom => 'Bottom';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).

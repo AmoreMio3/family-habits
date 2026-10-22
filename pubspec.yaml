@@ -41,6 +41,10 @@ dependencies:
   firebase_auth: ^6.7.0
   cloud_firestore: ^6.10.0
   crypto: ^3.0.7
+  flutter_local_notifications: ^22.3.2
+  timezone: ^0.11.2
+  flutter_timezone: ^5.1.1
+  shared_preferences: ^2.5.6
 
 dev_dependencies:
   flutter_test:
@@ -86,9 +90,19 @@ flutter:
           weight: 600
         - asset: assets/fonts/Fredoka-700.ttf
           weight: 700
-    - family: VarelaRound
+    - family: FrankRuhlLibre
       fonts:
-        - asset: assets/fonts/VarelaRound-400.ttf
+        - asset: assets/fonts/FrankRuhlLibre-700.ttf
+          weight: 700
+    - family: IBMPlexSansHebrew
+      fonts:
+        - asset: assets/fonts/IBMPlexSansHebrew-400.ttf
+        - asset: assets/fonts/IBMPlexSansHebrew-500.ttf
+          weight: 500
+        - asset: assets/fonts/IBMPlexSansHebrew-600.ttf
+          weight: 600
+        - asset: assets/fonts/IBMPlexSansHebrew-700.ttf
+          weight: 700
 
   # To add assets to your application, add an assets section, like this:
   # assets:

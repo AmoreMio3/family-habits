@@ -41,6 +41,21 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String habitAdded(String habit) {
+    return '新习惯：$habit';
+  }
+
+  @override
+  String addHabitFor(String name) {
+    return '为$name添加习惯';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return '你正在查看$name的一天。在这里添加的习惯只属于$name。';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -64,6 +79,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get phoneLanguage => '跟随手机语言';
+
+  @override
+  String get appearance => '浅色或深色';
+
+  @override
+  String get phoneAppearance => '跟随手机';
+
+  @override
+  String get lightMode => '浅色';
+
+  @override
+  String get darkMode => '深色';
 
   @override
   String get parent => '家长';
@@ -333,16 +360,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get wholeFamily => '全家';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '每周 $count 次',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return '删除“$habit”及其记录？';
   }
@@ -407,12 +424,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get ourCategories => '我们家的分类';
 
   @override
-  String get personalDefinition => '怎样算完成？（可选）';
-
-  @override
-  String get personalDefinitionHint => '例如：我今天喝了足够的水';
-
-  @override
   String get categoryName => '分类名称';
 
   @override
@@ -445,6 +456,141 @@ class AppLocalizationsZh extends AppLocalizations {
   String hiName(String name) {
     return '你好，$name！';
   }
+
+  @override
+  String get howOften => '频率';
+
+  @override
+  String get specificDays => '指定日期';
+
+  @override
+  String get pickADay => '请至少选择一天';
+
+  @override
+  String get otherDays => '其他日子';
+
+  @override
+  String get reminders => '提醒';
+
+  @override
+  String get remindersIntro => '每天提醒你打卡习惯。提醒设置在这部手机上。';
+
+  @override
+  String get reminderOff => '不提醒';
+
+  @override
+  String get reminderMorning => '每天早上';
+
+  @override
+  String get reminderEvening => '每天晚上';
+
+  @override
+  String get reminderTwice => '每天两次';
+
+  @override
+  String get morningTime => '早上提醒';
+
+  @override
+  String get eveningTime => '晚上提醒';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return '每天早上 $time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return '每天晚上 $time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return '每天 $morning 和 $evening';
+  }
+
+  @override
+  String get remindersBlocked => 'Family Habits 的通知已关闭。请在手机设置中开启以接收提醒。';
+
+  @override
+  String get reminderMorningBody => '早上好！今天的习惯在等你。';
+
+  @override
+  String get reminderEveningBody => '今天过得怎么样？来打卡你的习惯吧。';
+
+  @override
+  String get habitPicture => '图标';
+
+  @override
+  String get pickAnEmoji => '为这个习惯选一个表情';
+
+  @override
+  String get useCategoryIcon => '使用类别图标';
+
+  @override
+  String get typeAnyEmoji => '或输入任意表情';
+
+  @override
+  String get useThis => '使用';
+
+  @override
+  String get myDay => '我的一天';
+
+  @override
+  String get myProgress => '我的进度';
+
+  @override
+  String get habitIdeas => '习惯灵感';
+
+  @override
+  String get familyProgress => '家庭进度';
+
+  @override
+  String get familySettings => '家庭设置';
+
+  @override
+  String get weekTab => '周';
+
+  @override
+  String get monthTab => '月';
+
+  @override
+  String get myWeek => '我的这一周';
+
+  @override
+  String get myMonth => '我的这个月';
+
+  @override
+  String get familyMonth => '家庭的这个月';
+
+  @override
+  String get byHabit => '按习惯';
+
+  @override
+  String get byPerson => '按成员';
+
+  @override
+  String get previous => '上一个';
+
+  @override
+  String get next => '下一个';
+
+  @override
+  String get account => '账户';
+
+  @override
+  String get thisWeek => '本周';
+
+  @override
+  String get thisMonth => '本月';
+
+  @override
+  String get menuPlace => '菜单';
+
+  @override
+  String get menuTop => '顶部';
+
+  @override
+  String get menuBottom => '底部';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -483,6 +629,21 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   }
 
   @override
+  String habitAdded(String habit) {
+    return '新習慣：$habit';
+  }
+
+  @override
+  String addHabitFor(String name) {
+    return '為$name新增習慣';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return '你正在查看$name的一天。在這裡新增的習慣只屬於$name。';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -506,6 +667,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get phoneLanguage => '跟隨手機語言';
+
+  @override
+  String get appearance => '淺色或深色';
+
+  @override
+  String get phoneAppearance => '跟隨手機';
+
+  @override
+  String get lightMode => '淺色';
+
+  @override
+  String get darkMode => '深色';
 
   @override
   String get parent => '家長';
@@ -775,16 +948,6 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get wholeFamily => '全家';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '每週 $count 次',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return '刪除「$habit」和相關紀錄？';
   }
@@ -849,12 +1012,6 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get ourCategories => '我們家的分類';
 
   @override
-  String get personalDefinition => '怎樣算完成？（選填）';
-
-  @override
-  String get personalDefinitionHint => '例如：我今天喝了足夠的水';
-
-  @override
   String get categoryName => '分類名稱';
 
   @override
@@ -887,4 +1044,139 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String hiName(String name) {
     return '你好，$name！';
   }
+
+  @override
+  String get howOften => '頻率';
+
+  @override
+  String get specificDays => '指定日期';
+
+  @override
+  String get pickADay => '請至少選擇一天';
+
+  @override
+  String get otherDays => '其他日子';
+
+  @override
+  String get reminders => '提醒';
+
+  @override
+  String get remindersIntro => '每天提醒你打卡習慣。提醒設定在這支手機上。';
+
+  @override
+  String get reminderOff => '不提醒';
+
+  @override
+  String get reminderMorning => '每天早上';
+
+  @override
+  String get reminderEvening => '每天晚上';
+
+  @override
+  String get reminderTwice => '每天兩次';
+
+  @override
+  String get morningTime => '早上提醒';
+
+  @override
+  String get eveningTime => '晚上提醒';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return '每天早上 $time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return '每天晚上 $time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return '每天 $morning 和 $evening';
+  }
+
+  @override
+  String get remindersBlocked => 'Family Habits 的通知已關閉。請在手機設定中開啟以接收提醒。';
+
+  @override
+  String get reminderMorningBody => '早安！今天的習慣在等你。';
+
+  @override
+  String get reminderEveningBody => '今天過得怎麼樣？來打卡你的習慣吧。';
+
+  @override
+  String get habitPicture => '圖示';
+
+  @override
+  String get pickAnEmoji => '為這個習慣選一個表情';
+
+  @override
+  String get useCategoryIcon => '使用類別圖示';
+
+  @override
+  String get typeAnyEmoji => '或輸入任意表情';
+
+  @override
+  String get useThis => '使用';
+
+  @override
+  String get myDay => '我的一天';
+
+  @override
+  String get myProgress => '我的進度';
+
+  @override
+  String get habitIdeas => '習慣靈感';
+
+  @override
+  String get familyProgress => '家庭進度';
+
+  @override
+  String get familySettings => '家庭設定';
+
+  @override
+  String get weekTab => '週';
+
+  @override
+  String get monthTab => '月';
+
+  @override
+  String get myWeek => '我的這一週';
+
+  @override
+  String get myMonth => '我的這個月';
+
+  @override
+  String get familyMonth => '家庭的這個月';
+
+  @override
+  String get byHabit => '依習慣';
+
+  @override
+  String get byPerson => '依成員';
+
+  @override
+  String get previous => '上一個';
+
+  @override
+  String get next => '下一個';
+
+  @override
+  String get account => '帳戶';
+
+  @override
+  String get thisWeek => '本週';
+
+  @override
+  String get thisMonth => '本月';
+
+  @override
+  String get menuPlace => '選單';
+
+  @override
+  String get menuTop => '頂部';
+
+  @override
+  String get menuBottom => '底部';
 }

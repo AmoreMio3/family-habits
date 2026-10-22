@@ -1,11 +1,19 @@
 import 'package:family_habits/app.dart';
 import 'package:family_habits/data/in_memory_accounts.dart';
+import 'package:family_habits/data/reminders.dart';
 import 'package:family_habits/data/sample_family.dart';
 import 'package:family_habits/l10n/app_localizations.dart';
 import 'package:family_habits/models/category.dart';
 import 'package:family_habits/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+/// The page's own vertical list, not the sideways menu at the top.
+final mainList = find
+    .byWidgetPredicate(
+      (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+    )
+    .last;
 
 void main() {
   Future<dynamic> pumpHome(WidgetTester tester, {Locale? locale}) async {
@@ -14,14 +22,17 @@ void main() {
     addTearDown(tester.view.reset);
     final store = sampleFamily();
     addTearDown(store.dispose);
+    final settings = AppSettings();
     await tester.pumpWidget(
       MaterialApp(
         locale: locale,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
+        builder: (context, child) =>
+            RemindersScope(reminders: settings.reminders, child: child!),
         home: HomeScreen(
           store: store,
-          settings: AppSettings(),
+          settings: settings,
           accounts: InMemoryAccountService(),
         ),
       ),
@@ -47,19 +58,79 @@ void main() {
 
     await tester.tap(find.text('Visit a park'));
     await tester.pumpAndSettle();
-    await tester.enterText(
-      find.byKey(const Key('habitDefinition')),
-      'At least 30 minutes outside',
-    );
+    expect(find.text('What counts as done? (optional)'), findsNothing);
     await save(tester);
 
     expect(find.byKey(const Key('habitSearch')), findsNothing);
     final habit = store.habits.firstWhere((h) => h.name == 'Visit a park');
     expect(habit.templateId, 'OUTDOOR_003');
     expect(habit.category, const BuiltInRef(BuiltInCategory.outdoor));
-    final row = find.textContaining('At least 30 minutes outside');
-    await tester.scrollUntilVisible(row, 300);
+    expect(habit.isEveryDay, isTrue);
+    final row = find.text('Visit a park');
+    await tester.scrollUntilVisible(row, 300, scrollable: mainList);
     expect(row, findsOneWidget);
+  });
+
+  testWidgets('pick an emoji for your own habit, or type one', (tester) async {
+    final store = await pumpHome(tester);
+    await tester.tap(find.byKey(const Key('createOwnHabit')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('habitName')), 'Violin');
+    await tester.tap(find.byKey(const Key('habitPicture')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('emoji-🎻')));
+    await tester.pumpAndSettle();
+    await save(tester);
+
+    final habit = store.habits.firstWhere((h) => h.name == 'Violin');
+    expect(habit.emoji, '🎻');
+    expect(habit.toMap()['emoji'], '🎻');
+    final row = find.text('🎻');
+    await tester.scrollUntilVisible(row, 300, scrollable: mainList);
+    expect(row, findsOneWidget);
+
+    // Edit it: type another emoji, then go back to the category icon.
+    await tester.tap(row);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('habitPicture')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('typedEmoji')), '🦄 hi');
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('useTypedEmoji')));
+    await tester.pumpAndSettle();
+    expect(find.text('🦄'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('habitPicture')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('emoji-none')));
+    await tester.pumpAndSettle();
+    await save(tester);
+    expect(store.habits.firstWhere((h) => h.name == 'Violin').emoji, isNull);
+  });
+
+  testWidgets('a habit for chosen days shows on Today only on those days', (
+    tester,
+  ) async {
+    final store = await pumpHome(tester);
+    final today = store.today.weekday as int;
+    final tomorrow = today % 7 + 1;
+    await tester.tap(find.byKey(const Key('createOwnHabit')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('habitName')), 'Swim');
+    await tester.tap(find.text('Specific days'));
+    await tester.pumpAndSettle();
+    expect(find.text('Pick at least one day'), findsOneWidget);
+    await tester.tap(find.byKey(Key('day-$tomorrow')));
+    await tester.pumpAndSettle();
+    expect(find.text('Pick at least one day'), findsNothing);
+    await save(tester);
+
+    final habit = store.habits.firstWhere((h) => h.name == 'Swim');
+    expect(habit.days, {tomorrow});
+    expect(habit.timesPerWeek, 1);
+    expect(store.canCheckIn(habit), isFalse);
+    final title = find.text('Other days');
+    await tester.scrollUntilVisible(title, 300, scrollable: mainList);
+    expect(title, findsOneWidget);
   });
 
   testWidgets('a search with no match offers to create it', (tester) async {
@@ -91,6 +162,7 @@ void main() {
     await tester.scrollUntilVisible(
       find.byKey(const Key('createOwnInCategory')),
       300,
+      scrollable: mainList,
     );
     expect(find.byKey(const Key('createOwnInCategory')), findsOneWidget);
   });
@@ -121,7 +193,7 @@ void main() {
     final habit = store.habits.firstWhere((h) => h.name == 'Practice violin');
     expect(habit.category, isA<CustomRef>());
     final row = find.textContaining('Music school');
-    await tester.scrollUntilVisible(row, 300);
+    await tester.scrollUntilVisible(row, 300, scrollable: mainList);
     expect(row, findsOneWidget);
   });
 

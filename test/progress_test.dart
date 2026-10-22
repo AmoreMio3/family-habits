@@ -12,14 +12,25 @@ void main() {
     name: 'Family dinner',
     owner: FamilyOwner(),
     category: BuiltInRef(BuiltInCategory.familyMeals),
-    timesPerWeek: 4,
+    days: {
+      DateTime.sunday,
+      DateTime.monday,
+      DateTime.tuesday,
+      DateTime.wednesday,
+    },
   );
   const read = Habit(
     id: 'read',
     name: 'Read',
     owner: PersonalOwner('noa'),
     category: BuiltInRef(BuiltInCategory.study),
-    timesPerWeek: 2,
+    days: {DateTime.monday, DateTime.wednesday},
+  );
+  const brush = Habit(
+    id: 'brush',
+    name: 'Brush teeth',
+    owner: PersonalOwner('noa'),
+    category: BuiltInRef(BuiltInCategory.selfCare),
   );
 
   CheckIn c(String habit, int offset) =>
@@ -66,20 +77,69 @@ void main() {
     expect(p.byOwner[familyKey], 1);
   });
 
+  test('every day is the default schedule', () {
+    expect(brush.isEveryDay, isTrue);
+    expect(brush.timesPerWeek, 7);
+    expect(read.timesPerWeek, 2);
+    expect(read.isScheduledOn(day(1)), isTrue); // Monday
+    expect(read.isScheduledOn(day(2)), isFalse); // Tuesday
+  });
+
+  test('chosen days survive saving and loading', () {
+    final map = read.toMap();
+    expect(map['days'], [DateTime.monday, DateTime.wednesday]);
+    expect(map['timesPerWeek'], 2);
+    final back = Habit.fromMap('read', map);
+    expect(back.days, {DateTime.monday, DateTime.wednesday});
+    expect(brush.toMap().containsKey('days'), isFalse);
+    expect(brush.toMap().containsKey('emoji'), isFalse);
+    expect(Habit.fromMap('brush', brush.toMap()).isEveryDay, isTrue);
+  });
+
   group('streak', () {
     test('counts back from today', () {
       expect(
-        streak(read, [c('read', 3), c('read', 2), c('read', 1)], day(3)),
+        streak(brush, [c('brush', 3), c('brush', 2), c('brush', 1)], day(3)),
         3,
       );
     });
 
     test('an open today keeps yesterday\'s streak', () {
-      expect(streak(read, [c('read', 1), c('read', 2)], day(3)), 2);
+      expect(streak(brush, [c('brush', 1), c('brush', 2)], day(3)), 2);
     });
 
     test('a gap ends the streak', () {
-      expect(streak(read, [c('read', 3), c('read', 1)], day(3)), 1);
+      expect(streak(brush, [c('brush', 3), c('brush', 1)], day(3)), 1);
     });
+
+    test('days off the schedule do not break it', () {
+      // Monday and Wednesday done, Tuesday is not a reading day.
+      expect(streak(read, [c('read', 1), c('read', 3)], day(3)), 2);
+      // Last Wednesday, then this Monday and Wednesday.
+      expect(
+        streak(read, [c('read', -4), c('read', 1), c('read', 3)], day(4)),
+        3,
+      );
+    });
+
+    test('a missed scheduled day ends it', () {
+      expect(streak(read, [c('read', -4), c('read', 3)], day(3)), 1);
+    });
+  });
+
+  test('period progress counts planned days only', () {
+    final checks = [
+      // Monday and Wednesday are planned; Friday isn't, so it doesn't count.
+      CheckIn(habitId: 'read', day: day(1), checkedInBy: 'noa'),
+      CheckIn(habitId: 'read', day: day(3), checkedInBy: 'noa'),
+      CheckIn(habitId: 'read', day: day(5), checkedInBy: 'noa'),
+      CheckIn(habitId: 'dinner', day: day(0), checkedInBy: 'dad'),
+    ];
+    final week = periodProgress([read, dinner], checks, day(0), day(6));
+    expect(week.done, 3);
+    expect(week.target, 6);
+    final monday = periodProgress([read, dinner], checks, day(1), day(1));
+    expect(monday.done, 1);
+    expect(monday.target, 2);
   });
 }

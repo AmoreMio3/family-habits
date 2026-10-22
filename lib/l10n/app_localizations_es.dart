@@ -41,6 +41,21 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String habitAdded(String habit) {
+    return 'Nuevo hábito: $habit';
+  }
+
+  @override
+  String addHabitFor(String name) {
+    return 'Añadir un hábito para $name';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return 'Estás viendo el día de $name. Los hábitos que añadas aquí son solo de $name.';
+  }
+
+  @override
   String streakDays(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -65,6 +80,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get phoneLanguage => 'Idioma del teléfono';
+
+  @override
+  String get appearance => 'Claro u oscuro';
+
+  @override
+  String get phoneAppearance => 'Como el teléfono';
+
+  @override
+  String get lightMode => 'Claro';
+
+  @override
+  String get darkMode => 'Oscuro';
 
   @override
   String get parent => 'Padre o madre';
@@ -345,17 +372,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get wholeFamily => 'Toda la familia';
 
   @override
-  String timesPerWeek(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count veces a la semana',
-      one: 'Una vez a la semana',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String deleteHabitConfirm(String habit) {
     return '¿Eliminar «$habit» y su historial?';
   }
@@ -421,13 +437,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get ourCategories => 'Categorías de nuestra familia';
 
   @override
-  String get personalDefinition => '¿Qué cuenta como hecho? (opcional)';
-
-  @override
-  String get personalDefinitionHint =>
-      'Por ejemplo: hoy he bebido suficiente agua';
-
-  @override
   String get categoryName => 'Nombre de la categoría';
 
   @override
@@ -461,6 +470,144 @@ class AppLocalizationsEs extends AppLocalizations {
   String hiName(String name) {
     return '¡Hola, $name!';
   }
+
+  @override
+  String get howOften => 'Con qué frecuencia';
+
+  @override
+  String get specificDays => 'Días concretos';
+
+  @override
+  String get pickADay => 'Elige al menos un día';
+
+  @override
+  String get otherDays => 'Otros días';
+
+  @override
+  String get reminders => 'Recordatorios';
+
+  @override
+  String get remindersIntro =>
+      'Recibe un recordatorio diario para marcar tus hábitos. Los recordatorios se guardan en este teléfono.';
+
+  @override
+  String get reminderOff => 'Sin recordatorio';
+
+  @override
+  String get reminderMorning => 'Cada mañana';
+
+  @override
+  String get reminderEvening => 'Cada noche';
+
+  @override
+  String get reminderTwice => 'Dos veces al día';
+
+  @override
+  String get morningTime => 'Recordatorio de la mañana';
+
+  @override
+  String get eveningTime => 'Recordatorio de la noche';
+
+  @override
+  String reminderSummaryMorning(String time) {
+    return 'Cada mañana a las $time';
+  }
+
+  @override
+  String reminderSummaryEvening(String time) {
+    return 'Cada noche a las $time';
+  }
+
+  @override
+  String reminderSummaryTwice(String morning, String evening) {
+    return 'Cada día a las $morning y a las $evening';
+  }
+
+  @override
+  String get remindersBlocked =>
+      'Las notificaciones de Family Habits están desactivadas. Actívalas en los ajustes del teléfono para recibir recordatorios.';
+
+  @override
+  String get reminderMorningBody =>
+      '¡Buenos días! Tus hábitos de hoy te esperan.';
+
+  @override
+  String get reminderEveningBody => '¿Qué tal hoy? Marca tus hábitos.';
+
+  @override
+  String get habitPicture => 'Imagen';
+
+  @override
+  String get pickAnEmoji => 'Elige un emoji para este hábito';
+
+  @override
+  String get useCategoryIcon => 'Usar el icono de la categoría';
+
+  @override
+  String get typeAnyEmoji => 'O escribe cualquier emoji';
+
+  @override
+  String get useThis => 'Usar';
+
+  @override
+  String get myDay => 'Mi día';
+
+  @override
+  String get myProgress => 'Mi progreso';
+
+  @override
+  String get habitIdeas => 'Ideas de hábitos';
+
+  @override
+  String get familyProgress => 'Progreso familiar';
+
+  @override
+  String get familySettings => 'Ajustes de la familia';
+
+  @override
+  String get weekTab => 'Semana';
+
+  @override
+  String get monthTab => 'Mes';
+
+  @override
+  String get myWeek => 'Mi semana';
+
+  @override
+  String get myMonth => 'Mi mes';
+
+  @override
+  String get familyMonth => 'El mes en familia';
+
+  @override
+  String get byHabit => 'Por hábito';
+
+  @override
+  String get byPerson => 'Por persona';
+
+  @override
+  String get previous => 'Anterior';
+
+  @override
+  String get next => 'Siguiente';
+
+  @override
+  String get account => 'Cuenta';
+
+  @override
+  String get thisWeek => 'Esta semana';
+
+  @override
+  String get thisMonth => 'Este mes';
+
+  @override
+  String get menuPlace => 'Menú';
+
+  @override
+  String get menuTop => 'Arriba';
+
+  @override
+  String get menuBottom => 'Abajo';
 }
 
 /// The translations for Spanish Castilian, as used in Latin America and the Caribbean (`es_419`).
@@ -470,6 +617,21 @@ class AppLocalizationsEs419 extends AppLocalizationsEs {
   @override
   String familyCheckedIn(String name, String habit) {
     return '$name registró «$habit» para toda la familia';
+  }
+
+  @override
+  String habitAdded(String habit) {
+    return 'Nuevo hábito: $habit';
+  }
+
+  @override
+  String addHabitFor(String name) {
+    return 'Agregar un hábito para $name';
+  }
+
+  @override
+  String childDayHint(String name) {
+    return 'Estás viendo el día de $name. Los hábitos que agregues aquí son solo de $name.';
   }
 
   @override
@@ -599,13 +761,13 @@ class AppLocalizationsEs419 extends AppLocalizationsEs {
       'Ningún hábito predefinido coincide. Puedes crear el tuyo.';
 
   @override
-  String get personalDefinitionHint => 'Por ejemplo: hoy tomé suficiente agua';
-
-  @override
   String get addHabitToCategory => 'Agregar un hábito';
 
   @override
   String hiName(String name) {
     return '¡Hola, $name!';
   }
+
+  @override
+  String get familySettings => 'Configuración de la familia';
 }

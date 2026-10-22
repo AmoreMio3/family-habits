@@ -6,7 +6,6 @@ import '../l10n/app_localizations.dart';
 import '../logic/progress.dart';
 import '../logic/week.dart';
 import '../models/family.dart';
-import 'family_progress_card.dart';
 import 'celebration.dart';
 import 'common.dart';
 import 'habit_editor.dart';
@@ -26,7 +25,19 @@ class TodayScreen extends StatelessWidget {
     final weekStart = startOfWeek(store.today, store.weekStartFor(locale));
     final me = store.activeMember;
     if (me == null) return Center(child: Text(l10n.noHabitsYet));
-    final mine = store.habitsOf(me.id);
+    final today = store.today;
+    final family = [
+      for (final h in store.familyHabits)
+        if (h.isScheduledOn(today)) h,
+    ];
+    final mine = [
+      for (final h in store.habitsOf(me.id))
+        if (h.isScheduledOn(today)) h,
+    ];
+    final otherDays = [
+      for (final h in [...store.familyHabits, ...store.habitsOf(me.id)])
+        if (!h.isScheduledOn(today) && !store.isDoneToday(h)) h,
+    ];
     String doneOf(List<Habit> habits) =>
         '${habits.where(store.isDoneToday).length}/${habits.length}';
 
@@ -43,16 +54,19 @@ class TodayScreen extends StatelessWidget {
                 style: TextStyle(color: look.muted, fontSize: 14),
               ),
               const SizedBox(height: 2),
-              Text(l10n.hiName(me.nickname), style: look.heading(30)),
+              Text(l10n.hiName(me.nickname), style: look.heading(22)),
             ],
           ),
         ),
         _ProfileSwitcher(store: store),
-        const SizedBox(height: 16),
-        FamilyProgressCard(store: store, weekStart: weekStart),
-        if (store.familyHabits.isNotEmpty) ...[
-          SectionTitle(l10n.familyHabits, trailing: doneOf(store.familyHabits)),
-          for (final habit in store.familyHabits)
+        if (store.childInView case final child?) ...[
+          const SizedBox(height: 12),
+          _ChildDayHint(text: l10n.childDayHint(child.nickname)),
+        ],
+        const SizedBox(height: 4),
+        if (family.isNotEmpty) ...[
+          SectionTitle(l10n.familyHabits, trailing: doneOf(family)),
+          for (final habit in family)
             HabitCard(store: store, habit: habit, weekStart: weekStart),
         ],
         if (mine.isNotEmpty) ...[
@@ -60,7 +74,12 @@ class TodayScreen extends StatelessWidget {
           for (final habit in mine)
             HabitCard(store: store, habit: habit, weekStart: weekStart),
         ],
-        if (mine.isEmpty && store.familyHabits.isEmpty)
+        if (otherDays.isNotEmpty) ...[
+          SectionTitle(l10n.otherDays),
+          for (final habit in otherDays)
+            HabitCard(store: store, habit: habit, weekStart: weekStart),
+        ],
+        if (mine.isEmpty && family.isEmpty && otherDays.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 32),
             child: Center(
@@ -140,29 +159,58 @@ class _ProfileButton extends StatelessWidget {
             children: [
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
-                padding: const EdgeInsets.all(3),
+                padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: selected ? look.primary : Colors.transparent,
-                    width: 3,
+                    width: 2,
                   ),
                 ),
-                child: MemberAvatar(name: name, color: color, size: 54),
+                child: MemberAvatar(name: name, color: color, size: 34),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 2),
               Text(
                 name,
                 style: TextStyle(
                   fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                   color: selected ? look.ink : look.muted,
-                  fontSize: 14,
+                  fontSize: 12,
                 ),
               ),
-              Text(role, style: TextStyle(color: look.muted, fontSize: 12)),
+              Text(role, style: TextStyle(color: look.muted, fontSize: 10)),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Tells a parent they are looking at a child's day.
+class _ChildDayHint extends StatelessWidget {
+  const _ChildDayHint({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final look = Look.of(context);
+    return Container(
+      key: const Key('childDayHint'),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: look.tint(look.primary),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.child_care_rounded, size: 20, color: look.primary),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(text, style: TextStyle(color: look.ink, fontSize: 13)),
+          ),
+        ],
       ),
     );
   }
@@ -197,9 +245,17 @@ class HabitCard extends StatelessWidget {
     final done = store.isDoneToday(habit);
     final cat = categoryLook(l10n, store, habit.category);
     final enabled = store.canCheckIn(habit);
+    final offDay = !habit.isScheduledOn(store.today) && !done;
+    final firstWeekday = store.weekStartFor(Localizations.localeOf(context));
 
     final Widget subtitle;
-    if (habit.isFamily) {
+    if (offDay) {
+      subtitle = _Meta(
+        icon: Icons.event_repeat_rounded,
+        iconColor: look.muted,
+        text: scheduleLabel(context, habit, firstWeekday),
+      );
+    } else if (habit.isFamily) {
       subtitle = _Meta(
         icon: Icons.groups_rounded,
         iconColor: look.familyColor,
@@ -214,10 +270,13 @@ class HabitCard extends StatelessWidget {
         spacing: 10,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          Text(
-            habit.definition ?? cat.label,
-            style: TextStyle(color: look.muted, fontSize: 13),
-          ),
+          Text(cat.label, style: TextStyle(color: look.muted, fontSize: 13)),
+          if (!habit.isEveryDay)
+            _Meta(
+              icon: Icons.event_repeat_rounded,
+              iconColor: look.muted,
+              text: scheduleLabel(context, habit, firstWeekday),
+            ),
           _Meta(
             icon: Icons.local_fire_department_rounded,
             iconColor: days > 0 ? look.streak : look.muted,
@@ -227,7 +286,7 @@ class HabitCard extends StatelessWidget {
       );
     }
 
-    final bubble = IconBubble(icon: cat.icon, color: cat.color);
+    final bubble = HabitBubble(habit: habit, look: cat);
     return Semantics(
       checked: done,
       enabled: enabled,
@@ -269,8 +328,10 @@ class HabitCard extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 8),
-            CheckCircle(done: done, enabled: enabled),
+            if (!offDay) ...[
+              const SizedBox(width: 8),
+              CheckCircle(done: done, enabled: enabled),
+            ],
           ],
         ),
       ),
@@ -282,7 +343,7 @@ class HabitCard extends StatelessWidget {
     final messenger = ScaffoldMessenger.of(context);
     final name = store.activeMember?.nickname ?? '';
     if (!store.isDoneToday(habit)) {
-      celebrate(context, celebrationFor(habit), habit.name);
+      celebrateHabit(context, habit, habit.name);
     }
     final familyCheckIn = await store.toggleToday(habit);
     if (familyCheckIn) {
@@ -334,8 +395,8 @@ class CheckCircle extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 220),
       curve: Curves.easeOutBack,
-      width: 38,
-      height: 38,
+      width: 34,
+      height: 34,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: done ? look.done : Colors.transparent,
@@ -345,10 +406,21 @@ class CheckCircle extends StatelessWidget {
         ),
       ),
       child: done
-          ? const Icon(Icons.check_rounded, color: Colors.white, size: 24)
+          ? const Icon(Icons.check_rounded, color: Colors.white, size: 22)
           : enabled
           ? null
           : Icon(Icons.lock_outline_rounded, color: look.muted, size: 18),
     );
   }
+}
+
+/// The row of family members at the top of a screen, to switch whose habits
+/// are shown.
+class ProfileSwitcher extends StatelessWidget {
+  const ProfileSwitcher({super.key, required this.store});
+
+  final FamilyStore store;
+
+  @override
+  Widget build(BuildContext context) => _ProfileSwitcher(store: store);
 }

@@ -43,3 +43,9 @@ bool isInWeek(DateTime day, DateTime weekStart) {
   final end = DateTime(weekStart.year, weekStart.month, weekStart.day + 7);
   return !d.isBefore(weekStart) && d.isBefore(end);
 }
+
+/// Midnight on the first day of [day]'s month.
+DateTime startOfMonth(DateTime day) => DateTime(day.year, day.month);
+
+/// The last day of [day]'s month.
+DateTime endOfMonth(DateTime day) => DateTime(day.year, day.month + 1, 0);

@@ -2,17 +2,11 @@ import 'package:flutter/material.dart';
 
 /// The app's visual style: colors, fonts, corner rounding and shadows.
 ///
-/// There are three looks while the family picks one. Build with
-/// `--dart-define=LOOK=garden` or `LOOK=playground` to try the others;
-/// `sunshine` is the default.
-enum LookName { sunshine, garden, playground }
+/// The family picked Clear Blue: navy and royal blue, Frank Ruhl Libre
+/// headings and IBM Plex Sans Hebrew text.
+enum LookName { clear }
 
-final selectedLook =
-    LookName.values.asNameMap()[const String.fromEnvironment(
-      'LOOK',
-      defaultValue: 'sunshine',
-    )] ??
-    LookName.sunshine;
+const selectedLook = LookName.clear;
 
 class Look extends ThemeExtension<Look> {
   const Look({
@@ -36,6 +30,7 @@ class Look extends ThemeExtension<Look> {
     required this.familyColor,
     required this.streak,
     required this.nav,
+    this.bodyFont = fallbackFont,
   });
 
   final Brightness brightness;
@@ -63,7 +58,11 @@ class Look extends ThemeExtension<Look> {
   final Color streak;
   final Color nav;
 
-  static const bodyFont = 'Rubik';
+  /// Font for everything but headings.
+  final String bodyFont;
+
+  /// Covers Hebrew and Arabic; used for any letter a look's fonts lack.
+  static const fallbackFont = 'Rubik';
 
   bool get isDark => brightness == Brightness.dark;
 
@@ -89,7 +88,7 @@ class Look extends ThemeExtension<Look> {
 
   TextStyle heading(double size, {Color? color}) => TextStyle(
     fontFamily: headingFont,
-    fontFamilyFallback: const [bodyFont],
+    fontFamilyFallback: [bodyFont, fallbackFont],
     fontSize: size,
     fontWeight: headingWeight,
     color: color ?? ink,
@@ -99,119 +98,41 @@ class Look extends ThemeExtension<Look> {
   static Look resolve(LookName name, Brightness brightness) {
     final dark = brightness == Brightness.dark;
     return switch (name) {
-      LookName.sunshine => Look(
+      LookName.clear => Look(
         brightness: brightness,
-        background: dark ? const Color(0xFF1E1813) : const Color(0xFFFFF6EA),
-        card: dark ? const Color(0xFF2B231C) : Colors.white,
-        ink: dark ? const Color(0xFFF8EEE4) : const Color(0xFF2E2118),
-        muted: dark ? const Color(0xFFC3B2A2) : const Color(0xFF7A6656),
-        primary: dark ? const Color(0xFFFF8A4C) : const Color(0xFFC9501A),
-        onPrimary: dark ? const Color(0xFF2E1405) : Colors.white,
-        done: const Color(0xFF1FA463),
-        hero: const LinearGradient(
-          begin: AlignmentDirectional.topStart,
-          end: AlignmentDirectional.bottomEnd,
-          colors: [Color(0xFFFF9B42), Color(0xFFFF5F6D)],
-        ),
-        heroInk: Colors.white,
-        radius: 24,
-        borderWidth: 0,
-        border: Colors.transparent,
-        shadows: dark
-            ? const []
-            : const [
-                BoxShadow(
-                  color: Color(0x1FE07B2E),
-                  blurRadius: 18,
-                  offset: Offset(0, 6),
-                ),
-              ],
-        headingFont: 'Fredoka',
-        headingWeight: FontWeight.w600,
-        memberColors: const [
-          Color(0xFFFF8A3D),
-          Color(0xFFF2547D),
-          Color(0xFF7C5CFF),
-          Color(0xFF14A8A0),
-          Color(0xFFF2B01E),
-          Color(0xFF3D9BFF),
-        ],
-        familyColor: const Color(0xFF1FA463),
-        streak: const Color(0xFFFF7A1A),
-        nav: dark ? const Color(0xFF2B231C) : Colors.white,
-      ),
-      LookName.garden => Look(
-        brightness: brightness,
-        background: dark ? const Color(0xFF151C17) : const Color(0xFFF2F5EC),
-        card: dark ? const Color(0xFF1F2922) : Colors.white,
-        ink: dark ? const Color(0xFFE9F0E7) : const Color(0xFF1F2D24),
-        muted: dark ? const Color(0xFFA7B6AA) : const Color(0xFF627266),
-        primary: dark ? const Color(0xFF8FCBA6) : const Color(0xFF3B7655),
-        onPrimary: dark ? const Color(0xFF0E2618) : Colors.white,
-        done: dark ? const Color(0xFF6DBB8C) : const Color(0xFF3B7655),
+        background: dark ? const Color(0xFF0B1424) : const Color(0xFFF5F7FB),
+        card: dark ? const Color(0xFF132036) : Colors.white,
+        ink: dark ? const Color(0xFFE8EEF8) : const Color(0xFF0F1E36),
+        muted: dark ? const Color(0xFF9AA9C2) : const Color(0xFF5B6B84),
+        primary: dark ? const Color(0xFF6EA2FF) : const Color(0xFF1D5FD1),
+        onPrimary: dark ? const Color(0xFF071A3D) : Colors.white,
+        done: const Color(0xFF0F9D7A),
         hero: LinearGradient(
           begin: AlignmentDirectional.topStart,
           end: AlignmentDirectional.bottomEnd,
           colors: dark
-              ? const [Color(0xFF2D5A40), Color(0xFF6B4A33)]
-              : const [Color(0xFFB9DEC5), Color(0xFFF7D9B5)],
-        ),
-        heroInk: dark ? const Color(0xFFF1F5EF) : const Color(0xFF1F2D24),
-        radius: 18,
-        borderWidth: 1,
-        border: dark ? const Color(0xFF2E3B32) : const Color(0xFFDDE6D5),
-        shadows: const [],
-        headingFont: 'VarelaRound',
-        headingWeight: FontWeight.w400,
-        memberColors: const [
-          Color(0xFF4F9A6E),
-          Color(0xFFE08A5F),
-          Color(0xFF7484D2),
-          Color(0xFFC07BB0),
-          Color(0xFFD0A73C),
-          Color(0xFF4FA1B3),
-        ],
-        familyColor: const Color(0xFFE9A23B),
-        streak: const Color(0xFFE08A5F),
-        nav: dark ? const Color(0xFF1F2922) : Colors.white,
-      ),
-      LookName.playground => Look(
-        brightness: brightness,
-        background: dark ? const Color(0xFF17132B) : const Color(0xFFF3EFFF),
-        card: dark ? const Color(0xFF231D40) : Colors.white,
-        ink: dark ? const Color(0xFFF2EEFF) : const Color(0xFF231A4A),
-        muted: dark ? const Color(0xFFB6ADDB) : const Color(0xFF625A86),
-        primary: dark ? const Color(0xFFA48BFF) : const Color(0xFF5F3DF0),
-        onPrimary: dark ? const Color(0xFF1A0F4A) : Colors.white,
-        done: const Color(0xFF16A34A),
-        hero: const LinearGradient(
-          begin: AlignmentDirectional.topStart,
-          end: AlignmentDirectional.bottomEnd,
-          colors: [Color(0xFF5F3DF0), Color(0xFFC03FE0)],
+              ? const [Color(0xFF16305C), Color(0xFF1D4E9E)]
+              : const [Color(0xFF10264A), Color(0xFF1D4E9E)],
         ),
         heroInk: Colors.white,
-        radius: 20,
-        borderWidth: 2.5,
-        border: dark ? const Color(0xFF4A3F80) : const Color(0xFF231A4A),
-        shadows: [
-          BoxShadow(
-            color: dark ? const Color(0xFF0B0818) : const Color(0xFF231A4A),
-            offset: const Offset(0, 4),
-          ),
-        ],
-        headingFont: 'Fredoka',
+        radius: 16,
+        borderWidth: 1,
+        border: dark ? const Color(0xFF1F2E48) : const Color(0xFFE2E8F2),
+        shadows: const [],
+        headingFont: 'FrankRuhlLibre',
         headingWeight: FontWeight.w700,
+        bodyFont: 'IBMPlexSansHebrew',
         memberColors: const [
-          Color(0xFFFF4F86),
-          Color(0xFFFFA41B),
-          Color(0xFF22B455),
-          Color(0xFF2E9BFF),
-          Color(0xFFA855F7),
-          Color(0xFFFF6B3D),
+          Color(0xFF1D5FD1),
+          Color(0xFFE2557A),
+          Color(0xFF0F9D7A),
+          Color(0xFFE89A24),
+          Color(0xFF7B61FF),
+          Color(0xFF2BB3D9),
         ],
-        familyColor: const Color(0xFF0FB5A6),
-        streak: const Color(0xFFFF6B3D),
-        nav: dark ? const Color(0xFF231D40) : Colors.white,
+        familyColor: const Color(0xFFE89A24),
+        streak: const Color(0xFFF07A30),
+        nav: dark ? const Color(0xFF132036) : Colors.white,
       ),
     };
   }
@@ -254,7 +175,8 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
   final base = ThemeData(
     colorScheme: scheme,
     useMaterial3: true,
-    fontFamily: Look.bodyFont,
+    fontFamily: look.bodyFont,
+    fontFamilyFallback: const [Look.fallbackFont],
   );
   final shape = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(look.radius),
@@ -264,19 +186,20 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
   );
   TextStyle? headed(TextStyle? style) => style?.copyWith(
     fontFamily: look.headingFont,
-    fontFamilyFallback: const [Look.bodyFont],
+    fontFamilyFallback: [look.bodyFont, Look.fallbackFont],
     fontWeight: look.headingWeight,
   );
   final text = base.textTheme.apply(
     bodyColor: look.ink,
     displayColor: look.ink,
   );
-  const buttonText = TextStyle(
-    fontFamily: Look.bodyFont,
+  final buttonText = TextStyle(
+    fontFamily: look.bodyFont,
+    fontFamilyFallback: const [Look.fallbackFont],
     fontSize: 16,
     fontWeight: FontWeight.w600,
   );
-  const buttonSize = Size(64, 52);
+  const buttonSize = Size(64, 46);
 
   return base.copyWith(
     extensions: [look],
@@ -294,7 +217,7 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
       surfaceTintColor: Colors.transparent,
       scrolledUnderElevation: 0,
       elevation: 0,
-      titleTextStyle: look.heading(24),
+      titleTextStyle: look.heading(20),
     ),
     cardTheme: CardThemeData(
       color: look.card,
@@ -356,7 +279,7 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
       surfaceTintColor: Colors.transparent,
       indicatorColor: look.tint(look.primary),
       elevation: 0,
-      height: 72,
+      height: 64,
       iconTheme: WidgetStateProperty.resolveWith(
         (states) => IconThemeData(
           color: states.contains(WidgetState.selected)
@@ -406,6 +329,46 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
   );
 }
 
+/// Draws all text a little smaller than Flutter's default, on top of the
+/// size the person picked in the phone's settings.
+class CompactText extends StatelessWidget {
+  const CompactText({super.key, required this.child});
+
+  static const factor = 0.82;
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final media = MediaQuery.of(context);
+    return MediaQuery(
+      data: media.copyWith(textScaler: _ScaledText(media.textScaler, factor)),
+      child: child,
+    );
+  }
+}
+
+class _ScaledText extends TextScaler {
+  const _ScaledText(this.base, this.factor);
+
+  final TextScaler base;
+  final double factor;
+
+  @override
+  double scale(double fontSize) => base.scale(fontSize) * factor;
+
+  @override
+  // ignore: deprecated_member_use
+  double get textScaleFactor => base.textScaleFactor * factor;
+
+  @override
+  bool operator ==(Object other) =>
+      other is _ScaledText && other.base == base && other.factor == factor;
+
+  @override
+  int get hashCode => Object.hash(base, factor);
+}
+
 /// A card in the current look that can be tapped.
 class SoftCard extends StatelessWidget {
   const SoftCard({
@@ -413,7 +376,7 @@ class SoftCard extends StatelessWidget {
     required this.child,
     this.onTap,
     this.color,
-    this.padding = const EdgeInsets.all(16),
+    this.padding = const EdgeInsets.all(14),
     this.margin = const EdgeInsets.symmetric(vertical: 6),
   });
 
@@ -452,7 +415,7 @@ class IconBubble extends StatelessWidget {
     super.key,
     required this.icon,
     required this.color,
-    this.size = 44,
+    this.size = 40,
   });
 
   final IconData icon;
@@ -523,7 +486,7 @@ class SectionTitle extends StatelessWidget {
       padding: const EdgeInsetsDirectional.fromSTEB(4, 20, 4, 6),
       child: Row(
         children: [
-          Expanded(child: Text(text, style: look.heading(20))),
+          Expanded(child: Text(text, style: look.heading(18))),
           if (trailing != null)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
