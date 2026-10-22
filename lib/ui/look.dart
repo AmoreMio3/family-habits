@@ -8,6 +8,25 @@ enum LookName { clear }
 
 const selectedLook = LookName.clear;
 
+// Font trial: heading font, heading weight, text font, text weight.
+const _fontName = String.fromEnvironment('FONTS', defaultValue: 'current');
+final _fontTry = switch (_fontName) {
+  'heebo' => ('Heebo', FontWeight.w800, 'Heebo', FontWeight.w500),
+  'plex' => (
+    'IBMPlexSansHebrew',
+    FontWeight.w700,
+    'IBMPlexSansHebrew',
+    FontWeight.w500,
+  ),
+  'secular' => ('SecularOne', FontWeight.w400, 'Assistant', FontWeight.w600),
+  _ => (
+    'FrankRuhlLibre',
+    FontWeight.w700,
+    'IBMPlexSansHebrew',
+    FontWeight.w400,
+  ),
+};
+
 class Look extends ThemeExtension<Look> {
   const Look({
     required this.brightness,
@@ -31,6 +50,7 @@ class Look extends ThemeExtension<Look> {
     required this.streak,
     required this.nav,
     this.bodyFont = fallbackFont,
+    this.bodyWeight = FontWeight.w400,
   });
 
   final Brightness brightness;
@@ -60,6 +80,9 @@ class Look extends ThemeExtension<Look> {
 
   /// Font for everything but headings.
   final String bodyFont;
+
+  /// Weight of ordinary text.
+  final FontWeight bodyWeight;
 
   /// Covers Hebrew and Arabic; used for any letter a look's fonts lack.
   static const fallbackFont = 'Rubik';
@@ -119,9 +142,10 @@ class Look extends ThemeExtension<Look> {
         borderWidth: 1,
         border: dark ? const Color(0xFF1F2E48) : const Color(0xFFE2E8F2),
         shadows: const [],
-        headingFont: 'FrankRuhlLibre',
-        headingWeight: FontWeight.w700,
-        bodyFont: 'IBMPlexSansHebrew',
+        headingFont: _fontTry.$1,
+        headingWeight: _fontTry.$2,
+        bodyFont: _fontTry.$3,
+        bodyWeight: _fontTry.$4,
         memberColors: const [
           Color(0xFF1D5FD1),
           Color(0xFFE2557A),
@@ -189,9 +213,16 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
     fontFamilyFallback: [look.bodyFont, Look.fallbackFont],
     fontWeight: look.headingWeight,
   );
-  final text = base.textTheme.apply(
+  final plain = base.textTheme.apply(
     bodyColor: look.ink,
     displayColor: look.ink,
+  );
+  TextStyle? weighted(TextStyle? style) =>
+      style?.copyWith(fontWeight: look.bodyWeight);
+  final text = plain.copyWith(
+    bodyLarge: weighted(plain.bodyLarge),
+    bodyMedium: weighted(plain.bodyMedium),
+    bodySmall: weighted(plain.bodySmall),
   );
   final buttonText = TextStyle(
     fontFamily: look.bodyFont,
@@ -334,7 +365,8 @@ ThemeData buildTheme(Brightness brightness, {LookName? name}) {
 class CompactText extends StatelessWidget {
   const CompactText({super.key, required this.child});
 
-  static const factor = 0.82;
+  static final factor =
+      double.tryParse(const String.fromEnvironment('TEXT')) ?? 0.82;
 
   final Widget child;
 

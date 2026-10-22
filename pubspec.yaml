@@ -94,6 +94,28 @@ flutter:
       fonts:
         - asset: assets/fonts/FrankRuhlLibre-700.ttf
           weight: 700
+    - family: Heebo
+      fonts:
+        - asset: assets/fonts/Heebo-400.ttf
+        - asset: assets/fonts/Heebo-500.ttf
+          weight: 500
+        - asset: assets/fonts/Heebo-700.ttf
+          weight: 700
+        - asset: assets/fonts/Heebo-800.ttf
+          weight: 800
+    - family: Assistant
+      fonts:
+        - asset: assets/fonts/Assistant-500.ttf
+          weight: 500
+        - asset: assets/fonts/Assistant-600.ttf
+          weight: 600
+        - asset: assets/fonts/Assistant-700.ttf
+          weight: 700
+        - asset: assets/fonts/Assistant-800.ttf
+          weight: 800
+    - family: SecularOne
+      fonts:
+        - asset: assets/fonts/SecularOne-400.ttf
     - family: IBMPlexSansHebrew
       fonts:
         - asset: assets/fonts/IBMPlexSansHebrew-400.ttf

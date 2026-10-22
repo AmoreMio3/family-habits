@@ -157,10 +157,10 @@ packages:
     dependency: "direct dev"
     description:
       name: fake_cloud_firestore
-      sha256: "4276eadc5e2c36663fe393e98d14d4cc413ebe8ce0d02edd8cda57ef7a5a8369"
+      sha256: f0916603e17b53b6fd0c8f1b124594c473ab06007f4a79c13efa00fb08b61098
       url: "https://pub.dev"
     source: hosted
-    version: "4.3.0"
+    version: "4.4.0"
   fake_firebase_security_rules:
     dependency: transitive
     description:
@@ -553,10 +553,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: b90caa27669d5f3ef9918d55343b44000f088ee9d4685ed822310848004c793e
+      sha256: "732b86c5c726402ac781a9fe14fe9cadad3c7dde8f99c72ab43a75a307077336"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0"
+    version: "2.5.2"
   shared_preferences_foundation:
     dependency: transitive
     description:
